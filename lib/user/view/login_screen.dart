@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gproject/common/logo/main_logo.dart';
 import 'package:gproject/common/variable/color/color.dart';
 import 'package:gproject/component/textformfield.dart';
+import 'package:gproject/user/view/signup_screen1.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -23,24 +24,29 @@ class LoginScreen extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 25),
         child: Column(
           children: [
-            SizedBox(height: MediaQuery.of(context).size.height / 6 * 1,),
+            SizedBox(
+              height: MediaQuery.of(context).size.height / 6 * 1,
+            ),
             MainLogo(),
-            SizedBox(height: MediaQuery.of(context).size.height / 8 * 1,),
-            CustomTextFormField(controller: idController, hintText: '아이디 입력',),
-            SizedBox(height: 20,),
-            CustomTextFormField(controller: pwController, hintText: '비밀번호 입력',),
-            SizedBox(height: 30,),
+            SizedBox(
+              height: MediaQuery.of(context).size.height / 8 * 1,
+            ),
+            CustomTextFormField(
+              controller: idController,
+              hintText: '아이디 입력',
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            CustomTextFormField(
+              controller: pwController,
+              hintText: '비밀번호 입력',
+            ),
+            SizedBox(
+              height: 30,
+            ),
             InkWell(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return LoginScreen();
-                    },
-                  ),
-                );
-              },
+              onTap: () {},
               child: Container(
                 padding: const EdgeInsets.symmetric(vertical: 17),
                 width: double.infinity,
@@ -60,7 +66,57 @@ class LoginScreen extends StatelessWidget {
               ),
             ),
             Row(
-              children: [],
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                TextButton(
+                  onPressed: () {},
+                  child: Text(
+                    '아이디 찾기',
+                    style: TextStyle(
+                      color: Color(0xFF04060E),
+                    ),
+                  ),
+                ),
+                Text(
+                  '|',
+                  style: TextStyle(
+                    color: PColors.grey1.withOpacity(0.3),
+                  ),
+                ),
+                TextButton(
+                  onPressed: () {},
+                  child: Text(
+                    '비밀번호 찾기',
+                    style: TextStyle(
+                      color: Color(0xFF04060E),
+                    ),
+                  ),
+                ),
+                Text(
+                  '|',
+                  style: TextStyle(
+                    color: PColors.grey1.withOpacity(0.3),
+                  ),
+                ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return SignUpScreen1();
+                        },
+                      ),
+                    );
+                  },
+                  child: Text(
+                    '회원가입',
+                    style: TextStyle(
+                      color: Color(0xFF04060E),
+                    ),
+                  ),
+                ),
+              ],
             )
           ],
         ),
