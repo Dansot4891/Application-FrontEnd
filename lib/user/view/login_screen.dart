@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:gproject/common/logo/main_logo.dart';
 import 'package:gproject/common/variable/color/color.dart';
-import 'package:gproject/component/textformfield.dart';
+import 'package:gproject/common/component/main_text.dart';
+import 'package:gproject/common/component/textformfield.dart';
+import 'package:gproject/home/view/home_screen.dart';
 import 'package:gproject/user/view/signup_screen1.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -27,7 +28,7 @@ class LoginScreen extends StatelessWidget {
             SizedBox(
               height: MediaQuery.of(context).size.height / 6 * 1,
             ),
-            MainLogo(),
+            MainText(),
             SizedBox(
               height: MediaQuery.of(context).size.height / 8 * 1,
             ),
@@ -46,9 +47,13 @@ class LoginScreen extends StatelessWidget {
               height: 30,
             ),
             InkWell(
-              onTap: () {},
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context){
+                  return HomeScreen(); 
+                },),);
+              },
               child: Container(
-                padding: const EdgeInsets.symmetric(vertical: 17),
+                padding: const EdgeInsets.symmetric(vertical: 13),
                 width: double.infinity,
                 decoration: BoxDecoration(
                   color: PColors.mainColor,

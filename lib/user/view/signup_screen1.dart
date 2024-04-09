@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:gproject/common/logo/main_logo.dart';
 import 'package:gproject/common/variable/color/color.dart';
-import 'package:gproject/component/textformfield.dart';
+import 'package:gproject/common/component/main_text.dart';
+import 'package:gproject/common/component/textformfield.dart';
 import 'package:gproject/user/view/signup_screen2.dart';
 
 class SignUpScreen1 extends StatelessWidget {
@@ -27,7 +27,7 @@ class SignUpScreen1 extends StatelessWidget {
         child: Column(
           children: [
             SizedBox(height: MediaQuery.of(context).size.height / 8 * 1,),
-            MainLogo(),
+            MainText(),
             SizedBox(height: MediaQuery.of(context).size.height / 15 * 1,),
             CustomTextFormField(controller: idController, hintText: '아이디 입력',),
             SizedBox(height: 12,),
@@ -66,7 +66,7 @@ class SignUpScreen1 extends StatelessWidget {
                 );
               },
               child: Container(
-                padding: const EdgeInsets.symmetric(vertical: 17),
+                padding: const EdgeInsets.symmetric(vertical: 13),
                 width: double.infinity,
                 decoration: BoxDecoration(
                   color: PColors.mainColor,
