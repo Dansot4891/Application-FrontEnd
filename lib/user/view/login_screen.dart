@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gproject/common/component/button.dart';
 import 'package:gproject/common/variable/color/color.dart';
 import 'package:gproject/common/component/main_text.dart';
 import 'package:gproject/common/component/textformfield.dart';
@@ -46,29 +47,18 @@ class LoginScreen extends StatelessWidget {
             SizedBox(
               height: 30,
             ),
-            InkWell(
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context){
-                  return HomeScreen(); 
-                },),);
-              },
-              child: Container(
-                padding: const EdgeInsets.symmetric(vertical: 13),
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: PColors.mainColor,
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Center(
-                  child: Text(
-                    '로그인',
-                    style: TextStyle(
-                      fontSize: 20,
-                      color: Colors.white,
-                    ),
+            CustomButton(
+              text: '로그인',
+              func: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return HomeScreen();
+                    },
                   ),
-                ),
-              ),
+                );
+              },
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,

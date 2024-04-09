@@ -5,11 +5,13 @@ import 'package:gproject/common/variable/color/color.dart';
 class DefaultLayout extends StatelessWidget {
   final Widget child;
   final bool isBoard;
-  const DefaultLayout({required this.child, this.isBoard = false, super.key});
+  final bool keyboard;
+  const DefaultLayout({required this.child, this.isBoard = false, this.keyboard = false, super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: keyboard,
       appBar: AppBar(
         shape: isBoard ? Border(
           bottom: BorderSide(

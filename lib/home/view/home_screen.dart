@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:gproject/chatbot/view/chatbot_screen.dart';
 import 'package:gproject/common/component/main_text.dart';
 import 'package:gproject/common/variable/color/color.dart';
 import 'package:gproject/common/variable/image_path/image_path.dart';
@@ -62,10 +63,62 @@ class HomeScreen extends StatelessWidget {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          mainButton(ImgPath.cosmeticLogo, "화장품"),
-                          mainButton(ImgPath.ingredientLogo, "성분"),
-                          mainButton(ImgPath.chatbotLogo, "상담"),
-                          mainButton(ImgPath.QandALogo, "Q&A"),
+                          mainButton(
+                            ImgPath.cosmeticLogo,
+                            "화장품",
+                            () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) {
+                                    return ChatBotScreen();
+                                  },
+                                ),
+                              );
+                            },
+                          ),
+                          mainButton(
+                            ImgPath.ingredientLogo,
+                            "성분",
+                            () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) {
+                                    return ChatBotScreen();
+                                  },
+                                ),
+                              );
+                            },
+                          ),
+                          mainButton(
+                            ImgPath.chatbotLogo,
+                            "상담",
+                            () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) {
+                                    return ChatBotScreen();
+                                  },
+                                ),
+                              );
+                            },
+                          ),
+                          mainButton(
+                            ImgPath.QandALogo,
+                            "Q&A",
+                            () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) {
+                                    return ChatBotScreen();
+                                  },
+                                ),
+                              );
+                            },
+                          ),
                         ],
                       ),
                     ),
@@ -117,11 +170,12 @@ class HomeScreen extends StatelessWidget {
   Column mainButton(
     String imgpath,
     String title,
+    VoidCallback func,
   ) {
     return Column(
       children: [
         InkWell(
-          onTap: () {},
+          onTap: func,
           child: Container(
             margin: const EdgeInsets.symmetric(horizontal: 15),
             width: ratio.width * 70,
