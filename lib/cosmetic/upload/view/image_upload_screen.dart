@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +8,7 @@ import 'package:gproject/common/component/button.dart';
 import 'package:gproject/common/variable/color/color.dart';
 import 'package:gproject/common/variable/image_path/image_path.dart';
 import 'package:gproject/common/view/default_layout.dart';
+import 'package:gproject/common/view/loading_screen.dart';
 import 'package:gproject/main.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -64,7 +66,11 @@ class _ImageUpLoadScreenState extends State<ImageUpLoadScreen> {
               horizontal: 25,
               vertical: 30,
             ),
-            child: CustomButton(text: '성분 분석', func: () {}),
+            child: CustomButton(text: '성분 분석', func: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context){
+                return LoadingScreen();
+              },),);
+            }),
           )
         ],
       ),
