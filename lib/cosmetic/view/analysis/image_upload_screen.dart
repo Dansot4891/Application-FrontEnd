@@ -9,6 +9,7 @@ import 'package:gproject/common/variable/color/color.dart';
 import 'package:gproject/common/variable/image_path/image_path.dart';
 import 'package:gproject/common/view/default_layout.dart';
 import 'package:gproject/common/view/loading_screen.dart';
+import 'package:gproject/cosmetic/view/analysis/analysis_screen.dart';
 import 'package:gproject/main.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -67,9 +68,14 @@ class _ImageUpLoadScreenState extends State<ImageUpLoadScreen> {
               vertical: 30,
             ),
             child: CustomButton(text: '성분 분석', func: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context){
-                return LoadingScreen();
-              },),);
+              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) {
+                                    return AnalysisScreen();
+                                  },
+                                ),
+                              );
             }),
           )
         ],

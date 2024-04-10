@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gproject/common/variable/color/color.dart';
 import 'package:gproject/common/component/main_text.dart';
 import 'package:gproject/common/component/textformfield.dart';
-import 'package:gproject/user/view/signup_screen2.dart';
+import 'package:gproject/user/view/login/signup_screen2.dart';
 
 class SignUpScreen1 extends StatelessWidget {
   const SignUpScreen1({super.key});

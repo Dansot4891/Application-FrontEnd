@@ -10,5 +10,6 @@ class PColors{
   static const Color halfDanger = Color(0xFFF59300);
   static const Color danger = Color(0xFFFF0000);
   static const Color bookMark = Color(0xFFFAFF00);
-  
+  static const Color darkgrey = Color(0xFF595B5A);
+  static const Color price = Color(0xFFFF3535);
 }

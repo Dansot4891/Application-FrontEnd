@@ -4,19 +4,25 @@ import 'package:gproject/common/variable/color/color.dart';
 class CustomTextFormField extends StatelessWidget {
   final TextEditingController controller;
   final String hintText;
-  const CustomTextFormField({
+  bool expand;
+  CustomTextFormField({
     required this.controller,
     required this.hintText,
+    this.expand = false,
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      expands: expand,
+      textAlignVertical: TextAlignVertical.top,
       style: TextStyle(
         fontSize: 16,
         color: Colors.black,
       ),
+      minLines: !expand ? 1 : null,
+      maxLines: !expand ? 1 : null,
       controller: controller,
       decoration: InputDecoration(
         contentPadding:

@@ -7,10 +7,12 @@ import 'package:gproject/common/component/dialog.dart';
 import 'package:gproject/common/component/main_text.dart';
 import 'package:gproject/common/variable/color/color.dart';
 import 'package:gproject/common/variable/image_path/image_path.dart';
-import 'package:gproject/cosmetic/recommend/view/recommend_screen.dart';
+import 'package:gproject/cosmetic/view/analysis/analysis_screen.dart';
+import 'package:gproject/cosmetic/view/costetics/cosmetics_screen.dart';
+import 'package:gproject/cosmetic/view/recommend/recommend_screen.dart';
 import 'package:gproject/main.dart';
-import 'package:gproject/cosmetic/upload/view/image_upload_screen.dart';
-import 'package:gproject/user/view/mypage_screen.dart';
+import 'package:gproject/cosmetic/view/analysis/image_upload_screen.dart';
+import 'package:gproject/user/view/mypage/mypage_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -37,7 +39,7 @@ class HomeScreen extends StatelessWidget {
             ),
             IconButton(
               onPressed: () {
-                Navigator.pop(context);
+                CustomDialog(context: context, title: '로그아웃 하시겠습니까?', buttonText: '확인', buttonCount: 2, func: (){Navigator.pop(context);});
               },
               icon: Icon(
                 Icons.logout,
@@ -80,7 +82,7 @@ class HomeScreen extends StatelessWidget {
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) {
-                                    return ChatBotScreen();
+                                    return CosmeticsScreen();
                                   },
                                 ),
                               );
@@ -151,7 +153,7 @@ class HomeScreen extends StatelessWidget {
                             text: '사진을 통해 화장품의\n성분을 비교 분석합니다.',
                             imgPath: ImgPath.compare_analysis,
                             route: () {
-                              CustomDialog(context: context, title: '안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요', buttonCount: 2, func: (){});
+                              CustomDialog(context: context, title: '안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요', buttonCount: 2,  buttonText: null, func: (){});
                             }),
                         mainBigButton(
                             title: 'AI 추천',

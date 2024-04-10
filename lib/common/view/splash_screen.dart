@@ -5,7 +5,7 @@ import 'package:gproject/common/component/button.dart';
 import 'package:gproject/common/variable/color/color.dart';
 import 'package:gproject/common/variable/image_path/image_path.dart';
 import 'package:gproject/common/component/main_text.dart';
-import 'package:gproject/user/view/login_screen.dart';
+import 'package:gproject/user/view/login/login_screen.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
