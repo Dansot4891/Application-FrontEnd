@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:gproject/common/variable/color/color.dart';
+import 'package:gproject/common/variable/color.dart';
 import 'package:gproject/common/view/default_layout.dart';
+import 'package:gproject/cosmetic/view/analysis/ai_analysis_screen.dart';
+import 'package:gproject/cosmetic/view/analysis/ingredient_component_screen.dart';
 
 class AnalysisScreen extends StatefulWidget {
   const AnalysisScreen({super.key});
@@ -21,15 +23,36 @@ class _AnalysisScreenState extends State<AnalysisScreen> with SingleTickerProvid
   @override
   Widget build(BuildContext context) {
     return DefaultLayout(
-      child: TabBar(
-        controller: tabController,
-        unselectedLabelColor: PColors.grey3,
-        labelColor: Colors.black,
-        tabs: [
-          Tab(text: '분석',),
-          Tab(text: '성분 구성',),
-          Tab(text: '효과별',),
-          Tab(text: '피부 타입별',),
+      child: Column(
+        children: [
+          TabBar(
+            indicatorColor: PColors.mainColor,
+            indicatorWeight: 2,
+            indicatorSize: TabBarIndicatorSize.tab,
+            overlayColor: MaterialStatePropertyAll(
+              PColors.mainColor.withOpacity(0.5),
+            ),
+            splashBorderRadius: BorderRadius.circular(20),
+            controller: tabController,
+            unselectedLabelColor: PColors.grey3,
+            labelColor: Colors.black,
+            tabs: [
+              Tab(text: '분석',),
+              Tab(text: '성분 구성',),
+              Tab(text: '효과별',),
+              Tab(text: '피부 타입별',),
+            ],
+          ),
+          Expanded(child: 
+          TabBarView(
+            controller: tabController,
+            children: [
+            AIAnalysisScreen(),
+            IngredientComponentScreen(),
+            Text('asdf3'),
+            Text('asdf4'),
+          ])
+          ),
         ],
       )
     );

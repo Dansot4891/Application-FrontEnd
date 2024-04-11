@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class PColors{
   static const Color mainColor = Color(0xFFFFAFAF);
   static const Color subColor = Color(0xFFFFE9E9);
+  static const Color subColor2 = Color(0xFFFFCECE);
   static const Color grey1 = Color(0xFF04060E);
   static const Color grey2 = Color(0xFFD7D7D7);
   static const Color grey3 = Color(0xFF808093);
@@ -12,4 +13,5 @@ class PColors{
   static const Color bookMark = Color(0xFFFAFF00);
   static const Color darkgrey = Color(0xFF595B5A);
   static const Color price = Color(0xFFFF3535);
+  
 }

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gproject/common/variable/color/color.dart';
-import 'package:gproject/common/variable/textstyle/textstyle.dart';
+import 'package:gproject/common/variable/color.dart';
 import 'package:gproject/common/component/main_text.dart';
 import 'package:gproject/common/component/textformfield.dart';
 import 'package:gproject/home/view/home_screen.dart';

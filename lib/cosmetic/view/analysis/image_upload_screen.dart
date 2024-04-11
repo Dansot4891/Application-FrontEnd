@@ -5,8 +5,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:gproject/common/component/button.dart';
-import 'package:gproject/common/variable/color/color.dart';
-import 'package:gproject/common/variable/image_path/image_path.dart';
+import 'package:gproject/common/component/dialog.dart';
+import 'package:gproject/common/variable/color.dart';
+import 'package:gproject/common/variable/image_path.dart';
 import 'package:gproject/common/view/default_layout.dart';
 import 'package:gproject/common/view/loading_screen.dart';
 import 'package:gproject/cosmetic/view/analysis/analysis_screen.dart';
@@ -67,17 +68,39 @@ class _ImageUpLoadScreenState extends State<ImageUpLoadScreen> {
               horizontal: 25,
               vertical: 30,
             ),
-            child: CustomButton(text: '성분 분석', func: () {
-              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) {
-                                    return AnalysisScreen();
-                                  },
-                                ),
-                              );
-            }),
-          )
+            child: CustomButton(
+              text: '성분 분석',
+              func: () async {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return LoadingScreen();
+                    },
+                  ),
+                );
+
+                await Future.delayed(Duration(seconds: 3));
+
+                CustomDialog(
+                  context: context,
+                  title: '분석이 완료되었습니다!',
+                  buttonText: '확인',
+                  buttonCount: 1,
+                  func: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return AnalysisScreen();
+                        },
+                      ),
+                    );
+                  },
+                );
+              },
+            ),
+          ),
         ],
       ),
     );

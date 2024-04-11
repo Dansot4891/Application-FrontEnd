@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:gproject/common/component/dialog.dart';
-import 'package:gproject/common/variable/color/color.dart';
+import 'package:gproject/common/variable/color.dart';
 import 'package:gproject/common/view/default_layout.dart';
 import 'package:gproject/cosmetic/view/ingredient/ingredient_screen.dart';
 import 'package:gproject/user/view/mypage/answer_screen.dart';

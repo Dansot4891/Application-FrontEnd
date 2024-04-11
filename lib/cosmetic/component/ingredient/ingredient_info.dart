@@ -1,9 +1,15 @@
 import 'package:flutter/cupertino.dart';
-import 'package:gproject/common/variable/color/color.dart';
+import 'package:gproject/common/variable/color.dart';
 
 class IngredientInfo extends StatelessWidget {
-  
-  const IngredientInfo({super.key});
+  final int? safeRating;
+  final int? halfSafeRating;
+  final int? dangerRating;
+  const IngredientInfo({
+    this.safeRating = null,
+    this.halfSafeRating = null,
+    this.dangerRating = null,
+    super.key,});
 
   @override
   Widget build(BuildContext context) {
@@ -19,13 +25,14 @@ class IngredientInfo extends StatelessWidget {
 
   Widget IngredientMiniBar({
     required String text,
+    String? rating,
     required Color color,
   }){
     return Row(
       children: [
         Container(
-          height: 12,
-          width: 12,
+          height: 14,
+          width: 14,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             color: color
@@ -37,7 +44,18 @@ class IngredientInfo extends StatelessWidget {
         Text(
           text,
           style: TextStyle(
-            fontSize: 12,
+            fontSize: 14,
+          ),
+        ),
+        rating == null ? Text(
+          '',
+          style: TextStyle(
+            fontSize: 14,
+          ),
+        ) : Text(
+          ' (${rating!})',
+          style: TextStyle(
+            fontSize: 14,
           ),
         )
       ],

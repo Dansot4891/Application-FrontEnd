@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:gproject/common/variable/color/color.dart';
+import 'package:gproject/common/variable/color.dart';
 
 Future<void> CustomDialog({
   required BuildContext context,

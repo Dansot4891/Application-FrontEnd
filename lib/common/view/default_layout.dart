@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gproject/common/component/main_text.dart';
-import 'package:gproject/common/variable/color/color.dart';
+import 'package:gproject/common/variable/color.dart';
 
 class DefaultLayout extends StatelessWidget {
   final Widget child;

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:gproject/common/variable/color/color.dart';
+import 'package:flutter/widgets.dart';
+import 'package:gproject/common/variable/color.dart';
 import 'package:gproject/common/view/default_layout.dart';
 
 class AnswerScreen extends StatelessWidget {
@@ -9,30 +10,54 @@ class AnswerScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultLayout(
-      child: Container(
+      child: Column(
+        children: [
+          AnswerBigBox(context: context, title: '답변 완료'),
+          AnswerBigBox(context: context, title: '답변 미완료', underBorder: false),
+        ],
+      )
+    );
+  }
+
+  Container AnswerBigBox({
+    required BuildContext context,
+    required String title,
+    bool underBorder = true,
+  }){
+    return Container(
         margin: const EdgeInsets.symmetric(horizontal: 25),
         width: double.infinity,
         height: MediaQuery.of(context).size.height / 5 * 2,
         decoration: BoxDecoration(
-            border: Border(bottom: BorderSide(color: PColors.grey2, width: 1))),
+            border: underBorder ? Border(bottom: BorderSide(color: PColors.grey2, width: 1),) : null),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(height: 15,),
-            Text('답변 완료', style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),),
+            Text(title, style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),),
             SizedBox(height: 10,),
-            AnswerBox(title: '안녕하세요', content: '안녕하세요 저는 누구누구입니다. 안녕하세요 저는 누구누구입니다. 안녕하세요 저는 누구누구입니다.'),
-            AnswerBox(title: '안녕하세요', content: '안녕하세요 저는 누구누구입니다. 안녕하세요 저는 누구누구입니다. 안녕하세요 저는 누구누구입니다.'),
+            Expanded(
+              child: ListView(
+                shrinkWrap: true,
+                children: [
+                  AnswerBox(title: '안녕하세요', content: '안녕하세요 저는 누구누구입니다. 안녕하세요 저는 누구누구입니다. 안녕하세요 저는 누구누구입니다.', answer: underBorder),
+              AnswerBox(title: '안녕하세요', content: '안녕하세요 저는 누구누구입니다. 안녕하세요 저는 누구누구입니다. 안녕하세요 저는 누구누구입니다.', answer: underBorder),
+              AnswerBox(title: '안녕하세요', content: '안녕하세요 저는 누구누구입니다. 안녕하세요 저는 누구누구입니다. 안녕하세요 저는 누구누구입니다.', answer: underBorder),
+              AnswerBox(title: '안녕하세요', content: '안녕하세요 저는 누구누구입니다. 안녕하세요 저는 누구누구입니다. 안녕하세요 저는 누구누구입니다.', answer: underBorder),
+              AnswerBox(title: '안녕하세요', content: '안녕하세요 저는 누구누구입니다. 안녕하세요 저는 누구누구입니다. 안녕하세요 저는 누구누구입니다.', answer: underBorder),
+              AnswerBox(title: '안녕하세요', content: '안녕하세요 저는 누구누구입니다. 안녕하세요 저는 누구누구입니다. 안녕하세요 저는 누구누구입니다.', answer: underBorder),
+                ],
+              ),
+            )
           ],
         ),
-      ),
-    );
+      );
   }
 
   GestureDetector AnswerBox({
     required String title,
     required String content,
-    bool bottomBorder = true,
+    bool answer = true,
   }){
     return GestureDetector(
       child: Container(
@@ -50,7 +75,7 @@ class AnswerScreen extends StatelessWidget {
                 ],
                 borderRadius: BorderRadius.circular(12),
                 border: Border.all(
-                  color: PColors.mainColor,
+                  color: answer ? PColors.mainColor : PColors.grey3
                 ),
               ),
               child: Column(
