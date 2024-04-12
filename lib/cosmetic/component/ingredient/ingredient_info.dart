@@ -5,7 +5,9 @@ class IngredientInfo extends StatelessWidget {
   final int? safeRating;
   final int? halfSafeRating;
   final int? dangerRating;
+  final bool type;
   const IngredientInfo({
+    this.type = false,
     this.safeRating = null,
     this.halfSafeRating = null,
     this.dangerRating = null,
@@ -13,19 +15,26 @@ class IngredientInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return type ? Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
-        IngredientMiniBar(text: '1~2 등급', color: PColors.safe,),
-        IngredientMiniBar(text: '3~5 등급', color: PColors.halfDanger,),
-        IngredientMiniBar(text: '6~7 등급', color: PColors.danger,),
+        IngredientMiniBar(text: '안전', color: PColors.safe, rating: safeRating),
+        IngredientMiniBar(text: '약간 위험', color: PColors.halfDanger, rating: halfSafeRating),
+        IngredientMiniBar(text: '위험', color: PColors.danger, rating: dangerRating),
+      ],
+    ) : Row(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: [
+        IngredientMiniBar(text: '1~2 등급', color: PColors.safe, rating: safeRating),
+        IngredientMiniBar(text: '3~5 등급', color: PColors.halfDanger, rating: halfSafeRating),
+        IngredientMiniBar(text: '6~7 등급', color: PColors.danger, rating: dangerRating),
       ],
     );
   }
 
   Widget IngredientMiniBar({
     required String text,
-    String? rating,
+    int? rating,
     required Color color,
   }){
     return Row(
@@ -53,7 +62,7 @@ class IngredientInfo extends StatelessWidget {
             fontSize: 14,
           ),
         ) : Text(
-          ' (${rating!})',
+          '(${rating}%)',
           style: TextStyle(
             fontSize: 14,
           ),

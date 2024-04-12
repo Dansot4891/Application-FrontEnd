@@ -6,7 +6,8 @@ class DefaultLayout extends StatelessWidget {
   final Widget child;
   final bool isBoard;
   final bool keyboard;
-  const DefaultLayout({required this.child, this.isBoard = false, this.keyboard = false, super.key});
+  final VoidCallback? func;
+  const DefaultLayout({required this.child, this.isBoard = false, this.keyboard = false, this.func, super.key,});
 
   @override
   Widget build(BuildContext context) {
@@ -24,9 +25,9 @@ class DefaultLayout extends StatelessWidget {
           size: 30,
         ),
         leading: IconButton(
-          onPressed: () {
+          onPressed: func == null ? () {
             Navigator.pop(context);
-          },
+          } : func!,
           icon: Icon(
             Icons.arrow_back,
             size: 35,

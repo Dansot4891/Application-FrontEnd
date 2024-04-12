@@ -6,7 +6,7 @@ import 'package:gproject/common/variable/color.dart';
 import 'package:gproject/common/view/default_layout.dart';
 import 'package:gproject/cosmetic/component/ingredient/ingredient_bar.dart';
 import 'package:gproject/cosmetic/component/ingredient/ingredient_info.dart';
-import 'package:gproject/cosmetic/provider/ingredient/ingredient_provider.dart';
+import 'package:gproject/cosmetic/provider/ingredient/ingredient_button_provider.dart';
 
 class IngredientScreen extends ConsumerWidget {
   IngredientScreen({super.key});
