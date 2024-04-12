@@ -7,11 +7,15 @@ class IngredientBar extends StatelessWidget {
   final String ingredientName;
   final String purpose;
   final String function;
+  final bool bookMark;
+  final VoidCallback func;
   const IngredientBar({
     required this.level,
     required this.ingredientName,
     required this.purpose,
     required this.function,
+    required this.bookMark,
+    required this.func,
     super.key,});
 
   @override
@@ -93,10 +97,17 @@ class IngredientBar extends StatelessWidget {
                 Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    IconButton(
-                      onPressed: () {},
+                    bookMark ? IconButton(
+                      onPressed: func,
                       icon: Icon(
                         Icons.bookmark,
+                        color: PColors.bookMark,
+                        size: 30,
+                      ),
+                    ) : IconButton(
+                      onPressed: func,
+                      icon: Icon(
+                        Icons.bookmark_border,
                         color: PColors.bookMark,
                         size: 30,
                       ),

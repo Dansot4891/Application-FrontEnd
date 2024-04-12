@@ -13,21 +13,21 @@ class IngredientComponentScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     List<Widget> lists = [
       IngredientBar(
-          level: 1, ingredientName: '정제수, 물', purpose: '피부 보습', function: '습윤'),
+          level: 1, ingredientName: '정제수, 물', purpose: '피부 보습', function: '습윤', bookMark: true, func: (){},),
       IngredientBar(
-          level: 1, ingredientName: '정제수, 물', purpose: '피부 보습', function: '습윤'),
+          level: 1, ingredientName: '정제수, 물', purpose: '피부 보습', function: '습윤', bookMark: true, func: (){},),
       IngredientBar(
-          level: 2, ingredientName: '정제수, 물', purpose: '피부 보습', function: '습윤'),
+          level: 2, ingredientName: '정제수, 물', purpose: '피부 보습', function: '습윤', bookMark: true, func: (){},),
       IngredientBar(
-          level: 2, ingredientName: '정제수, 물', purpose: '피부 보습', function: '습윤'),
+          level: 2, ingredientName: '정제수, 물', purpose: '피부 보습', function: '습윤', bookMark: true, func: (){},),
       IngredientBar(
-          level: 1, ingredientName: '정제수, 물', purpose: '피부 보습', function: '습윤'),
+          level: 1, ingredientName: '정제수, 물', purpose: '피부 보습', function: '습윤', bookMark: true, func: (){},),
       IngredientBar(
-          level: 4, ingredientName: '정제수, 물', purpose: '피부 보습', function: '습윤'),
+          level: 4, ingredientName: '정제수, 물', purpose: '피부 보습', function: '습윤', bookMark: true, func: (){},),
       IngredientBar(
-          level: 6, ingredientName: '정제수, 물', purpose: '피부 보습', function: '습윤'),
+          level: 6, ingredientName: '정제수, 물', purpose: '피부 보습', function: '습윤', bookMark: true, func: (){},),
       IngredientBar(
-          level: 7, ingredientName: '정제수, 물', purpose: '피부 보습', function: '습윤'),
+          level: 7, ingredientName: '정제수, 물', purpose: '피부 보습', function: '습윤', bookMark: true, func: (){},),
     ];
     return CustomScrollView(
       slivers: [

@@ -6,7 +6,9 @@ import 'package:gproject/common/variable/color.dart';
 import 'package:gproject/common/view/default_layout.dart';
 import 'package:gproject/cosmetic/component/ingredient/ingredient_bar.dart';
 import 'package:gproject/cosmetic/component/ingredient/ingredient_info.dart';
+import 'package:gproject/cosmetic/model/ingredient/ingredient_model.dart';
 import 'package:gproject/cosmetic/provider/ingredient/ingredient_button_provider.dart';
+import 'package:gproject/cosmetic/provider/ingredient/ingredient_provider.dart';
 
 class IngredientScreen extends ConsumerWidget {
   IngredientScreen({super.key});
@@ -14,26 +16,7 @@ class IngredientScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final List<bool> state = ref.watch(buttonIndexProvider);
-    List<Widget> barList = [
-      IngredientBar(
-          level: 1, ingredientName: '증류수', purpose: '수분 보충', function: '미백'),
-      IngredientBar(
-          level: 1, ingredientName: '증류수', purpose: '수분 보충', function: '미백'),
-      IngredientBar(
-          level: 3, ingredientName: '증류수', purpose: '수분 보충', function: '미백'),
-      IngredientBar(
-          level: 5, ingredientName: '증류수', purpose: '수분 보충', function: '미백'),
-      IngredientBar(
-          level: 6, ingredientName: '증류수', purpose: '수분 보충', function: '미백'),
-      IngredientBar(
-          level: 7, ingredientName: '증류수', purpose: '수분 보충', function: '미백'),
-      IngredientBar(
-          level: 5, ingredientName: '증류수', purpose: '수분 보충', function: '미백'),
-      IngredientBar(
-          level: 2, ingredientName: '증류수', purpose: '수분 보충', function: '미백'),
-      IngredientBar(
-          level: 7, ingredientName: '증류수', purpose: '수분 보충', function: '미백'),
-    ];
+    List<IngredientModel> list = state[0] ? ref.watch(IngredientProvider) : state[1] ? ref.read(IngredientProvider.notifier).fetchSafeData() : state[2] ? ref.read(IngredientProvider.notifier).fetchHalfDangerData() : ref.read(IngredientProvider.notifier).fetchDangerData();
     List<Widget> levelButton = [
       IngredientButton(
         title: '전체',
@@ -86,9 +69,11 @@ class IngredientScreen extends ConsumerWidget {
                 delegate: SliverChildBuilderDelegate(
               (context, index) => Padding(
                 padding: const EdgeInsets.only(bottom: 20),
-                child: barList[index],
+                child: IngredientBar(level: list[index].grade, ingredientName: list[index].ingredient_name, purpose: list[index].purpose, function: list[index].function, bookMark: list[index].bookmark, func: (){
+                  ref.read(IngredientProvider.notifier).changeBookmark(list[index].ingredients_id);
+                },),
               ),
-              childCount: barList.length,
+              childCount: list.length,
             )),
           ),
         ],
