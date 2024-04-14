@@ -5,6 +5,7 @@ class PColors{
   static const Color subColor = Color(0xFFFFE9E9);
   static const Color subColor2 = Color(0xFFFFCECE);
   static const Color subColor3 = Color(0xFFFF4471);
+  static const Color subColor4 = Color(0xFFFFAFAF);
   static const Color grey1 = Color(0xFF04060E);
   static const Color grey2 = Color(0xFFD7D7D7);
   static const Color grey3 = Color(0xFF808093);

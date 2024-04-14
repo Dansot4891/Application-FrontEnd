@@ -3,7 +3,9 @@ import 'package:gproject/common/component/button.dart';
 import 'package:gproject/common/variable/color.dart';
 import 'package:gproject/common/component/main_text.dart';
 import 'package:gproject/common/component/textformfield.dart';
+import 'package:gproject/common/view/splash_screen.dart';
 import 'package:gproject/home/view/home_screen.dart';
+import 'package:gproject/user/view/find_IDPW/find_screen.dart';
 import 'package:gproject/user/view/login/signup_screen1.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -17,7 +19,9 @@ class LoginScreen extends StatelessWidget {
       appBar: AppBar(
         leading: IconButton(
           onPressed: () {
-            Navigator.pop(context);
+            Navigator.push(context, MaterialPageRoute(builder: (context){
+                  return SplashScreen();
+                },),);
           },
           icon: Icon(Icons.arrow_back),
         ),
@@ -64,24 +68,18 @@ class LoginScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 TextButton(
-                  onPressed: () {},
-                  child: Text(
-                    '아이디 찾기',
-                    style: TextStyle(
-                      color: Color(0xFF04060E),
-                    ),
+                  onPressed: () {
+                    Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return FindScreen();
+                    },
                   ),
-                ),
-                Text(
-                  '|',
-                  style: TextStyle(
-                    color: PColors.grey1.withOpacity(0.3),
-                  ),
-                ),
-                TextButton(
-                  onPressed: () {},
+                );
+                  },
                   child: Text(
-                    '비밀번호 찾기',
+                    '아이디 찾기 | 비밀번호 찾기',
                     style: TextStyle(
                       color: Color(0xFF04060E),
                     ),

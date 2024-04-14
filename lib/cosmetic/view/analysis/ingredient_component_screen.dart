@@ -171,7 +171,7 @@ class IngredientComponentScreen extends StatelessWidget {
         Container(
           margin: const EdgeInsets.symmetric(vertical: 20),
           width: MediaQuery.of(context).size.width,
-          height: ratio.height * 30,
+          height: ratio.height * 20,
           decoration: BoxDecoration(
             color: PColors.danger,
             borderRadius: BorderRadius.circular(24),
@@ -182,7 +182,7 @@ class IngredientComponentScreen extends StatelessWidget {
           width: (MediaQuery.of(context).size.width - 60) /
               100 *
               (halfSafeRating + safeRating),
-          height: ratio.height * 30,
+          height: ratio.height * 20,
           decoration: BoxDecoration(
             color: PColors.halfDanger,
             borderRadius: BorderRadius.circular(24),
@@ -191,7 +191,7 @@ class IngredientComponentScreen extends StatelessWidget {
         Container(
           margin: const EdgeInsets.symmetric(vertical: 20),
           width: (MediaQuery.of(context).size.width - 60) / 100 * safeRating,
-          height: ratio.height * 30,
+          height: ratio.height * 20,
           decoration: BoxDecoration(
             color: PColors.safe,
             borderRadius: BorderRadius.circular(24),

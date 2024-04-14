@@ -1,11 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:gproject/common/component/button.dart';
+import 'package:gproject/common/component/dialog.dart';
 import 'package:gproject/common/variable/color.dart';
 import 'package:gproject/common/component/textformfield.dart';
 import 'package:gproject/common/view/default_layout.dart';
-import 'package:gproject/home/view/home_screen.dart';
 import 'package:gproject/user/component/signup_radio_button.dart';
+import 'package:gproject/user/view/login/login_screen.dart';
 
 class SignUpScreen2 extends StatelessWidget {
   const SignUpScreen2({super.key});
@@ -78,35 +80,49 @@ class SignUpScreen2 extends StatelessWidget {
               child: SignupRadioButtonRow(type: '피부고민',),
             ),
             Spacer(),
-            InkWell(
-              onTap: () {
-                Navigator.push(
+            CustomButton(text: '회원가입', func: (){
+              CustomDialog(context: context, title: '회원가입이 완료됐습니다!', buttonText: '확인', buttonCount: 1, func: (){
+                  Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (context) {
-                      return HomeScreen();
+                      return LoginScreen();
                     },
                   ),
                 );
-              },
-              child: Container(
-                padding: const EdgeInsets.symmetric(vertical: 13),
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: PColors.mainColor,
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Center(
-                  child: Text(
-                    '회원가입',
-                    style: TextStyle(
-                      fontSize: 20,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-              ),
-            ),
+                });
+            })
+            // InkWell(
+            //   onTap: () {
+            //     CustomDialog(context: context, title: '회원가입이 완료됐습니다!', buttonText: '확인', buttonCount: 1, func: (){
+            //       Navigator.push(
+            //       context,
+            //       MaterialPageRoute(
+            //         builder: (context) {
+            //           return LoginScreen();
+            //         },
+            //       ),
+            //     );
+            //     });
+            //   },
+            //   child: Container(
+            //     padding: const EdgeInsets.symmetric(vertical: 13),
+            //     width: double.infinity,
+            //     decoration: BoxDecoration(
+            //       color: PColors.mainColor,
+            //       borderRadius: BorderRadius.circular(8),
+            //     ),
+            //     child: Center(
+            //       child: Text(
+            //         '회원가입',
+            //         style: TextStyle(
+            //           fontSize: 20,
+            //           color: Colors.white,
+            //         ),
+            //       ),
+            //     ),
+            //   ),
+            // ),
           ],
         ),
       ),

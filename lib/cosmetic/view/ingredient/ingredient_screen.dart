@@ -16,7 +16,7 @@ class IngredientScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final List<bool> state = ref.watch(buttonIndexProvider);
-    List<IngredientModel> list = state[0] ? ref.watch(IngredientProvider) : state[1] ? ref.read(IngredientProvider.notifier).fetchSafeData() : state[2] ? ref.read(IngredientProvider.notifier).fetchHalfDangerData() : ref.read(IngredientProvider.notifier).fetchDangerData();
+    List<IngredientModel> list = ref.watch(IngredientFilterProvider);
     List<Widget> levelButton = [
       IngredientButton(
         title: '전체',
@@ -70,7 +70,7 @@ class IngredientScreen extends ConsumerWidget {
               (context, index) => Padding(
                 padding: const EdgeInsets.only(bottom: 20),
                 child: IngredientBar(level: list[index].grade, ingredientName: list[index].ingredient_name, purpose: list[index].purpose, function: list[index].function, bookMark: list[index].bookmark, func: (){
-                  ref.read(IngredientProvider.notifier).changeBookmark(list[index].ingredients_id);
+                  ref.read(IngredientProvider.notifier).changeBookmark(list[index].ingredients_id);;
                 },),
               ),
               childCount: list.length,

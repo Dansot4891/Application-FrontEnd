@@ -1,18 +1,24 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gproject/common/component/dialog.dart';
 import 'package:gproject/common/variable/color.dart';
 import 'package:gproject/common/variable/image_path.dart';
 import 'package:gproject/common/view/default_layout.dart';
+import 'package:gproject/cosmetic/model/cosmetics/cosmetic_purchase.dart';
+import 'package:gproject/cosmetic/provider/cosmetics/cosmetics_provider.dart';
 import 'package:gproject/main.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class CosmeticsInfoScreen extends StatelessWidget {
-  const CosmeticsInfoScreen({super.key});
+class CosmeticsInfoScreen extends ConsumerWidget {
+  final int id;
+  const CosmeticsInfoScreen({required this.id, super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final state = ref.read(CosmeticProvider.notifier).getDetail(id);
+    print(state);
     return DefaultLayout(
         child: Column(
       children: [
@@ -29,26 +35,40 @@ class CosmeticsInfoScreen extends StatelessWidget {
             mainAxisSize: MainAxisSize.max,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: ratio.height * 40,),
+              SizedBox(
+                height: ratio.height * 20,
+              ),
               Text(
-                '레이어 물톡스 램프',
+                state.name,
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.w400,
                 ),
               ),
+              SizedBox(
+                height: ratio.height * 10,
+              ),
               Text(
-                '최저가 37000원',
+                '최저가 ${state.lowestPrice}원',
                 style: TextStyle(
                   fontSize: 18,
                   color: PColors.price,
                   fontWeight: FontWeight.w500,
                 ),
               ),
-              purchasingOffice(context),
-              purchasingOffice(context),
-              purchasingOffice(context),
-              purchasingOffice(context),
+              SizedBox(
+                height: ratio.height * 20,
+              ),
+              ListView.builder(
+                itemCount: state.cosmeticPurchaseLinks.length,
+                shrinkWrap: true,
+                itemBuilder: ((context, index) {
+                  return purchasingOffice(
+                    context,
+                    state.cosmeticPurchaseLinks[index],
+                  );
+                }),
+              ),
             ],
           ),
         ),
@@ -57,7 +77,8 @@ class CosmeticsInfoScreen extends StatelessWidget {
   }
 
   Padding purchasingOffice(
-    BuildContext context
+    BuildContext context,
+    CosmeticPurchaseModel price,
   ) {
     return Padding(
       padding: const EdgeInsets.only(top: 15),
@@ -65,7 +86,7 @@ class CosmeticsInfoScreen extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            'G마켓',
+            price.purchaseSite,
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.w400,
@@ -73,7 +94,7 @@ class CosmeticsInfoScreen extends StatelessWidget {
           ),
           Expanded(
             child: Text(
-              '37000원',
+              '${price.price}원',
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.w500,
@@ -81,19 +102,32 @@ class CosmeticsInfoScreen extends StatelessWidget {
               textAlign: TextAlign.right,
             ),
           ),
-          GestureDetector(onTap: () async {
-            final url = Uri.parse(
-                  'https://www.naver.com',
+          GestureDetector(
+              onTap: () async {
+                final url = Uri.parse(
+                  'https:/${price.url}',
                 );
                 if (await canLaunchUrl(url)) {
                   launchUrl(url);
                 } else {
-                  CustomDialog(context: context, title: '에러입니다. 다시 시도해 주세요.', buttonText: '확인', buttonCount: 1, func: (){Navigator.pop(context);});
+                  CustomDialog(
+                      context: context,
+                      title: '에러입니다. 다시 시도해 주세요.',
+                      buttonText: '확인',
+                      buttonCount: 1,
+                      func: () {
+                        Navigator.pop(context);
+                      });
                 }
-          }, child: Padding(
-            padding: const EdgeInsets.only(left: 40),
-            child: Icon(Icons.chevron_right, size: 35, color: PColors.mainColor,),
-          ))
+              },
+              child: Padding(
+                padding: const EdgeInsets.only(left: 40),
+                child: Icon(
+                  Icons.chevron_right,
+                  size: 35,
+                  color: PColors.mainColor,
+                ),
+              ))
         ],
       ),
     );

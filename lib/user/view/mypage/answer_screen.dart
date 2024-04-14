@@ -2,11 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:gproject/common/component/button.dart';
 import 'package:gproject/common/variable/color.dart';
 import 'package:gproject/common/view/default_layout.dart';
+import 'package:gproject/main.dart';
 import 'package:gproject/user/model/QandA_model.dart';
 import 'package:gproject/user/provider/QandA_provider.dart';
 import 'package:gproject/user/view/mypage/myanswer_screen.dart';
+import 'package:gproject/user/view/mypage/question_screen.dart';
 
 class AnswerScreen extends ConsumerWidget {
   const AnswerScreen({super.key});
@@ -19,21 +22,59 @@ class AnswerScreen extends ConsumerWidget {
     List<QandAModel> yesList = ref.read(QandAProvider.notifier).fetchYesData();
     List<QandAModel> noList = ref.read(QandAProvider.notifier).fetchNoData();
     return DefaultLayout(
-      child: Column(
-        children: [
-          AnswerBigBox(
-            context: context,
-            title: '답변 완료',
-            model: yesList,
-          ),
-          AnswerBigBox(
-            context: context,
-            title: '답변 미완료',
-            underBorder: false,
-            model: noList,
-          ),
-        ],
-      ),
+      child: (noList.length == 0 && yesList.length == 0)
+          ? Center(
+              child: Column(
+                children: [
+                  Icon(
+                    Icons.close,
+                    size: 50,
+                  ),
+                  Text(
+                    '문의 내역이 없습니다.',
+                    style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                  )
+                ],
+              ),
+            )
+          : Column(
+              children: [
+                AnswerBigBox(
+                  context: context,
+                  title: '답변 완료',
+                  model: yesList,
+                ),
+                SizedBox(
+                  height: ratio.height * 30,
+                ),
+                AnswerBigBox(
+                  context: context,
+                  title: '답변 미완료',
+                  underBorder: false,
+                  model: noList,
+                ),
+                Spacer(),
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 20,
+                    horizontal: 25,
+                  ),
+                  child: CustomButton(
+                    text: '문의하러 가기',
+                    func: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return QuestionScreen();
+                          },
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ],
+            ),
     );
   }
 
@@ -46,7 +87,7 @@ class AnswerScreen extends ConsumerWidget {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 25),
       width: double.infinity,
-      height: MediaQuery.of(context).size.height / 5 * 2,
+      height: ratio.height * 310,
       decoration: BoxDecoration(
           border: underBorder
               ? Border(
@@ -76,7 +117,6 @@ class AnswerScreen extends ConsumerWidget {
                   content: model[index].qna_content,
                   answer: model[index].answer_status,
                   func: () {
-                    print(model[index].qna_id);
                     Navigator.push(
                       context,
                       MaterialPageRoute(

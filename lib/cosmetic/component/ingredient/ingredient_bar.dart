@@ -1,15 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gproject/common/variable/color.dart';
 
-class IngredientBar extends StatelessWidget {
+class IngredientBar extends ConsumerWidget {
   final int level;
   final String ingredientName;
   final String purpose;
   final String function;
   final bool bookMark;
   final VoidCallback func;
-  const IngredientBar({
+  IngredientBar({
     required this.level,
     required this.ingredientName,
     required this.purpose,
@@ -19,7 +20,8 @@ class IngredientBar extends StatelessWidget {
     super.key,});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
@@ -33,8 +35,16 @@ class IngredientBar extends StatelessWidget {
           child: Container(
             height: 80,
             decoration: BoxDecoration(
-              color: PColors.mainColor,
+              color: PColors.subColor2,
               borderRadius: BorderRadius.circular(12),
+              boxShadow: [
+                BoxShadow(
+                  color: PColors.grey3.withOpacity(0.5),
+                  offset: Offset(3, 3),
+                  blurRadius: 3,
+                  spreadRadius: 2,
+                )
+              ]
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -52,7 +62,7 @@ class IngredientBar extends StatelessWidget {
                     child: Text(
                       level.toString(),
                       style: TextStyle(
-                        fontSize: 16,
+                        fontSize: 18,
                         fontWeight: FontWeight.w600,
                         color: (level == 1 || level == 2) ? PColors.safe : (level == 3 || level == 4 || level == 5) ? PColors.halfDanger : PColors.danger,
                       ),

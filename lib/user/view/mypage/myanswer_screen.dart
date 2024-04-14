@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:gproject/common/component/button.dart';
 import 'package:gproject/common/view/default_layout.dart';
 import 'package:gproject/user/provider/QandA_provider.dart';
 
@@ -34,6 +35,7 @@ class MyAnswerScreen extends ConsumerWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    
                     Text(
                       '나의 문의',
                       style: TextStyle(
@@ -56,6 +58,7 @@ class MyAnswerScreen extends ConsumerWidget {
                     TextBox(
                       text: model.answer,
                     ),
+                    
                   ],
                 ),
               ),

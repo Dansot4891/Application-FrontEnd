@@ -1,23 +1,28 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gproject/chatbot/view/chatbot_screen.dart';
 import 'package:gproject/common/component/dialog.dart';
 import 'package:gproject/common/component/main_text.dart';
 import 'package:gproject/common/variable/color.dart';
 import 'package:gproject/common/variable/image_path.dart';
+import 'package:gproject/cosmetic/provider/cosmetics/cosmetics_provider.dart';
+import 'package:gproject/cosmetic/provider/ingredient/ingredient_provider.dart';
 import 'package:gproject/cosmetic/view/costetics/cosmetics_screen.dart';
 import 'package:gproject/cosmetic/view/ingredient/ingredient_screen.dart';
 import 'package:gproject/cosmetic/view/recommend/recommend_screen.dart';
 import 'package:gproject/main.dart';
 import 'package:gproject/cosmetic/view/analysis/image_upload_screen.dart';
+import 'package:gproject/user/view/login/login_screen.dart';
+import 'package:gproject/user/view/mypage/answer_screen.dart';
 import 'package:gproject/user/view/mypage/mypage_screen.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
@@ -38,7 +43,11 @@ class HomeScreen extends StatelessWidget {
             ),
             IconButton(
               onPressed: () {
-                CustomDialog(context: context, title: '로그아웃 하시겠습니까?', buttonText: '확인', buttonCount: 2, func: (){Navigator.pop(context);});
+                CustomDialog(context: context, title: '로그아웃 하시겠습니까?', buttonText: '확인', buttonCount: 2, func: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (context){
+                  return LoginScreen();
+                },),);
+                });
               },
               icon: Icon(
                 Icons.logout,
@@ -76,7 +85,8 @@ class HomeScreen extends StatelessWidget {
                           mainButton(
                             ImgPath.cosmeticLogo,
                             "화장품",
-                            () {
+                            () async {
+                              await ref.read(CosmeticProvider.notifier).fetchData();
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -90,7 +100,8 @@ class HomeScreen extends StatelessWidget {
                           mainButton(
                             ImgPath.ingredientLogo,
                             "성분",
-                            () {
+                            () async {
+                              await ref.read(IngredientProvider.notifier).fetchDate();
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -123,7 +134,7 @@ class HomeScreen extends StatelessWidget {
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) {
-                                    return ChatBotScreen();
+                                    return AnswerScreen();
                                   },
                                 ),
                               );
