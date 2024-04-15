@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gproject/common/view/splash_screen.dart';
 
 late Size ratio;
+//Size get ratio => WidgetsBinding.instance.platformDispatcher.views.first.physicalSize / WidgetsBinding.instance.platformDispatcher.views.first.devicePixelRatio;
+
 
 void main() {
   runApp(

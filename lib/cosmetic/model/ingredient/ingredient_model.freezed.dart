@@ -24,9 +24,6 @@ mixin _$IngredientModel {
   String get name => throw _privateConstructorUsedError;
   int get grade => throw _privateConstructorUsedError;
   List<String> get purposes => throw _privateConstructorUsedError;
-  bool get danger_status => throw _privateConstructorUsedError;
-  bool get allergy_status => throw _privateConstructorUsedError;
-  List<String> get skinTypeFeatures => throw _privateConstructorUsedError;
   bool get preference => throw _privateConstructorUsedError;
   List<String> get features => throw _privateConstructorUsedError;
 
@@ -47,9 +44,6 @@ abstract class $IngredientModelCopyWith<$Res> {
       String name,
       int grade,
       List<String> purposes,
-      bool danger_status,
-      bool allergy_status,
-      List<String> skinTypeFeatures,
       bool preference,
       List<String> features});
 }
@@ -71,9 +65,6 @@ class _$IngredientModelCopyWithImpl<$Res, $Val extends IngredientModel>
     Object? name = null,
     Object? grade = null,
     Object? purposes = null,
-    Object? danger_status = null,
-    Object? allergy_status = null,
-    Object? skinTypeFeatures = null,
     Object? preference = null,
     Object? features = null,
   }) {
@@ -93,18 +84,6 @@ class _$IngredientModelCopyWithImpl<$Res, $Val extends IngredientModel>
       purposes: null == purposes
           ? _value.purposes
           : purposes // ignore: cast_nullable_to_non_nullable
-              as List<String>,
-      danger_status: null == danger_status
-          ? _value.danger_status
-          : danger_status // ignore: cast_nullable_to_non_nullable
-              as bool,
-      allergy_status: null == allergy_status
-          ? _value.allergy_status
-          : allergy_status // ignore: cast_nullable_to_non_nullable
-              as bool,
-      skinTypeFeatures: null == skinTypeFeatures
-          ? _value.skinTypeFeatures
-          : skinTypeFeatures // ignore: cast_nullable_to_non_nullable
               as List<String>,
       preference: null == preference
           ? _value.preference
@@ -131,9 +110,6 @@ abstract class _$$IngredientModelImplCopyWith<$Res>
       String name,
       int grade,
       List<String> purposes,
-      bool danger_status,
-      bool allergy_status,
-      List<String> skinTypeFeatures,
       bool preference,
       List<String> features});
 }
@@ -153,9 +129,6 @@ class __$$IngredientModelImplCopyWithImpl<$Res>
     Object? name = null,
     Object? grade = null,
     Object? purposes = null,
-    Object? danger_status = null,
-    Object? allergy_status = null,
-    Object? skinTypeFeatures = null,
     Object? preference = null,
     Object? features = null,
   }) {
@@ -176,18 +149,6 @@ class __$$IngredientModelImplCopyWithImpl<$Res>
           ? _value._purposes
           : purposes // ignore: cast_nullable_to_non_nullable
               as List<String>,
-      null == danger_status
-          ? _value.danger_status
-          : danger_status // ignore: cast_nullable_to_non_nullable
-              as bool,
-      null == allergy_status
-          ? _value.allergy_status
-          : allergy_status // ignore: cast_nullable_to_non_nullable
-              as bool,
-      null == skinTypeFeatures
-          ? _value._skinTypeFeatures
-          : skinTypeFeatures // ignore: cast_nullable_to_non_nullable
-              as List<String>,
       null == preference
           ? _value.preference
           : preference // ignore: cast_nullable_to_non_nullable
@@ -203,18 +164,9 @@ class __$$IngredientModelImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$IngredientModelImpl implements _IngredientModel {
-  _$IngredientModelImpl(
-      this.id,
-      this.name,
-      this.grade,
-      final List<String> purposes,
-      this.danger_status,
-      this.allergy_status,
-      final List<String> skinTypeFeatures,
-      this.preference,
-      final List<String> features)
+  _$IngredientModelImpl(this.id, this.name, this.grade,
+      final List<String> purposes, this.preference, final List<String> features)
       : _purposes = purposes,
-        _skinTypeFeatures = skinTypeFeatures,
         _features = features;
 
   factory _$IngredientModelImpl.fromJson(Map<String, dynamic> json) =>
@@ -235,19 +187,6 @@ class _$IngredientModelImpl implements _IngredientModel {
   }
 
   @override
-  final bool danger_status;
-  @override
-  final bool allergy_status;
-  final List<String> _skinTypeFeatures;
-  @override
-  List<String> get skinTypeFeatures {
-    if (_skinTypeFeatures is EqualUnmodifiableListView)
-      return _skinTypeFeatures;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_skinTypeFeatures);
-  }
-
-  @override
   final bool preference;
   final List<String> _features;
   @override
@@ -259,7 +198,7 @@ class _$IngredientModelImpl implements _IngredientModel {
 
   @override
   String toString() {
-    return 'IngredientModel(id: $id, name: $name, grade: $grade, purposes: $purposes, danger_status: $danger_status, allergy_status: $allergy_status, skinTypeFeatures: $skinTypeFeatures, preference: $preference, features: $features)';
+    return 'IngredientModel(id: $id, name: $name, grade: $grade, purposes: $purposes, preference: $preference, features: $features)';
   }
 
   @override
@@ -271,12 +210,6 @@ class _$IngredientModelImpl implements _IngredientModel {
             (identical(other.name, name) || other.name == name) &&
             (identical(other.grade, grade) || other.grade == grade) &&
             const DeepCollectionEquality().equals(other._purposes, _purposes) &&
-            (identical(other.danger_status, danger_status) ||
-                other.danger_status == danger_status) &&
-            (identical(other.allergy_status, allergy_status) ||
-                other.allergy_status == allergy_status) &&
-            const DeepCollectionEquality()
-                .equals(other._skinTypeFeatures, _skinTypeFeatures) &&
             (identical(other.preference, preference) ||
                 other.preference == preference) &&
             const DeepCollectionEquality().equals(other._features, _features));
@@ -290,9 +223,6 @@ class _$IngredientModelImpl implements _IngredientModel {
       name,
       grade,
       const DeepCollectionEquality().hash(_purposes),
-      danger_status,
-      allergy_status,
-      const DeepCollectionEquality().hash(_skinTypeFeatures),
       preference,
       const DeepCollectionEquality().hash(_features));
 
@@ -317,9 +247,6 @@ abstract class _IngredientModel implements IngredientModel {
       final String name,
       final int grade,
       final List<String> purposes,
-      final bool danger_status,
-      final bool allergy_status,
-      final List<String> skinTypeFeatures,
       final bool preference,
       final List<String> features) = _$IngredientModelImpl;
 
@@ -334,12 +261,6 @@ abstract class _IngredientModel implements IngredientModel {
   int get grade;
   @override
   List<String> get purposes;
-  @override
-  bool get danger_status;
-  @override
-  bool get allergy_status;
-  @override
-  List<String> get skinTypeFeatures;
   @override
   bool get preference;
   @override

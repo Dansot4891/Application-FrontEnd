@@ -13,11 +13,6 @@ _$IngredientModelImpl _$$IngredientModelImplFromJson(
       json['name'] as String,
       json['grade'] as int,
       (json['purposes'] as List<dynamic>).map((e) => e as String).toList(),
-      json['danger_status'] as bool,
-      json['allergy_status'] as bool,
-      (json['skinTypeFeatures'] as List<dynamic>)
-          .map((e) => e as String)
-          .toList(),
       json['preference'] as bool,
       (json['features'] as List<dynamic>).map((e) => e as String).toList(),
     );
@@ -29,9 +24,6 @@ Map<String, dynamic> _$$IngredientModelImplToJson(
       'name': instance.name,
       'grade': instance.grade,
       'purposes': instance.purposes,
-      'danger_status': instance.danger_status,
-      'allergy_status': instance.allergy_status,
-      'skinTypeFeatures': instance.skinTypeFeatures,
       'preference': instance.preference,
       'features': instance.features,
     };

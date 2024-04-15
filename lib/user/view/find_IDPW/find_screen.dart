@@ -34,6 +34,7 @@ class _FindScreenState extends State<FindScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         leading: IconButton(
           onPressed: () {
@@ -54,7 +55,7 @@ class _FindScreenState extends State<FindScreen>
             SizedBox(height: ratio.height * 30),
             MainText(),
             SizedBox(
-              height: MediaQuery.of(context).size.height / 10 * 1,
+              height: ratio.height * 60,
             ),
             TabBar(
               indicatorColor: PColors.mainColor,

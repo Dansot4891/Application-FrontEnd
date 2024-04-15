@@ -4,6 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:gproject/common/component/dialog.dart';
 import 'package:gproject/common/variable/color.dart';
 import 'package:gproject/common/view/default_layout.dart';
+import 'package:gproject/common/view/home_screen.dart';
 import 'package:gproject/common/view/splash_screen.dart';
 import 'package:gproject/cosmetic/view/ingredient/ingredient_screen.dart';
 import 'package:gproject/user/view/mypage/answer_screen.dart';
@@ -161,6 +162,16 @@ class MyPageScreen extends StatelessWidget {
       ),
     ];
     return DefaultLayout(
+      func: (){
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) {
+                return HomeScreen();
+              },
+            ),
+          );
+      },
         child: Padding(
       padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 35),
       child: Column(

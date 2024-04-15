@@ -48,6 +48,10 @@ class IngredientScreen extends ConsumerWidget {
       ),
     ];
     return DefaultLayout(
+      func: (){
+        print(ref.read(IngredientProvider.notifier).getBookMarkData(ref.watch(previousDataProvider)));
+        Navigator.pop(context);
+      },
       child: CustomScrollView(
         slivers: [
           SliverToBoxAdapter(
@@ -70,7 +74,7 @@ class IngredientScreen extends ConsumerWidget {
               (context, index) => Padding(
                 padding: const EdgeInsets.only(bottom: 20),
                 child: IngredientBar(level: list[index].grade, ingredientName: list[index].name, purposes: list[index].purposes, features: list[index].features, bookMark: list[index].preference, func: (){
-                  ref.read(IngredientProvider.notifier).changeBookmark(list[index].id);;
+                  ref.read(IngredientProvider.notifier).changeBookmark(list[index].id);
                 },),
               ),
               childCount: list.length,

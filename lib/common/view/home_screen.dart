@@ -32,9 +32,14 @@ class HomeScreen extends ConsumerWidget {
           actions: [
             IconButton(
               onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context){
-                  return MyPageScreen();
-                },),);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return MyPageScreen();
+                    },
+                  ),
+                );
               },
               icon: Icon(
                 Icons.account_circle_outlined,
@@ -43,11 +48,21 @@ class HomeScreen extends ConsumerWidget {
             ),
             IconButton(
               onPressed: () {
-                CustomDialog(context: context, title: '로그아웃 하시겠습니까?', buttonText: '확인', buttonCount: 2, func: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context){
-                  return LoginScreen();
-                },),);
-                });
+                CustomDialog(
+                    context: context,
+                    title: '로그아웃 하시겠습니까?',
+                    buttonText: '확인',
+                    buttonCount: 2,
+                    func: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return LoginScreen();
+                          },
+                        ),
+                      );
+                    });
               },
               icon: Icon(
                 Icons.logout,
@@ -86,7 +101,9 @@ class HomeScreen extends ConsumerWidget {
                             ImgPath.cosmeticLogo,
                             "화장품",
                             () async {
-                              await ref.read(CosmeticProvider.notifier).fetchData();
+                              await ref
+                                  .read(CosmeticProvider.notifier)
+                                  .fetchData();
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -102,6 +119,7 @@ class HomeScreen extends ConsumerWidget {
                             "성분",
                             () async {
                               await ref.read(IngredientProvider.notifier).fetchDate();
+                              ref.read(previousDataProvider.notifier).setData(ref);
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -153,28 +171,43 @@ class HomeScreen extends ConsumerWidget {
                             text: '사진을 통해 화장품의\n성분을 분석합니다.',
                             imgPath: ImgPath.analysis,
                             route: () {
-                              Navigator.push(context,
-                                  MaterialPageRoute(builder: (context) {
-                                return ImageUpLoadScreen();
-                              }));
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) {
+                                    return ImageUpLoadScreen();
+                                  },
+                                ),
+                              );
                             }),
                         mainBigButton(
-                            title: '내 화장품\n 성분 비교 분석',
-                            text: '사진을 통해 화장품의\n성분을 비교 분석합니다.',
-                            imgPath: ImgPath.compare_analysis,
-                            route: () {
-                              CustomDialog(context: context, title: '안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요', buttonCount: 2,  buttonText: null, func: (){});
-                            }),
+                          title: '내 화장품\n 성분 비교 분석',
+                          text: '사진을 통해 화장품의\n성분을 비교 분석합니다.',
+                          imgPath: ImgPath.compare_analysis,
+                          route: () {
+                            CustomDialog(
+                                context: context,
+                                title: '안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요',
+                                buttonCount: 2,
+                                buttonText: null,
+                                func: () {});
+                          },
+                        ),
                         mainBigButton(
-                            title: 'AI 추천',
-                            text: 'AI가 사용자의 취향을\n분석하여 맞춤형 추천을\n해드립니다.',
-                            imgPath: ImgPath.ai_recommend,
-                            route: () {
-                              Navigator.push(context,
-                                  MaterialPageRoute(builder: (context) {
-                                return RecommendScreen();
-                              }));
-                            }),
+                          title: 'AI 추천',
+                          text: 'AI가 사용자의 취향을\n분석하여 맞춤형 추천을\n해드립니다.',
+                          imgPath: ImgPath.ai_recommend,
+                          route: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) {
+                                  return RecommendScreen();
+                                },
+                              ),
+                            );
+                          },
+                        ),
                       ],
                     )
                   ],

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gproject/common/component/button.dart';
 import 'package:gproject/common/component/dialog.dart';
 import 'package:gproject/common/component/textformfield.dart';
+import 'package:gproject/common/variable/validator.dart';
 import 'package:gproject/main.dart';
 import 'package:gproject/user/component/signup_radio_button.dart';
 import 'package:gproject/user/view/mypage/mypage_screen.dart';
@@ -11,6 +12,7 @@ class ChangePersonalInfoScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final gkey = GlobalKey<FormState>();
     TextEditingController nameController =
         TextEditingController(text: '최현수123');
     TextEditingController emailController =
@@ -24,6 +26,7 @@ class ChangePersonalInfoScreen extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 30),
             child: Form(
+              key: gkey,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -66,6 +69,7 @@ class ChangePersonalInfoScreen extends StatelessWidget {
                     height: ratio.height * 5,
                   ),
                   CustomTextFormField(
+                    validator: nameValidator,
                     controller: nameController,
                     hintText: '닉네임 입력',
                   ),
@@ -79,6 +83,7 @@ class ChangePersonalInfoScreen extends StatelessWidget {
                     height: ratio.height * 5,
                   ),
                   CustomTextFormField(
+                    validator: signupEmailValidator,
                     controller: emailController,
                     hintText: '이메일 입력',
                   ),
@@ -127,23 +132,26 @@ class ChangePersonalInfoScreen extends StatelessWidget {
                   ),
                   Spacer(),
                   CustomButton(
-                    text: '회원가입',
+                    text: '수정하기',
                     func: () {
-                      CustomDialog(
-                          context: context,
-                          title: '회원가입이 완료됐습니다!',
-                          buttonText: '확인',
-                          buttonCount: 1,
-                          func: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) {
-                                  return MyPageScreen();
-                                },
-                              ),
-                            );
-                          });
+                      if(gkey.currentState!.validate()){
+                        CustomDialog(
+                        context: context,
+                        title: '수정이 완료되었습니다!',
+                        buttonText: '확인',
+                        buttonCount: 1,
+                        func: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) {
+                                return MyPageScreen();
+                              },
+                            ),
+                          );
+                        },
+                      );
+                      }
                     },
                   ),
                 ],
