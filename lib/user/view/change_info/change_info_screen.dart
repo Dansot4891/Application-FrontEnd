@@ -33,39 +33,41 @@ class _ChangeInfoScreenState extends State<ChangeInfoScreen>
   @override
   Widget build(BuildContext context) {
     return DefaultLayout(
-      child: Column(
-        children: [
-          TabBar(
-            indicatorColor: PColors.mainColor,
-            indicatorWeight: 2,
-            indicatorSize: TabBarIndicatorSize.tab,
-            overlayColor: MaterialStatePropertyAll(
-              PColors.mainColor.withOpacity(0.5),
-            ),
-            splashBorderRadius: BorderRadius.circular(20),
-            controller: tabController,
-            unselectedLabelColor: PColors.grey3,
-            labelColor: Colors.black,
-            tabs: [
-              Tab(
-                text: '개인정보 변경',
+      child: NestedScrollView(
+        headerSliverBuilder: (context, innerBoxIsScrolled) {
+          return [
+            SliverToBoxAdapter(
+              child: TabBar(
+                indicatorColor: PColors.mainColor,
+                indicatorWeight: 2,
+                indicatorSize: TabBarIndicatorSize.tab,
+                overlayColor: MaterialStatePropertyAll(
+                  PColors.mainColor.withOpacity(0.5),
+                ),
+                splashBorderRadius: BorderRadius.circular(20),
+                controller: tabController,
+                unselectedLabelColor: PColors.grey3,
+                labelColor: Colors.black,
+                tabs: [
+                  Tab(
+                    text: '개인정보 변경',
+                  ),
+                  Tab(
+                    text: '비밀번호 변경',
+                  ),
+                ],
               ),
-              Tab(
-                text: '비밀번호 변경',
-              ),
-            ],
-          ),
-          Expanded(
-            child: TabBarView(
-              controller: tabController,
-              physics: NeverScrollableScrollPhysics(),
-              children: [
-                ChangePersonalInfoScreen(),
-                ChangePasswordScreen(),
-              ],
             ),
-          ),
-        ],
+          ];
+        },
+        body: TabBarView(
+          controller: tabController,
+          physics: NeverScrollableScrollPhysics(),
+          children: [
+            ChangePersonalInfoScreen(),
+            ChangePasswordScreen(),
+          ],
+        ),
       ),
     );
   }

@@ -15,5 +15,6 @@ class PColors{
   static const Color bookMark = Color(0xFFFAFF00);
   static const Color darkgrey = Color(0xFF595B5A);
   static const Color price = Color(0xFFFF3535);
+  static const Color bad = Color(0xFFA3A3A3);
   
 }

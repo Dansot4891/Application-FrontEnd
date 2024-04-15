@@ -4,6 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:gproject/common/variable/color.dart';
 import 'package:gproject/common/variable/image_path.dart';
 import 'package:gproject/common/view/default_layout.dart';
+import 'package:gproject/cosmetic/component/ingredient/ingredient_mini_bar.dart';
 import 'package:gproject/main.dart';
 
 class RecommendScreen extends StatelessWidget {
@@ -124,14 +125,23 @@ class RecommendScreen extends StatelessWidget {
                           context: context,
                           title: "주요 성분",
                           list: [
-                            ingredientText(ingredient: '글리세린', grade: 1),
-                            ingredientText(ingredient: '글리세린', grade: 1),
-                            ingredientText(ingredient: '글리세린', grade: 1),
-                            ingredientText(ingredient: '글리세린', grade: 1),
-                            ingredientText(ingredient: '글리세린', grade: 1),
-                            ingredientText(ingredient: '글리세린', grade: 1),
-                            ingredientText(ingredient: '글리세린', grade: 1),
-                            ingredientText(ingredient: '글리세린', grade: 1),
+                            IngredientMiniBar(grade: 1, name: '글리세린', fontSize: 14),
+                            IngredientMiniBar(grade: 1, name: '글리세린', fontSize: 14),
+                            IngredientMiniBar(grade: 1, name: '글리세린', fontSize: 14),
+                            IngredientMiniBar(grade: 1, name: '글리세린', fontSize: 14),
+                            IngredientMiniBar(grade: 1, name: '글리세린', fontSize: 14),
+                            IngredientMiniBar(grade: 1, name: '글리세린', fontSize: 14),
+                            IngredientMiniBar(grade: 1, name: '글리세린', fontSize: 14),
+                            IngredientMiniBar(grade: 1, name: '글리세린', fontSize: 14),
+                            IngredientMiniBar(grade: 1, name: '글리세린', fontSize: 14),
+                            // ingredientText(ingredient: '글리세린', grade: 1),
+                            // ingredientText(ingredient: '글리세린', grade: 1),
+                            // ingredientText(ingredient: '글리세린', grade: 1),
+                            // ingredientText(ingredient: '글리세린', grade: 1),
+                            // ingredientText(ingredient: '글리세린', grade: 1),
+                            // ingredientText(ingredient: '글리세린', grade: 1),
+                            // ingredientText(ingredient: '글리세린', grade: 1),
+                            // ingredientText(ingredient: '글리세린', grade: 1),
                           ])
                     ],
                   )
@@ -235,10 +245,22 @@ class RecommendScreen extends StatelessWidget {
             ),
           ],
         ),
-        Icon(
-          Icons.bookmark,
-          size: 35,
-          color: PColors.bookMark,
+        GestureDetector(
+          onTap: (){
+            
+          },
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              Icon(Icons.bookmark,
+                  size: 42, color: Color(0xFF636363).withOpacity(0.8)),
+              Icon(
+                Icons.bookmark,
+                size: 35,
+                color: PColors.bookMark,
+              )
+            ],
+          ),
         )
       ],
     );

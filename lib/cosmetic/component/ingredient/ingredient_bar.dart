@@ -6,34 +6,35 @@ import 'package:gproject/common/variable/color.dart';
 class IngredientBar extends ConsumerWidget {
   final int level;
   final String ingredientName;
-  final String purpose;
-  final String function;
+  final List<String> purposes;
+  final List<String> features;
   final bool bookMark;
   final VoidCallback func;
   IngredientBar({
     required this.level,
     required this.ingredientName,
-    required this.purpose,
-    required this.function,
+    required this.purposes,
+    required this.features,
     required this.bookMark,
     required this.func,
     super.key,});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Container(
           margin: const EdgeInsets.only(right: 15),
-          height: 50,
+          constraints: BoxConstraints(
+            minHeight: 50,
+          ),
           width: 10,
           color: (level == 1 || level == 2) ? PColors.safe : (level == 3 || level == 4 || level == 5) ? PColors.halfDanger : PColors.danger,
         ),
         Expanded(
           child: Container(
-            height: 80,
+            padding: const EdgeInsets.symmetric(vertical: 10),
             decoration: BoxDecoration(
               color: PColors.subColor2,
               borderRadius: BorderRadius.circular(12),
@@ -47,6 +48,7 @@ class IngredientBar extends ConsumerWidget {
               ]
             ),
             child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Container(
@@ -86,7 +88,7 @@ class IngredientBar extends ConsumerWidget {
                         height: 5,
                       ),
                       Text(
-                        '성분 목적 : ' + purpose,
+                        '성분 목적 : ' + purposes.join(', '),
                         style: TextStyle(
                           fontSize: 12,
                           color: PColors.darkgrey,
@@ -94,7 +96,7 @@ class IngredientBar extends ConsumerWidget {
                         ),
                       ),
                       Text(
-                        '성분 기능 : ' + function,
+                        '성분 기능 : ' + features.join(', '),
                         style: TextStyle(
                           fontSize: 12,
                           color: PColors.darkgrey,
@@ -123,7 +125,7 @@ class IngredientBar extends ConsumerWidget {
                       ),
                     ),
                   ],
-                ),
+                )
               ],
             ),
           ),

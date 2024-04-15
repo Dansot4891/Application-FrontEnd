@@ -3,10 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:gproject/common/variable/color.dart';
 import 'package:gproject/common/view/default_layout.dart';
 import 'package:gproject/cosmetic/view/analysis/ai_analysis_screen.dart';
+import 'package:gproject/cosmetic/view/analysis/evaluation_screen.dart';
 import 'package:gproject/cosmetic/view/analysis/ingredient_component_screen.dart';
 import 'package:gproject/cosmetic/view/analysis/ingredient_effect_screen.dart';
 import 'package:gproject/cosmetic/view/analysis/skintype_screen.dart';
-import 'package:gproject/home/view/home_screen.dart';
+import 'package:gproject/common/view/home_screen.dart';
 
 class AnalysisScreen extends StatefulWidget {
   const AnalysisScreen({super.key});
@@ -40,7 +41,7 @@ class _AnalysisScreenState extends State<AnalysisScreen>
             context,
             MaterialPageRoute(
               builder: (context) {
-                return HomeScreen();
+                return EvaluationScreen();
               },
             ),
           );

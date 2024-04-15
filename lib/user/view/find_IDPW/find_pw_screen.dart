@@ -18,7 +18,7 @@ class FindPWScreen extends StatelessWidget {
         CustomTextFormField(controller: nameController, hintText: '이름 입력'),
         SizedBox(height: 30,),
         CustomButton(text: '아이디 찾기', func: (){
-          CustomDialog(context: context, title: "회원님의 아이디는\n'chlgustn'입니다.", buttonText: '확인', buttonCount: 1, func: (){
+          CustomDialog(context: context, title: "회원님의 비밀번호는\n'chlgustn123'입니다.", buttonText: '확인', buttonCount: 1, func: (){
             Navigator.pop(context);
           });
         })

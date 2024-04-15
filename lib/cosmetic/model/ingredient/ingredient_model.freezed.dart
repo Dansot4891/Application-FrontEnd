@@ -20,12 +20,15 @@ IngredientModel _$IngredientModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$IngredientModel {
-  int get ingredients_id => throw _privateConstructorUsedError;
-  String get ingredient_name => throw _privateConstructorUsedError;
+  int get id => throw _privateConstructorUsedError;
+  String get name => throw _privateConstructorUsedError;
   int get grade => throw _privateConstructorUsedError;
-  bool get bookmark => throw _privateConstructorUsedError;
-  String get purpose => throw _privateConstructorUsedError;
-  String get function => throw _privateConstructorUsedError;
+  List<String> get purposes => throw _privateConstructorUsedError;
+  bool get danger_status => throw _privateConstructorUsedError;
+  bool get allergy_status => throw _privateConstructorUsedError;
+  List<String> get skinTypeFeatures => throw _privateConstructorUsedError;
+  bool get preference => throw _privateConstructorUsedError;
+  List<String> get features => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -40,12 +43,15 @@ abstract class $IngredientModelCopyWith<$Res> {
       _$IngredientModelCopyWithImpl<$Res, IngredientModel>;
   @useResult
   $Res call(
-      {int ingredients_id,
-      String ingredient_name,
+      {int id,
+      String name,
       int grade,
-      bool bookmark,
-      String purpose,
-      String function});
+      List<String> purposes,
+      bool danger_status,
+      bool allergy_status,
+      List<String> skinTypeFeatures,
+      bool preference,
+      List<String> features});
 }
 
 /// @nodoc
@@ -61,38 +67,53 @@ class _$IngredientModelCopyWithImpl<$Res, $Val extends IngredientModel>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? ingredients_id = null,
-    Object? ingredient_name = null,
+    Object? id = null,
+    Object? name = null,
     Object? grade = null,
-    Object? bookmark = null,
-    Object? purpose = null,
-    Object? function = null,
+    Object? purposes = null,
+    Object? danger_status = null,
+    Object? allergy_status = null,
+    Object? skinTypeFeatures = null,
+    Object? preference = null,
+    Object? features = null,
   }) {
     return _then(_value.copyWith(
-      ingredients_id: null == ingredients_id
-          ? _value.ingredients_id
-          : ingredients_id // ignore: cast_nullable_to_non_nullable
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
               as int,
-      ingredient_name: null == ingredient_name
-          ? _value.ingredient_name
-          : ingredient_name // ignore: cast_nullable_to_non_nullable
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
               as String,
       grade: null == grade
           ? _value.grade
           : grade // ignore: cast_nullable_to_non_nullable
               as int,
-      bookmark: null == bookmark
-          ? _value.bookmark
-          : bookmark // ignore: cast_nullable_to_non_nullable
+      purposes: null == purposes
+          ? _value.purposes
+          : purposes // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      danger_status: null == danger_status
+          ? _value.danger_status
+          : danger_status // ignore: cast_nullable_to_non_nullable
               as bool,
-      purpose: null == purpose
-          ? _value.purpose
-          : purpose // ignore: cast_nullable_to_non_nullable
-              as String,
-      function: null == function
-          ? _value.function
-          : function // ignore: cast_nullable_to_non_nullable
-              as String,
+      allergy_status: null == allergy_status
+          ? _value.allergy_status
+          : allergy_status // ignore: cast_nullable_to_non_nullable
+              as bool,
+      skinTypeFeatures: null == skinTypeFeatures
+          ? _value.skinTypeFeatures
+          : skinTypeFeatures // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      preference: null == preference
+          ? _value.preference
+          : preference // ignore: cast_nullable_to_non_nullable
+              as bool,
+      features: null == features
+          ? _value.features
+          : features // ignore: cast_nullable_to_non_nullable
+              as List<String>,
     ) as $Val);
   }
 }
@@ -106,12 +127,15 @@ abstract class _$$IngredientModelImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {int ingredients_id,
-      String ingredient_name,
+      {int id,
+      String name,
       int grade,
-      bool bookmark,
-      String purpose,
-      String function});
+      List<String> purposes,
+      bool danger_status,
+      bool allergy_status,
+      List<String> skinTypeFeatures,
+      bool preference,
+      List<String> features});
 }
 
 /// @nodoc
@@ -125,38 +149,53 @@ class __$$IngredientModelImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? ingredients_id = null,
-    Object? ingredient_name = null,
+    Object? id = null,
+    Object? name = null,
     Object? grade = null,
-    Object? bookmark = null,
-    Object? purpose = null,
-    Object? function = null,
+    Object? purposes = null,
+    Object? danger_status = null,
+    Object? allergy_status = null,
+    Object? skinTypeFeatures = null,
+    Object? preference = null,
+    Object? features = null,
   }) {
     return _then(_$IngredientModelImpl(
-      null == ingredients_id
-          ? _value.ingredients_id
-          : ingredients_id // ignore: cast_nullable_to_non_nullable
+      null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
               as int,
-      null == ingredient_name
-          ? _value.ingredient_name
-          : ingredient_name // ignore: cast_nullable_to_non_nullable
+      null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
               as String,
       null == grade
           ? _value.grade
           : grade // ignore: cast_nullable_to_non_nullable
               as int,
-      null == bookmark
-          ? _value.bookmark
-          : bookmark // ignore: cast_nullable_to_non_nullable
+      null == purposes
+          ? _value._purposes
+          : purposes // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      null == danger_status
+          ? _value.danger_status
+          : danger_status // ignore: cast_nullable_to_non_nullable
               as bool,
-      null == purpose
-          ? _value.purpose
-          : purpose // ignore: cast_nullable_to_non_nullable
-              as String,
-      null == function
-          ? _value.function
-          : function // ignore: cast_nullable_to_non_nullable
-              as String,
+      null == allergy_status
+          ? _value.allergy_status
+          : allergy_status // ignore: cast_nullable_to_non_nullable
+              as bool,
+      null == skinTypeFeatures
+          ? _value._skinTypeFeatures
+          : skinTypeFeatures // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      null == preference
+          ? _value.preference
+          : preference // ignore: cast_nullable_to_non_nullable
+              as bool,
+      null == features
+          ? _value._features
+          : features // ignore: cast_nullable_to_non_nullable
+              as List<String>,
     ));
   }
 }
@@ -164,28 +203,63 @@ class __$$IngredientModelImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$IngredientModelImpl implements _IngredientModel {
-  _$IngredientModelImpl(this.ingredients_id, this.ingredient_name, this.grade,
-      this.bookmark, this.purpose, this.function);
+  _$IngredientModelImpl(
+      this.id,
+      this.name,
+      this.grade,
+      final List<String> purposes,
+      this.danger_status,
+      this.allergy_status,
+      final List<String> skinTypeFeatures,
+      this.preference,
+      final List<String> features)
+      : _purposes = purposes,
+        _skinTypeFeatures = skinTypeFeatures,
+        _features = features;
 
   factory _$IngredientModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$IngredientModelImplFromJson(json);
 
   @override
-  final int ingredients_id;
+  final int id;
   @override
-  final String ingredient_name;
+  final String name;
   @override
   final int grade;
+  final List<String> _purposes;
   @override
-  final bool bookmark;
+  List<String> get purposes {
+    if (_purposes is EqualUnmodifiableListView) return _purposes;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_purposes);
+  }
+
   @override
-  final String purpose;
+  final bool danger_status;
   @override
-  final String function;
+  final bool allergy_status;
+  final List<String> _skinTypeFeatures;
+  @override
+  List<String> get skinTypeFeatures {
+    if (_skinTypeFeatures is EqualUnmodifiableListView)
+      return _skinTypeFeatures;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_skinTypeFeatures);
+  }
+
+  @override
+  final bool preference;
+  final List<String> _features;
+  @override
+  List<String> get features {
+    if (_features is EqualUnmodifiableListView) return _features;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_features);
+  }
 
   @override
   String toString() {
-    return 'IngredientModel(ingredients_id: $ingredients_id, ingredient_name: $ingredient_name, grade: $grade, bookmark: $bookmark, purpose: $purpose, function: $function)';
+    return 'IngredientModel(id: $id, name: $name, grade: $grade, purposes: $purposes, danger_status: $danger_status, allergy_status: $allergy_status, skinTypeFeatures: $skinTypeFeatures, preference: $preference, features: $features)';
   }
 
   @override
@@ -193,22 +267,34 @@ class _$IngredientModelImpl implements _IngredientModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$IngredientModelImpl &&
-            (identical(other.ingredients_id, ingredients_id) ||
-                other.ingredients_id == ingredients_id) &&
-            (identical(other.ingredient_name, ingredient_name) ||
-                other.ingredient_name == ingredient_name) &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.name, name) || other.name == name) &&
             (identical(other.grade, grade) || other.grade == grade) &&
-            (identical(other.bookmark, bookmark) ||
-                other.bookmark == bookmark) &&
-            (identical(other.purpose, purpose) || other.purpose == purpose) &&
-            (identical(other.function, function) ||
-                other.function == function));
+            const DeepCollectionEquality().equals(other._purposes, _purposes) &&
+            (identical(other.danger_status, danger_status) ||
+                other.danger_status == danger_status) &&
+            (identical(other.allergy_status, allergy_status) ||
+                other.allergy_status == allergy_status) &&
+            const DeepCollectionEquality()
+                .equals(other._skinTypeFeatures, _skinTypeFeatures) &&
+            (identical(other.preference, preference) ||
+                other.preference == preference) &&
+            const DeepCollectionEquality().equals(other._features, _features));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, ingredients_id, ingredient_name,
-      grade, bookmark, purpose, function);
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      name,
+      grade,
+      const DeepCollectionEquality().hash(_purposes),
+      danger_status,
+      allergy_status,
+      const DeepCollectionEquality().hash(_skinTypeFeatures),
+      preference,
+      const DeepCollectionEquality().hash(_features));
 
   @JsonKey(ignore: true)
   @override
@@ -227,28 +313,37 @@ class _$IngredientModelImpl implements _IngredientModel {
 
 abstract class _IngredientModel implements IngredientModel {
   factory _IngredientModel(
-      final int ingredients_id,
-      final String ingredient_name,
+      final int id,
+      final String name,
       final int grade,
-      final bool bookmark,
-      final String purpose,
-      final String function) = _$IngredientModelImpl;
+      final List<String> purposes,
+      final bool danger_status,
+      final bool allergy_status,
+      final List<String> skinTypeFeatures,
+      final bool preference,
+      final List<String> features) = _$IngredientModelImpl;
 
   factory _IngredientModel.fromJson(Map<String, dynamic> json) =
       _$IngredientModelImpl.fromJson;
 
   @override
-  int get ingredients_id;
+  int get id;
   @override
-  String get ingredient_name;
+  String get name;
   @override
   int get grade;
   @override
-  bool get bookmark;
+  List<String> get purposes;
   @override
-  String get purpose;
+  bool get danger_status;
   @override
-  String get function;
+  bool get allergy_status;
+  @override
+  List<String> get skinTypeFeatures;
+  @override
+  bool get preference;
+  @override
+  List<String> get features;
   @override
   @JsonKey(ignore: true)
   _$$IngredientModelImplCopyWith<_$IngredientModelImpl> get copyWith =>

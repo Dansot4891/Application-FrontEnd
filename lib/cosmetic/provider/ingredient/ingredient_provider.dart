@@ -36,20 +36,20 @@ class IngredientNotifier extends StateNotifier<List<IngredientModel>> {
 
   Future<void> fetchDate()async{
     state = [
-          IngredientModel(1, '증류수, 물', 1, true, '피부 보습', '미백 효과'),
-          IngredientModel(2, '증류수, 물', 1, true, '피부 보습', '미백 효과'),
-          IngredientModel(3, '증류수, 물', 1, false, '피부 보습', '미백 효과'),
-          IngredientModel(4, '증류수, 물', 1, true, '피부 보습', '미백 효과'),
-          IngredientModel(5, '증류수, 물', 1, false, '피부 보습', '미백 효과'),
-          IngredientModel(6, '증류수, 물', 2, false, '피부 보습', '미백 효과'),
-          IngredientModel(7, '증류수, 물', 2, false, '피부 보습', '미백 효과'),
-          IngredientModel(8, '증류수, 물', 3, true, '피부 보습', '미백 효과'), 
-          IngredientModel(9, '증류수, 물', 3, true, '피부 보습', '미백 효과'),
-          IngredientModel(10, '증류수, 물', 4, false, '피부 보습', '미백 효과'),
-          IngredientModel(11, '증류수, 물', 5, true, '피부 보습', '미백 효과'),
-          IngredientModel(12, '증류수, 물', 6, false, '피부 보습', '미백 효과'),
-          IngredientModel(13, '증류수, 물', 6, false, '피부 보습', '미백 효과'),
-          IngredientModel(14, '증류수, 물', 7, false, '피부 보습', '미백 효과'),
+          IngredientModel(1, '증류수, 물', 1, ['피부 보습', '피부 윤기','피부 윤기',], true, true, [], false, ['미백 효과', '미백 효과'],),
+          IngredientModel(2, '증류수, 물', 2, ['피부 보습', '피부 윤기'], true, true, [], true, ['미백 효과', '미백 효과'],),
+          IngredientModel(3, '증류수, 물', 2, ['피부 보습', '피부 윤기'], true, true, [], false, ['미백 효과', '미백 효과'],),
+          IngredientModel(4, '증류수, 물', 2, ['피부 보습', '피부 윤기'], true, true, [], true, ['미백 효과', '미백 효과'],),
+          IngredientModel(5, '증류수, 물', 3, ['피부 보습', '피부 윤기'], true, true, [], true, ['미백 효과', '미백 효과'],),
+          IngredientModel(6, '증류수, 물', 3, ['피부 보습', '피부 윤기'], true, true, [], false, ['미백 효과', '미백 효과'],),
+          IngredientModel(7, '증류수, 물', 4, ['피부 보습', '피부 윤기'], true, true, [], true, ['미백 효과', '미백 효과'],),
+          IngredientModel(8, '증류수, 물', 5, ['피부 보습', '피부 윤기'], true, true, [], false, ['미백 효과', '미백 효과'],),
+          IngredientModel(9, '증류수, 물', 5, ['피부 보습', '피부 윤기'], true, true, [], true, ['미백 효과', '미백 효과'],),
+          IngredientModel(10, '증류수, 물', 5, ['피부 보습', '피부 윤기'], true, true, [], false, ['미백 효과', '미백 효과'],),
+          IngredientModel(11, '증류수, 물', 6, ['피부 보습', '피부 윤기'], true, true, [], true, ['미백 효과', '미백 효과'],),
+          IngredientModel(12, '증류수, 물', 6, ['피부 보습', '피부 윤기'], true, true, [], false, ['미백 효과', '미백 효과'],),
+          IngredientModel(13, '증류수, 물', 7, ['피부 보습', '피부 윤기'], true, true, [], true, ['미백 효과', '미백 효과'],),
+          IngredientModel(14, '증류수, 물', 7, ['피부 보습', '피부 윤기'], true, true, [], false, ['미백 효과', '미백 효과'],),
         ];
   }
 
@@ -88,8 +88,8 @@ class IngredientNotifier extends StateNotifier<List<IngredientModel>> {
 
   void changeBookmark(int id) {
     state = state.map((ingredient) {
-      if (ingredient.ingredients_id == id) {
-        return ingredient.copyWith(bookmark: !ingredient.bookmark);
+      if (ingredient.id == id) {
+        return ingredient.copyWith(preference: !ingredient.preference);
       }
       return ingredient;
     }).toList();

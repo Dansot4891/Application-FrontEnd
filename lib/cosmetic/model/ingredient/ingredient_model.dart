@@ -6,7 +6,7 @@ part 'ingredient_model.g.dart';
 @freezed
 class IngredientModel with _$IngredientModel {
 
-  factory IngredientModel(int ingredients_id, String ingredient_name, int grade, bool bookmark, String purpose, String function) = _IngredientModel;
+  factory IngredientModel(int id, String name, int grade, List<String> purposes, bool danger_status, bool allergy_status, List<String> skinTypeFeatures, bool preference, List<String> features,) = _IngredientModel;
 
   factory IngredientModel.fromJson(Map<String, dynamic> json) => _$IngredientModelFromJson(json);
 }

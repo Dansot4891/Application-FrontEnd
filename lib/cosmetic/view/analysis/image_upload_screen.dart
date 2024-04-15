@@ -47,6 +47,7 @@ class _ImageUpLoadScreenState extends State<ImageUpLoadScreen> {
                   if (image != null) {
                     setState(() {
                       images.add(image);
+                      
                     });
                   }
                 },
@@ -55,7 +56,7 @@ class _ImageUpLoadScreenState extends State<ImageUpLoadScreen> {
                 title: '사진',
                 imgPath: ImgPath.image,
                 func: () async {
-                  multiImage = await picker.pickMultiImage();
+                  image = await picker.pickImage(source: ImageSource.gallery);
                   setState(() {
                     images.addAll(multiImage);
                   });
@@ -119,7 +120,7 @@ class _ImageUpLoadScreenState extends State<ImageUpLoadScreen> {
       ),
       width: double.infinity,
       height: MediaQuery.of(context).size.height / 7 * 4,
-      child: image == null
+      child: (image == null || images.length == 0)
           ? Center(
               child: Text(
                 '선택된 이미지가 없습니다.',

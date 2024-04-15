@@ -4,7 +4,7 @@ import 'package:gproject/common/variable/color.dart';
 import 'package:gproject/common/component/main_text.dart';
 import 'package:gproject/common/component/textformfield.dart';
 import 'package:gproject/common/view/splash_screen.dart';
-import 'package:gproject/home/view/home_screen.dart';
+import 'package:gproject/common/view/home_screen.dart';
 import 'package:gproject/user/view/find_IDPW/find_screen.dart';
 import 'package:gproject/user/view/login/signup_screen1.dart';
 

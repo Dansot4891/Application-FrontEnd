@@ -5,16 +5,21 @@ class CustomTextFormField extends StatelessWidget {
   final TextEditingController controller;
   final String hintText;
   bool expand;
+  String? validator;
   CustomTextFormField({
     required this.controller,
     required this.hintText,
     this.expand = false,
+    this.validator,
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      validator: validator == null ? null : (val){
+        return validator!;
+      },
       expands: expand,
       textAlignVertical: TextAlignVertical.top,
       style: TextStyle(

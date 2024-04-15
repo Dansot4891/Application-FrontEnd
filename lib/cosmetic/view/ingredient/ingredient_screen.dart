@@ -69,8 +69,8 @@ class IngredientScreen extends ConsumerWidget {
                 delegate: SliverChildBuilderDelegate(
               (context, index) => Padding(
                 padding: const EdgeInsets.only(bottom: 20),
-                child: IngredientBar(level: list[index].grade, ingredientName: list[index].ingredient_name, purpose: list[index].purpose, function: list[index].function, bookMark: list[index].bookmark, func: (){
-                  ref.read(IngredientProvider.notifier).changeBookmark(list[index].ingredients_id);;
+                child: IngredientBar(level: list[index].grade, ingredientName: list[index].name, purposes: list[index].purposes, features: list[index].features, bookMark: list[index].preference, func: (){
+                  ref.read(IngredientProvider.notifier).changeBookmark(list[index].id);;
                 },),
               ),
               childCount: list.length,

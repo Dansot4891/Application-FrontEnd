@@ -47,7 +47,7 @@ class ChangePasswordScreen extends StatelessWidget {
               hintText: '현재 비밀번호 입력',
             ),
             SizedBox(
-              height: ratio.height * 5,
+              height: ratio.height * 15,
             ),
             CustomTextFormField(
               controller: nowPwController,
