@@ -1,5 +1,8 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gproject/common/component/button.dart';
+import 'package:gproject/common/secure_storage/secure_storage.dart';
 import 'package:gproject/common/variable/color.dart';
 import 'package:gproject/common/component/main_text.dart';
 import 'package:gproject/common/component/textformfield.dart';
@@ -7,14 +10,16 @@ import 'package:gproject/common/variable/validator.dart';
 import 'package:gproject/common/view/splash_screen.dart';
 import 'package:gproject/common/view/home_screen.dart';
 import 'package:gproject/main.dart';
+import 'package:gproject/user/model/user_model.dart';
+import 'package:gproject/user/provider/login_state_provider.dart';
 import 'package:gproject/user/view/find_IDPW/find_screen.dart';
 import 'package:gproject/user/view/login/signup_screen1.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends ConsumerWidget {
   const LoginScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final gkey = GlobalKey<FormState>();
     TextEditingController idController = TextEditingController();
     TextEditingController pwController = TextEditingController();
@@ -62,10 +67,14 @@ class LoginScreen extends StatelessWidget {
               ),
               CustomButton(
                 text: '로그인',
-                func: () {
+                func: () async {
                   if(gkey.currentState!.validate()){
-                    print(idController.text);
-                    print(pwController.text);
+                    final data = UserModel(name: '최현수', nickname: '최현수짱', login_id: 'chlgustn123', birth: '1999.01.01', gender: 'MALE', email: 'chlgustn@naver.com', skin_type: '건성', skin_concern: ['해당 없음'], allergy: '');
+                    final storage = ref.watch(secureStorageProvider);
+                    await storage.write(key: 'user', value: jsonEncode(data.toJson()));
+                    ref.read(loginStateProvider.notifier).setLoggedIn(true);
+                    // final data2 = await storage.readAll();
+                    // print(data2);
                     Navigator.push(
                     context,
                     MaterialPageRoute(

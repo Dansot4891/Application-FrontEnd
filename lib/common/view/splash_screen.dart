@@ -5,6 +5,7 @@ import 'package:gproject/common/component/button.dart';
 import 'package:gproject/common/variable/color.dart';
 import 'package:gproject/common/variable/image_path.dart';
 import 'package:gproject/common/component/main_text.dart';
+import 'package:gproject/common/view/home_screen.dart';
 import 'package:gproject/user/view/login/login_screen.dart';
 
 class SplashScreen extends StatelessWidget {
@@ -30,7 +31,16 @@ class SplashScreen extends StatelessWidget {
             ),
             Spacer(),
             InkWell(
-              onTap: () {},
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return HomeScreen();
+                    },
+                  ),
+                );
+              },
               child: Container(
                 padding: const EdgeInsets.symmetric(vertical: 13),
                 width: double.infinity,

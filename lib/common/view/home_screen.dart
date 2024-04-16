@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gproject/chatbot/view/chatbot_screen.dart';
 import 'package:gproject/common/component/dialog.dart';
 import 'package:gproject/common/component/main_text.dart';
+import 'package:gproject/common/secure_storage/secure_storage.dart';
 import 'package:gproject/common/variable/color.dart';
 import 'package:gproject/common/variable/image_path.dart';
 import 'package:gproject/cosmetic/provider/cosmetics/cosmetics_provider.dart';
@@ -14,6 +15,7 @@ import 'package:gproject/cosmetic/view/ingredient/ingredient_screen.dart';
 import 'package:gproject/cosmetic/view/recommend/recommend_screen.dart';
 import 'package:gproject/main.dart';
 import 'package:gproject/cosmetic/view/analysis/image_upload_screen.dart';
+import 'package:gproject/user/provider/login_state_provider.dart';
 import 'package:gproject/user/view/login/login_screen.dart';
 import 'package:gproject/user/view/mypage/answer_screen.dart';
 import 'package:gproject/user/view/mypage/mypage_screen.dart';
@@ -23,6 +25,7 @@ class HomeScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final loginState = ref.watch(loginStateProvider);
     return Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
@@ -46,14 +49,16 @@ class HomeScreen extends ConsumerWidget {
                 size: 35,
               ),
             ),
-            IconButton(
+            loginState ? IconButton(
               onPressed: () {
                 CustomDialog(
                     context: context,
                     title: '로그아웃 하시겠습니까?',
                     buttonText: '확인',
                     buttonCount: 2,
-                    func: () {
+                    func: () async {
+                      await ref.watch(secureStorageProvider).deleteAll();
+                      ref.read(loginStateProvider.notifier).setLoggedIn(false);
                       Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -62,13 +67,13 @@ class HomeScreen extends ConsumerWidget {
                           },
                         ),
                       );
-                    });
+                    },);
               },
               icon: Icon(
                 Icons.logout,
                 size: 30,
               ),
-            ),
+            ) : SizedBox()
           ],
         ),
         body: CustomScrollView(
@@ -144,6 +149,7 @@ class HomeScreen extends ConsumerWidget {
                               );
                             },
                           ),
+                          loginState ?
                           mainButton(
                             ImgPath.QandALogo,
                             "Q&A",
@@ -157,7 +163,7 @@ class HomeScreen extends ConsumerWidget {
                                 ),
                               );
                             },
-                          ),
+                          ) : SizedBox()
                         ],
                       ),
                     ),

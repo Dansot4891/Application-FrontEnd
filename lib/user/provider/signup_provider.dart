@@ -14,20 +14,20 @@ class GenderButtonNotifier extends StateNotifier<List<bool>>{
     state[index] = true;
   }
 
-  Future<void> fetchData() async {
-    String data = '';
-    if(state[0] == true){
-      data = 'MALE';
-    }
-    if(state[1] == true){
-      data == 'FEMALE';
-    }
-    try{
-      var resp = await dio.post('url');
-    }catch(e){
-      print(e);
-    }
-  }
+  // Future<void> fetchData() async {
+  //   String data = '';
+  //   if(state[0] == true){
+  //     data = 'MALE';
+  //   }
+  //   if(state[1] == true){
+  //     data == 'FEMALE';
+  //   }
+  //   try{
+  //     var resp = await dio.post('url');
+  //   }catch(e){
+  //     print(e);
+  //   }
+  // }
 }
 
 final typeButtonProvider = StateNotifierProvider<TypeButtonNotifier, List<bool>>((ref) => 
