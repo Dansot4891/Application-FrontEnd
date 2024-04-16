@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gproject/common/variable/color.dart';
+import 'package:gproject/user/provider/login_provider.dart';
 
 class IngredientBar extends ConsumerWidget {
   final int level;
@@ -21,6 +22,7 @@ class IngredientBar extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final loginState = ref.watch(loginStateProvider);
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
@@ -106,7 +108,7 @@ class IngredientBar extends ConsumerWidget {
                     ],
                   ),
                 ),
-                Column(
+                loginState ? Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     bookMark ? IconButton(
@@ -125,7 +127,7 @@ class IngredientBar extends ConsumerWidget {
                       ),
                     ),
                   ],
-                )
+                ) : SizedBox()
               ],
             ),
           ),

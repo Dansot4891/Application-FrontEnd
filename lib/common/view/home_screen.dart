@@ -8,6 +8,7 @@ import 'package:gproject/common/component/main_text.dart';
 import 'package:gproject/common/secure_storage/secure_storage.dart';
 import 'package:gproject/common/variable/color.dart';
 import 'package:gproject/common/variable/image_path.dart';
+import 'package:gproject/common/view/splash_screen.dart';
 import 'package:gproject/cosmetic/provider/cosmetics/cosmetics_provider.dart';
 import 'package:gproject/cosmetic/provider/ingredient/ingredient_provider.dart';
 import 'package:gproject/cosmetic/view/costetics/cosmetics_screen.dart';
@@ -15,7 +16,7 @@ import 'package:gproject/cosmetic/view/ingredient/ingredient_screen.dart';
 import 'package:gproject/cosmetic/view/recommend/recommend_screen.dart';
 import 'package:gproject/main.dart';
 import 'package:gproject/cosmetic/view/analysis/image_upload_screen.dart';
-import 'package:gproject/user/provider/login_state_provider.dart';
+import 'package:gproject/user/provider/login_provider.dart';
 import 'package:gproject/user/view/login/login_screen.dart';
 import 'package:gproject/user/view/mypage/answer_screen.dart';
 import 'package:gproject/user/view/mypage/mypage_screen.dart';
@@ -49,8 +50,9 @@ class HomeScreen extends ConsumerWidget {
                 size: 35,
               ),
             ),
-            loginState ? IconButton(
+            IconButton(
               onPressed: () {
+                loginState ?
                 CustomDialog(
                     context: context,
                     title: '로그아웃 하시겠습니까?',
@@ -58,7 +60,7 @@ class HomeScreen extends ConsumerWidget {
                     buttonCount: 2,
                     func: () async {
                       await ref.watch(secureStorageProvider).deleteAll();
-                      ref.read(loginStateProvider.notifier).setLoggedIn(false);
+                      ref.read(userDataProvider.notifier).deleteData();
                       Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -67,18 +69,26 @@ class HomeScreen extends ConsumerWidget {
                           },
                         ),
                       );
-                    },);
+                    },) : Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return SplashScreen();
+                          },
+                        ),
+                      );
               },
               icon: Icon(
                 Icons.logout,
                 size: 30,
               ),
-            ) : SizedBox()
+            )
           ],
         ),
         body: CustomScrollView(
           slivers: [
-            SliverToBoxAdapter(
+            SliverFillRemaining(
+              hasScrollBody: false,
               child: Container(
                 decoration: BoxDecoration(
                   image: DecorationImage(
@@ -199,7 +209,7 @@ class HomeScreen extends ConsumerWidget {
                                 func: () {});
                           },
                         ),
-                        mainBigButton(
+                        loginState ? mainBigButton(
                           title: 'AI 추천',
                           text: 'AI가 사용자의 취향을\n분석하여 맞춤형 추천을\n해드립니다.',
                           imgPath: ImgPath.ai_recommend,
@@ -213,7 +223,7 @@ class HomeScreen extends ConsumerWidget {
                               ),
                             );
                           },
-                        ),
+                        ) : SizedBox()
                       ],
                     )
                   ],
@@ -221,7 +231,8 @@ class HomeScreen extends ConsumerWidget {
               ),
             )
           ],
-        ));
+        ),
+      );
   }
 
   Column mainButton(

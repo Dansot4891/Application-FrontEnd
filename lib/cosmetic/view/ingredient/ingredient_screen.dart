@@ -78,7 +78,7 @@ class IngredientScreen extends ConsumerWidget {
                 },),
               ),
               childCount: list.length,
-            )),
+            ),),
           ),
         ],
       ),

@@ -11,7 +11,7 @@ import 'package:gproject/common/view/splash_screen.dart';
 import 'package:gproject/common/view/home_screen.dart';
 import 'package:gproject/main.dart';
 import 'package:gproject/user/model/user_model.dart';
-import 'package:gproject/user/provider/login_state_provider.dart';
+import 'package:gproject/user/provider/login_provider.dart';
 import 'package:gproject/user/view/find_IDPW/find_screen.dart';
 import 'package:gproject/user/view/login/signup_screen1.dart';
 
@@ -32,7 +32,7 @@ class LoginScreen extends ConsumerWidget {
                   return SplashScreen();
                 },),);
           },
-          icon: Icon(Icons.arrow_back),
+          icon: Icon(Icons.arrow_back, size: 35,),
         ),
       ),
       body: Padding(
@@ -69,10 +69,10 @@ class LoginScreen extends ConsumerWidget {
                 text: '로그인',
                 func: () async {
                   if(gkey.currentState!.validate()){
-                    final data = UserModel(name: '최현수', nickname: '최현수짱', login_id: 'chlgustn123', birth: '1999.01.01', gender: 'MALE', email: 'chlgustn@naver.com', skin_type: '건성', skin_concern: ['해당 없음'], allergy: '');
+                    final data = UserModel(name: '최현수', nickname: '최현수짱', login_id: 'chlgustn123', birth: '1999.01.01', gender: 'MALE', email: 'chlgustn@naver.com', skin_type: '중성', skin_concern: ['미백잡티', '아토피', '여드름', '각질',], allergy: '파인애플 알레르기');
                     final storage = ref.watch(secureStorageProvider);
                     await storage.write(key: 'user', value: jsonEncode(data.toJson()));
-                    ref.read(loginStateProvider.notifier).setLoggedIn(true);
+                    ref.read(userDataProvider.notifier).updateUserModel(ref);
                     // final data2 = await storage.readAll();
                     // print(data2);
                     Navigator.push(

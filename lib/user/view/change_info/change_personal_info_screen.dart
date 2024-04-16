@@ -1,24 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gproject/common/component/button.dart';
 import 'package:gproject/common/component/dialog.dart';
 import 'package:gproject/common/component/textformfield.dart';
 import 'package:gproject/common/variable/validator.dart';
 import 'package:gproject/main.dart';
 import 'package:gproject/user/component/signup_radio_button.dart';
+import 'package:gproject/user/provider/login_provider.dart';
 import 'package:gproject/user/view/mypage/mypage_screen.dart';
 
-class ChangePersonalInfoScreen extends StatelessWidget {
+class ChangePersonalInfoScreen extends ConsumerWidget {
   const ChangePersonalInfoScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final gkey = GlobalKey<FormState>();
+    final userData = ref.watch(userDataProvider);    
     TextEditingController nameController =
-        TextEditingController(text: '최현수123');
+        TextEditingController(text: userData!.nickname);
     TextEditingController emailController =
-        TextEditingController(text: 'chlgustn123@naver.com');
+        TextEditingController(text: userData.email);
     TextEditingController allergieController =
-        TextEditingController(text: 'OO 알레르기, OO 알레르기');
+        TextEditingController(text: userData.allergy);
+
+    
     return CustomScrollView(
       slivers: [
         SliverFillRemaining(
@@ -37,7 +42,7 @@ class ChangePersonalInfoScreen extends StatelessWidget {
                     height: ratio.height * 5,
                   ),
                   Text(
-                    '최현수',
+                    userData.name,
                     style: TextStyle(
                       fontSize: 18,
                       color: Colors.black,
@@ -53,7 +58,7 @@ class ChangePersonalInfoScreen extends StatelessWidget {
                     height: ratio.height * 5,
                   ),
                   Text(
-                    '2000.01.01',
+                    userData.birth,
                     style: TextStyle(
                       fontSize: 18,
                       color: Colors.black,

@@ -32,6 +32,12 @@ class CustomTextFormField extends StatelessWidget {
       maxLines: !expand ? 1 : null,
       controller: controller,
       decoration: InputDecoration(
+        focusedErrorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8),
+          borderSide: BorderSide(
+            color: Colors.red,
+          ),
+        ),
         errorBorder:
             OutlineInputBorder(borderSide: BorderSide(color: Colors.red)),
         contentPadding:

@@ -52,7 +52,7 @@ WorryButtonNotifier());
 
 class WorryButtonNotifier extends StateNotifier<List<bool>>{
   WorryButtonNotifier():super(
-    [false, true, false, false, false, false]
+    [true, false, false, false, false, false]
   );
 
   void setNull(){

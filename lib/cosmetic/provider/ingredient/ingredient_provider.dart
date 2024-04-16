@@ -67,39 +67,6 @@ class IngredientNotifier extends StateNotifier<List<IngredientModel>> {
         ];
   }
 
-  List<IngredientModel> fetchSafeData() {
-    List<IngredientModel> Data = [];
-
-    for (int i = 0; i < state.length; i++) {
-      if (state[i].grade == 1 || state[i].grade == 2) {
-        Data.add(state[i]);
-      }
-    }
-    return Data;
-  }
-
-  List<IngredientModel> fetchHalfDangerData() {
-    List<IngredientModel> Data = [];
-
-    for (int i = 0; i < state.length; i++) {
-      if (state[i].grade == 3 || state[i].grade == 4 || state[i].grade == 5) {
-        Data.add(state[i]);
-      }
-    }
-    return Data;
-  }
-
-  List<IngredientModel> fetchDangerData() {
-    List<IngredientModel> Data = [];
-
-    for (int i = 0; i < state.length; i++) {
-      if (state[i].grade == 6 || state[i].grade == 7) {
-        Data.add(state[i]);
-      }
-    }
-    return Data;
-  }
-
   void changeBookmark(int id) {
     state = state.map((ingredient) {
       if (ingredient.id == id) {

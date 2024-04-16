@@ -5,10 +5,12 @@ class IngredientMiniBar extends StatelessWidget {
   final int grade;
   final String name;
   final double fontSize;
+  final VoidCallback func;
   const IngredientMiniBar({
     required this.grade,
     required this.name,
     required this.fontSize,
+    required this.func,
     super.key,});
 
   @override
@@ -46,9 +48,7 @@ class IngredientMiniBar extends StatelessWidget {
           ],
         ),
         GestureDetector(
-          onTap: (){
-            
-          },
+          onTap: func,
           child: Stack(
             alignment: Alignment.center,
             children: [

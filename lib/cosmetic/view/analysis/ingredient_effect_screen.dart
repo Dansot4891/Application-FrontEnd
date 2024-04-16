@@ -152,6 +152,7 @@ class IngredientEffectScreen extends StatelessWidget {
                       name: '글리세린',
                       grade: 2,
                       fontSize: 16,
+                      func: (){},
                     ),
                     Divider(
                       thickness: 1,
