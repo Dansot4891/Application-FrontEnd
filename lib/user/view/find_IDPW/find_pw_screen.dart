@@ -48,17 +48,16 @@ class FindPwScreen extends StatelessWidget {
               if (gkey.currentState!.validate()) {
                 try {
                   final resp = await dio.post(
-                      'http://ceprj.gachon.ac.kr:60006/api/user/find-id',
+                      'http://ceprj.gachon.ac.kr:60006/api/user/find_password',
                       data: {
                         "login_id": idController.text,
                         "email": emailController.text,
                         "name": nameController.text,
                       });
                   if (resp.statusCode == 200) {
-                    final password = resp.data['password'];
                     CustomDialog(
                       context: context,
-                      title: "회원님의 비밀번호는\n'${password}'입니다.",
+                      title: "회원님의 비밀번호는\n'${resp.data}'입니다.",
                       buttonText: '확인',
                       buttonCount: 1,
                       func: () {
@@ -67,7 +66,15 @@ class FindPwScreen extends StatelessWidget {
                     );
                   }
                 } catch (e) {
-                  print(e);
+                  CustomDialog(
+                      context: context,
+                      title: "정보를 다시 확인해주세요.",
+                      buttonText: '확인',
+                      buttonCount: 1,
+                      func: () {
+                        Navigator.pop(context);
+                      },
+                    );
                 }
               }
             },

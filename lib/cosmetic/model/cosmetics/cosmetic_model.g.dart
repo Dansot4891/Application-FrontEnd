@@ -12,8 +12,9 @@ _$CosmeticModelImpl _$$CosmeticModelImplFromJson(Map<String, dynamic> json) =>
       json['name'] as String,
       json['imagePath'] as String,
       json['lowestPrice'] as int,
-      (json['cosmeticPurchaseLinks'] as List<dynamic>)
-          .map((e) => CosmeticPurchaseModel.fromJson(e as Map<String, dynamic>))
+      (json['cosmeticPurchaseLinks'] as List<dynamic>?)
+          ?.map(
+              (e) => CosmeticPurchaseModel.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 

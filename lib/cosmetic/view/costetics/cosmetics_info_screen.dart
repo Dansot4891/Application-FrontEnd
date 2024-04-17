@@ -6,19 +6,17 @@ import 'package:gproject/common/component/dialog.dart';
 import 'package:gproject/common/variable/color.dart';
 import 'package:gproject/common/variable/image_path.dart';
 import 'package:gproject/common/view/default_layout.dart';
+import 'package:gproject/cosmetic/model/cosmetics/cosmetic_model.dart';
 import 'package:gproject/cosmetic/model/cosmetics/cosmetic_purchase.dart';
-import 'package:gproject/cosmetic/provider/cosmetics/cosmetics_provider.dart';
 import 'package:gproject/main.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class CosmeticsInfoScreen extends ConsumerWidget {
-  final int id;
-  const CosmeticsInfoScreen({required this.id, super.key});
+  final CosmeticModel data;
+  const CosmeticsInfoScreen({required this.data, super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.read(CosmeticProvider.notifier).getDetail(id);
-    print(state);
     return DefaultLayout(
         child: Column(
       children: [
@@ -39,7 +37,7 @@ class CosmeticsInfoScreen extends ConsumerWidget {
                 height: ratio.height * 20,
               ),
               Text(
-                state.name,
+                data.name,
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.w400,
@@ -49,7 +47,7 @@ class CosmeticsInfoScreen extends ConsumerWidget {
                 height: ratio.height * 10,
               ),
               Text(
-                '최저가 ${state.lowestPrice}원',
+                '최저가 ${data.lowestPrice}원',
                 style: TextStyle(
                   fontSize: 18,
                   color: PColors.price,
@@ -60,12 +58,12 @@ class CosmeticsInfoScreen extends ConsumerWidget {
                 height: ratio.height * 20,
               ),
               ListView.builder(
-                itemCount: state.cosmeticPurchaseLinks.length,
+                itemCount: data.cosmeticPurchaseLinks!.length,
                 shrinkWrap: true,
                 itemBuilder: ((context, index) {
                   return purchasingOffice(
                     context,
-                    state.cosmeticPurchaseLinks[index],
+                    data.cosmeticPurchaseLinks![index],
                   );
                 }),
               ),

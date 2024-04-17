@@ -21,18 +21,19 @@ class CosmeticsScreen extends ConsumerWidget {
         itemCount: state.length,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
-          childAspectRatio: 3 / 4,
+          childAspectRatio: 7/9,
         ),
         itemBuilder: (BuildContext context, index) {
           return gridViewBox(
             name: state[index].name,
             price: state[index].lowestPrice,
-            func: () {
+            func: () async {
+              final data = await ref.read(CosmeticProvider.notifier).getDetail(state[index].id);
               Navigator.push(
                 context,
                 MaterialPageRoute(
                   builder: (context) {
-                    return CosmeticsInfoScreen(id: state[index].id,);
+                    return CosmeticsInfoScreen(data: data,);
                   },
                 ),
               );
@@ -51,6 +52,7 @@ class CosmeticsScreen extends ConsumerWidget {
     return GestureDetector(
       onTap: func,
       child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 25,),
         margin: const EdgeInsets.only(top: 50),
         child: Column(
           children: [
@@ -72,6 +74,7 @@ class CosmeticsScreen extends ConsumerWidget {
                 fontSize: 16,
                 fontWeight: FontWeight.w400,
               ),
+              overflow: TextOverflow.ellipsis,
             ),
             Text(
               '최저가 ${price}원',

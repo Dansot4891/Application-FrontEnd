@@ -40,7 +40,8 @@ class UserDataNotifer extends StateNotifier<UserModel?>{
     String userData = userDataNullable ?? "";
     Map<String, dynamic> userDataMap = jsonDecode(userData);
     UserModel user = UserModel.fromJson(userDataMap);
-    
+
+    print(user);
     //개인정보 때를 위한 provider 데이터 변경
     if(user.gender == 'MALE'){
       ref.read(genderButtonProvider.notifier).changeValue(0);
@@ -48,33 +49,38 @@ class UserDataNotifer extends StateNotifier<UserModel?>{
       ref.read(genderButtonProvider.notifier).changeValue(1);
     }
 
-    if(user.skin_type == '건성'){
+    if(user.skin_type == 'DRY'){
       ref.read(typeButtonProvider.notifier).changeValue(0);
-    }else if(user.skin_type == '지성'){
+    }else if(user.skin_type == 'OILY'){
       ref.read(typeButtonProvider.notifier).changeValue(1);
-    }else if(user.skin_type == '민감성'){
+    }else if(user.skin_type == 'SENSITIVE'){
       ref.read(typeButtonProvider.notifier).changeValue(2);
     }
 
-    if(!user.skin_concern.contains('해당 없음')){
+    ref.read(worryButtonProvider.notifier).reset();
+    if(user.skin_concerns.contains('해당없음') || user.skin_concerns.length == 0){
+      state = user;
+      return;
+    }
+    if(!user.skin_concerns.contains('해당없음')){
       ref.read(worryButtonProvider.notifier).changeValue(0);
     }
-    if(user.skin_concern.contains('아토피')){
+    if(user.skin_concerns.contains('아토피')){
+      print(ref.read(worryButtonProvider));
       ref.read(worryButtonProvider.notifier).changeValue(1);
     }
-    if(user.skin_concern.contains('여드름')){
+    if(user.skin_concerns.contains('여드름')){
       ref.read(worryButtonProvider.notifier).changeValue(2);
     }
-    if(user.skin_concern.contains('각질')){
+    if(user.skin_concerns.contains('각질')){
       ref.read(worryButtonProvider.notifier).changeValue(3);
     }
-    if(user.skin_concern.contains('미백잡티')){
+    if(user.skin_concerns.contains('미백잡티')){
       ref.read(worryButtonProvider.notifier).changeValue(4);
     }
-    if(user.skin_concern.contains('주름 탄력')){
+    if(user.skin_concerns.contains('주름탄력')){
       ref.read(worryButtonProvider.notifier).changeValue(5);
     }
-
     state = user;
   }
 

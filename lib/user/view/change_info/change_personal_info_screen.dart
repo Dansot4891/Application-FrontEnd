@@ -1,12 +1,18 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gproject/common/component/button.dart';
 import 'package:gproject/common/component/dialog.dart';
 import 'package:gproject/common/component/textformfield.dart';
+import 'package:gproject/common/dio/dio.dart';
+import 'package:gproject/common/secure_storage/secure_storage.dart';
 import 'package:gproject/common/variable/validator.dart';
 import 'package:gproject/main.dart';
 import 'package:gproject/user/component/signup_radio_button.dart';
+import 'package:gproject/user/model/user_model.dart';
 import 'package:gproject/user/provider/login_provider.dart';
+import 'package:gproject/user/provider/signup_provider.dart';
 import 'package:gproject/user/view/mypage/mypage_screen.dart';
 
 class ChangePersonalInfoScreen extends ConsumerWidget {
@@ -15,7 +21,7 @@ class ChangePersonalInfoScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final gkey = GlobalKey<FormState>();
-    final userData = ref.watch(userDataProvider);    
+    final userData = ref.watch(userDataProvider);
     TextEditingController nameController =
         TextEditingController(text: userData!.nickname);
     TextEditingController emailController =
@@ -23,7 +29,6 @@ class ChangePersonalInfoScreen extends ConsumerWidget {
     TextEditingController allergieController =
         TextEditingController(text: userData.allergy);
 
-    
     return CustomScrollView(
       slivers: [
         SliverFillRemaining(
@@ -138,24 +143,55 @@ class ChangePersonalInfoScreen extends ConsumerWidget {
                   Spacer(),
                   CustomButton(
                     text: '수정하기',
-                    func: () {
-                      if(gkey.currentState!.validate()){
-                        CustomDialog(
-                        context: context,
-                        title: '수정이 완료되었습니다!',
-                        buttonText: '확인',
-                        buttonCount: 1,
-                        func: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) {
-                                return MyPageScreen();
+                    func: () async {
+                      if (gkey.currentState!.validate()) {
+                        try {
+                          final user = UserModel(
+                              name: userData.name,
+                              nickname: nameController.text,
+                              login_id: userData.login_id,
+                              birth: userData.birth,
+                              gender: ref
+                                  .read(genderButtonProvider.notifier)
+                                  .postValue(),
+                              email: emailController.text,
+                              skin_type: ref
+                                  .read(typeButtonProvider.notifier)
+                                  .postValue(),
+                              skin_concerns: ref
+                                  .read(worryButtonProvider.notifier)
+                                  .postValue(),
+                              allergy: allergieController.text);
+                          final resp = await dio.put(
+                              'http://ceprj.gachon.ac.kr:60006/api/user/update_profile/ghdrlfehd',
+                              data: jsonEncode(user.toJson()));
+                          if (resp.statusCode == 200) {
+                            final storage = ref.watch(secureStorageProvider);
+                            await storage.write(
+                                key: 'user', value: jsonEncode(user.toJson()));
+                            ref
+                                .read(userDataProvider.notifier)
+                                .updateUserModel(ref);
+                            CustomDialog(
+                              context: context,
+                              title: '수정이 완료되었습니다!',
+                              buttonText: '확인',
+                              buttonCount: 1,
+                              func: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) {
+                                      return MyPageScreen();
+                                    },
+                                  ),
+                                );
                               },
-                            ),
-                          );
-                        },
-                      );
+                            );
+                          }
+                        } catch (e) {
+                          print(e);
+                        }
                       }
                     },
                   ),

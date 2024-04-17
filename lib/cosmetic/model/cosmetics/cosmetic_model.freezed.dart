@@ -24,7 +24,7 @@ mixin _$CosmeticModel {
   String get name => throw _privateConstructorUsedError;
   String get imagePath => throw _privateConstructorUsedError;
   int get lowestPrice => throw _privateConstructorUsedError;
-  List<CosmeticPurchaseModel> get cosmeticPurchaseLinks =>
+  List<CosmeticPurchaseModel>? get cosmeticPurchaseLinks =>
       throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -44,7 +44,7 @@ abstract class $CosmeticModelCopyWith<$Res> {
       String name,
       String imagePath,
       int lowestPrice,
-      List<CosmeticPurchaseModel> cosmeticPurchaseLinks});
+      List<CosmeticPurchaseModel>? cosmeticPurchaseLinks});
 }
 
 /// @nodoc
@@ -64,7 +64,7 @@ class _$CosmeticModelCopyWithImpl<$Res, $Val extends CosmeticModel>
     Object? name = null,
     Object? imagePath = null,
     Object? lowestPrice = null,
-    Object? cosmeticPurchaseLinks = null,
+    Object? cosmeticPurchaseLinks = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -83,10 +83,10 @@ class _$CosmeticModelCopyWithImpl<$Res, $Val extends CosmeticModel>
           ? _value.lowestPrice
           : lowestPrice // ignore: cast_nullable_to_non_nullable
               as int,
-      cosmeticPurchaseLinks: null == cosmeticPurchaseLinks
+      cosmeticPurchaseLinks: freezed == cosmeticPurchaseLinks
           ? _value.cosmeticPurchaseLinks
           : cosmeticPurchaseLinks // ignore: cast_nullable_to_non_nullable
-              as List<CosmeticPurchaseModel>,
+              as List<CosmeticPurchaseModel>?,
     ) as $Val);
   }
 }
@@ -104,7 +104,7 @@ abstract class _$$CosmeticModelImplCopyWith<$Res>
       String name,
       String imagePath,
       int lowestPrice,
-      List<CosmeticPurchaseModel> cosmeticPurchaseLinks});
+      List<CosmeticPurchaseModel>? cosmeticPurchaseLinks});
 }
 
 /// @nodoc
@@ -122,7 +122,7 @@ class __$$CosmeticModelImplCopyWithImpl<$Res>
     Object? name = null,
     Object? imagePath = null,
     Object? lowestPrice = null,
-    Object? cosmeticPurchaseLinks = null,
+    Object? cosmeticPurchaseLinks = freezed,
   }) {
     return _then(_$CosmeticModelImpl(
       null == id
@@ -141,10 +141,10 @@ class __$$CosmeticModelImplCopyWithImpl<$Res>
           ? _value.lowestPrice
           : lowestPrice // ignore: cast_nullable_to_non_nullable
               as int,
-      null == cosmeticPurchaseLinks
+      freezed == cosmeticPurchaseLinks
           ? _value._cosmeticPurchaseLinks
           : cosmeticPurchaseLinks // ignore: cast_nullable_to_non_nullable
-              as List<CosmeticPurchaseModel>,
+              as List<CosmeticPurchaseModel>?,
     ));
   }
 }
@@ -153,7 +153,7 @@ class __$$CosmeticModelImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$CosmeticModelImpl implements _CosmeticModel {
   _$CosmeticModelImpl(this.id, this.name, this.imagePath, this.lowestPrice,
-      final List<CosmeticPurchaseModel> cosmeticPurchaseLinks)
+      final List<CosmeticPurchaseModel>? cosmeticPurchaseLinks)
       : _cosmeticPurchaseLinks = cosmeticPurchaseLinks;
 
   factory _$CosmeticModelImpl.fromJson(Map<String, dynamic> json) =>
@@ -167,13 +167,15 @@ class _$CosmeticModelImpl implements _CosmeticModel {
   final String imagePath;
   @override
   final int lowestPrice;
-  final List<CosmeticPurchaseModel> _cosmeticPurchaseLinks;
+  final List<CosmeticPurchaseModel>? _cosmeticPurchaseLinks;
   @override
-  List<CosmeticPurchaseModel> get cosmeticPurchaseLinks {
+  List<CosmeticPurchaseModel>? get cosmeticPurchaseLinks {
+    final value = _cosmeticPurchaseLinks;
+    if (value == null) return null;
     if (_cosmeticPurchaseLinks is EqualUnmodifiableListView)
       return _cosmeticPurchaseLinks;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_cosmeticPurchaseLinks);
+    return EqualUnmodifiableListView(value);
   }
 
   @override
@@ -221,7 +223,7 @@ abstract class _CosmeticModel implements CosmeticModel {
           final String name,
           final String imagePath,
           final int lowestPrice,
-          final List<CosmeticPurchaseModel> cosmeticPurchaseLinks) =
+          final List<CosmeticPurchaseModel>? cosmeticPurchaseLinks) =
       _$CosmeticModelImpl;
 
   factory _CosmeticModel.fromJson(Map<String, dynamic> json) =
@@ -236,7 +238,7 @@ abstract class _CosmeticModel implements CosmeticModel {
   @override
   int get lowestPrice;
   @override
-  List<CosmeticPurchaseModel> get cosmeticPurchaseLinks;
+  List<CosmeticPurchaseModel>? get cosmeticPurchaseLinks;
   @override
   @JsonKey(ignore: true)
   _$$CosmeticModelImplCopyWith<_$CosmeticModelImpl> get copyWith =>

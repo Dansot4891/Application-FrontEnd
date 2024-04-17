@@ -17,7 +17,7 @@ _$UserModelImpl _$$UserModelImplFromJson(Map<String, dynamic> json) =>
       gender: json['gender'] as String,
       email: json['email'] as String,
       skin_type: json['skin_type'] as String,
-      skin_concern: (json['skin_concern'] as List<dynamic>)
+      skin_concerns: (json['skin_concerns'] as List<dynamic>)
           .map((e) => e as String)
           .toList(),
       allergy: json['allergy'] as String,
@@ -34,6 +34,6 @@ Map<String, dynamic> _$$UserModelImplToJson(_$UserModelImpl instance) =>
       'gender': instance.gender,
       'email': instance.email,
       'skin_type': instance.skin_type,
-      'skin_concern': instance.skin_concern,
+      'skin_concerns': instance.skin_concerns,
       'allergy': instance.allergy,
     };

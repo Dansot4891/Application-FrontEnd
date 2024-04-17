@@ -1,5 +1,4 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:gproject/common/dio/dio.dart';
 
 final genderButtonProvider = StateNotifierProvider<GenderButtonNotifier, List<bool>>((ref) => 
 GenderButtonNotifier());
@@ -25,20 +24,6 @@ class GenderButtonNotifier extends StateNotifier<List<bool>>{
     void reset(){
     state = [true, false];
   }
-  // Future<void> fetchData() async {
-  //   String data = '';
-  //   if(state[0] == true){
-  //     data = 'MALE';
-  //   }
-  //   if(state[1] == true){
-  //     data == 'FEMALE';
-  //   }
-  //   try{
-  //     var resp = await dio.post('url');
-  //   }catch(e){
-  //     print(e);
-  //   }
-  // }
 }
 
 final typeButtonProvider = StateNotifierProvider<TypeButtonNotifier, List<bool>>((ref) => 
@@ -83,7 +68,7 @@ class WorryButtonNotifier extends StateNotifier<List<bool>>{
 
   void setNull(){
     if(state[0] == true){
-      state = List<bool>.from(state);
+      state = [true, false, false, false, false, false];
       state[0] = !state[0];
     }else{
       state = List.generate(6, (_) => false);

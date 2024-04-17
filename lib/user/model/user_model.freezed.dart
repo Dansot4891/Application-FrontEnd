@@ -29,7 +29,7 @@ mixin _$UserModel {
   String get gender => throw _privateConstructorUsedError;
   String get email => throw _privateConstructorUsedError;
   String get skin_type => throw _privateConstructorUsedError;
-  List<String> get skin_concern => throw _privateConstructorUsedError;
+  List<String> get skin_concerns => throw _privateConstructorUsedError;
   String get allergy => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -53,7 +53,7 @@ abstract class $UserModelCopyWith<$Res> {
       String gender,
       String email,
       String skin_type,
-      List<String> skin_concern,
+      List<String> skin_concerns,
       String allergy});
 }
 
@@ -79,7 +79,7 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
     Object? gender = null,
     Object? email = null,
     Object? skin_type = null,
-    Object? skin_concern = null,
+    Object? skin_concerns = null,
     Object? allergy = null,
   }) {
     return _then(_value.copyWith(
@@ -119,9 +119,9 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
           ? _value.skin_type
           : skin_type // ignore: cast_nullable_to_non_nullable
               as String,
-      skin_concern: null == skin_concern
-          ? _value.skin_concern
-          : skin_concern // ignore: cast_nullable_to_non_nullable
+      skin_concerns: null == skin_concerns
+          ? _value.skin_concerns
+          : skin_concerns // ignore: cast_nullable_to_non_nullable
               as List<String>,
       allergy: null == allergy
           ? _value.allergy
@@ -149,7 +149,7 @@ abstract class _$$UserModelImplCopyWith<$Res>
       String gender,
       String email,
       String skin_type,
-      List<String> skin_concern,
+      List<String> skin_concerns,
       String allergy});
 }
 
@@ -173,7 +173,7 @@ class __$$UserModelImplCopyWithImpl<$Res>
     Object? gender = null,
     Object? email = null,
     Object? skin_type = null,
-    Object? skin_concern = null,
+    Object? skin_concerns = null,
     Object? allergy = null,
   }) {
     return _then(_$UserModelImpl(
@@ -213,9 +213,9 @@ class __$$UserModelImplCopyWithImpl<$Res>
           ? _value.skin_type
           : skin_type // ignore: cast_nullable_to_non_nullable
               as String,
-      skin_concern: null == skin_concern
-          ? _value._skin_concern
-          : skin_concern // ignore: cast_nullable_to_non_nullable
+      skin_concerns: null == skin_concerns
+          ? _value._skin_concerns
+          : skin_concerns // ignore: cast_nullable_to_non_nullable
               as List<String>,
       allergy: null == allergy
           ? _value.allergy
@@ -238,9 +238,9 @@ class _$UserModelImpl implements _UserModel {
       required this.gender,
       required this.email,
       required this.skin_type,
-      required final List<String> skin_concern,
+      required final List<String> skin_concerns,
       required this.allergy})
-      : _skin_concern = skin_concern;
+      : _skin_concerns = skin_concerns;
 
   factory _$UserModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$UserModelImplFromJson(json);
@@ -263,12 +263,12 @@ class _$UserModelImpl implements _UserModel {
   final String email;
   @override
   final String skin_type;
-  final List<String> _skin_concern;
+  final List<String> _skin_concerns;
   @override
-  List<String> get skin_concern {
-    if (_skin_concern is EqualUnmodifiableListView) return _skin_concern;
+  List<String> get skin_concerns {
+    if (_skin_concerns is EqualUnmodifiableListView) return _skin_concerns;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_skin_concern);
+    return EqualUnmodifiableListView(_skin_concerns);
   }
 
   @override
@@ -276,7 +276,7 @@ class _$UserModelImpl implements _UserModel {
 
   @override
   String toString() {
-    return 'UserModel(id: $id, name: $name, nickname: $nickname, login_id: $login_id, password: $password, birth: $birth, gender: $gender, email: $email, skin_type: $skin_type, skin_concern: $skin_concern, allergy: $allergy)';
+    return 'UserModel(id: $id, name: $name, nickname: $nickname, login_id: $login_id, password: $password, birth: $birth, gender: $gender, email: $email, skin_type: $skin_type, skin_concerns: $skin_concerns, allergy: $allergy)';
   }
 
   @override
@@ -298,7 +298,7 @@ class _$UserModelImpl implements _UserModel {
             (identical(other.skin_type, skin_type) ||
                 other.skin_type == skin_type) &&
             const DeepCollectionEquality()
-                .equals(other._skin_concern, _skin_concern) &&
+                .equals(other._skin_concerns, _skin_concerns) &&
             (identical(other.allergy, allergy) || other.allergy == allergy));
   }
 
@@ -315,7 +315,7 @@ class _$UserModelImpl implements _UserModel {
       gender,
       email,
       skin_type,
-      const DeepCollectionEquality().hash(_skin_concern),
+      const DeepCollectionEquality().hash(_skin_concerns),
       allergy);
 
   @JsonKey(ignore: true)
@@ -343,7 +343,7 @@ abstract class _UserModel implements UserModel {
       required final String gender,
       required final String email,
       required final String skin_type,
-      required final List<String> skin_concern,
+      required final List<String> skin_concerns,
       required final String allergy}) = _$UserModelImpl;
 
   factory _UserModel.fromJson(Map<String, dynamic> json) =
@@ -368,7 +368,7 @@ abstract class _UserModel implements UserModel {
   @override
   String get skin_type;
   @override
-  List<String> get skin_concern;
+  List<String> get skin_concerns;
   @override
   String get allergy;
   @override

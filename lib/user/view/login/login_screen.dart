@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gproject/common/component/button.dart';
+import 'package:gproject/common/component/dialog.dart';
 import 'package:gproject/common/dio/dio.dart';
 import 'package:gproject/common/secure_storage/secure_storage.dart';
 import 'package:gproject/common/variable/color.dart';
@@ -99,8 +100,6 @@ class LoginScreen extends ConsumerWidget {
                     });
                     try{
                       if (resp.statusCode == 200) {
-                        
-                      print(resp.data);
                       final user = UserModel.fromJson(resp.data);
                       print(user);
                       final storage = ref.watch(secureStorageProvider);
@@ -116,10 +115,10 @@ class LoginScreen extends ConsumerWidget {
                         ),
                       );
                     }else{
-                      print(resp.statusCode);
+                      
                     }
                     }catch(e){
-                      print(e);
+                      print('실패');
                     }
                   }
                 },

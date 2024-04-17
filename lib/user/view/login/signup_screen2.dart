@@ -129,7 +129,7 @@ class SignUpScreen2 extends ConsumerWidget {
                             skin_type: ref
                                 .read(typeButtonProvider.notifier)
                                 .postValue(),
-                            skin_concern: ref
+                            skin_concerns: ref
                                 .read(worryButtonProvider.notifier)
                                 .postValue(),
                             allergy: allergieController.text == "" ? "X" : allergieController.text,

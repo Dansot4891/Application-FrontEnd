@@ -112,13 +112,9 @@ class HomeScreen extends ConsumerWidget {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          mainButton(
-                            ImgPath.cosmeticLogo,
-                            "화장품",
+                          mainButton(ImgPath.cosmeticLogo,"화장품",
                             () async {
-                              await ref
-                                  .read(CosmeticProvider.notifier)
-                                  .fetchData();
+                              await ref.read(CosmeticProvider.notifier).fetchData();
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(

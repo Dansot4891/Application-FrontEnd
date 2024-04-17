@@ -81,6 +81,10 @@ class SignUpScreen1 extends ConsumerWidget {
                   children: [
                     InkWell(
                       onTap: () async {
+                        if(idController.text == ""){
+                          CustomDialog(context: context, title: '아이디를 입력해주세요.', buttonText: '확인', buttonCount: 1, func: (){Navigator.pop(context);});
+                          return;
+                        }
                         ref.read(idProvider.notifier).setId(idController.text);
                         ref.read(idCheckProvider.notifier).checkId(idController.text, context);
                       },
