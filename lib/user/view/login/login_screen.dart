@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gproject/common/component/button.dart';
+import 'package:gproject/common/dio/dio.dart';
 import 'package:gproject/common/secure_storage/secure_storage.dart';
 import 'package:gproject/common/variable/color.dart';
 import 'package:gproject/common/component/main_text.dart';
@@ -28,11 +29,19 @@ class LoginScreen extends ConsumerWidget {
       appBar: AppBar(
         leading: IconButton(
           onPressed: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context){
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) {
                   return SplashScreen();
-                },),);
+                },
+              ),
+            );
           },
-          icon: Icon(Icons.arrow_back, size: 35,),
+          icon: Icon(
+            Icons.arrow_back,
+            size: 35,
+          ),
         ),
       ),
       body: Padding(
@@ -68,21 +77,50 @@ class LoginScreen extends ConsumerWidget {
               CustomButton(
                 text: '로그인',
                 func: () async {
-                  if(gkey.currentState!.validate()){
-                    final data = UserModel(name: '최현수', nickname: '최현수짱', login_id: 'chlgustn123', birth: '1999.01.01', gender: 'MALE', email: 'chlgustn@naver.com', skin_type: '중성', skin_concern: ['미백잡티', '아토피', '여드름', '각질',], allergy: '파인애플 알레르기');
-                    final storage = ref.watch(secureStorageProvider);
-                    await storage.write(key: 'user', value: jsonEncode(data.toJson()));
-                    ref.read(userDataProvider.notifier).updateUserModel(ref);
-                    // final data2 = await storage.readAll();
-                    // print(data2);
-                    Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) {
-                        return HomeScreen();
-                      },
-                    ),
-                  );
+                  if (gkey.currentState!.validate()) {
+                    //   final data = UserModel(name: '최현수', nickname: '최현수짱', login_id: 'chlgustn123', birth: '1999.01.01', gender: 'MALE', email: 'chlgustn@naver.com', skin_type: '중성', skin_concern: ['미백잡티', '아토피', '여드름', '각질',], allergy: '파인애플 알레르기');
+                    //   final storage = ref.watch(secureStorageProvider);
+                    //   await storage.write(key: 'user', value: jsonEncode(data.toJson()));
+                    //   ref.read(userDataProvider.notifier).updateUserModel(ref);
+                    //   // final data2 = await storage.readAll();
+                    //   // print(data2);
+                    //   Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(
+                    //     builder: (context) {
+                    //       return HomeScreen();
+                    //     },
+                    //   ),
+                    // );
+                    final resp = await dio
+                        .post('http://ceprj.gachon.ac.kr:60006/api/user/login', data: {
+                      'login_id': idController.text,
+                      'password': pwController.text,
+                    });
+                    try{
+                      if (resp.statusCode == 200) {
+                        
+                      print(resp.data);
+                      final user = UserModel.fromJson(resp.data);
+                      print(user);
+                      final storage = ref.watch(secureStorageProvider);
+                      await storage.write(
+                          key: 'user', value: jsonEncode(user.toJson()));
+                      ref.read(userDataProvider.notifier).updateUserModel(ref);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return HomeScreen();
+                          },
+                        ),
+                      );
+                    }else{
+                      print(resp.statusCode);
+                    }
+                    }catch(e){
+                      print(e);
+                    }
                   }
                 },
               ),
@@ -92,13 +130,13 @@ class LoginScreen extends ConsumerWidget {
                   TextButton(
                     onPressed: () {
                       Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) {
-                        return FindScreen();
-                      },
-                    ),
-                  );
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return FindScreen();
+                          },
+                        ),
+                      );
                     },
                     child: Text(
                       '아이디 찾기 | 비밀번호 찾기',

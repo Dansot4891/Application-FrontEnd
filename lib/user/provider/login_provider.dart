@@ -50,12 +50,10 @@ class UserDataNotifer extends StateNotifier<UserModel?>{
 
     if(user.skin_type == '건성'){
       ref.read(typeButtonProvider.notifier).changeValue(0);
-    }else if(user.skin_type == '중성'){
-      ref.read(typeButtonProvider.notifier).changeValue(1);
     }else if(user.skin_type == '지성'){
-      ref.read(typeButtonProvider.notifier).changeValue(2);
+      ref.read(typeButtonProvider.notifier).changeValue(1);
     }else if(user.skin_type == '민감성'){
-      ref.read(typeButtonProvider.notifier).changeValue(3);
+      ref.read(typeButtonProvider.notifier).changeValue(2);
     }
 
     if(!user.skin_concern.contains('해당 없음')){

@@ -24,9 +24,8 @@ class SignupRadioButtonRow extends ConsumerWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         SignupRadioButton(title: '건성', checked: ref.watch(typeButtonProvider)[0], func: (){ref.read(typeButtonProvider.notifier).changeValue(0);}),
-        SignupRadioButton(title: '중성', checked: ref.watch(typeButtonProvider)[1], func: (){ref.read(typeButtonProvider.notifier).changeValue(1);}),
-        SignupRadioButton(title: '지성', checked: ref.watch(typeButtonProvider)[2], func: (){ref.read(typeButtonProvider.notifier).changeValue(2);}),
-        SignupRadioButton(title: '민감성', checked: ref.watch(typeButtonProvider)[3], func: (){ref.read(typeButtonProvider.notifier).changeValue(3);}),
+        SignupRadioButton(title: '지성', checked: ref.watch(typeButtonProvider)[1], func: (){ref.read(typeButtonProvider.notifier).changeValue(1);}),
+        SignupRadioButton(title: '민감성', checked: ref.watch(typeButtonProvider)[2], func: (){ref.read(typeButtonProvider.notifier).changeValue(2);}),
       ],
     ) :Column(
       mainAxisAlignment: MainAxisAlignment.start,

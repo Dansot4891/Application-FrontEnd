@@ -2,20 +2,30 @@ import 'package:flutter/cupertino.dart';
 import 'package:gproject/common/component/button.dart';
 import 'package:gproject/common/component/dialog.dart';
 import 'package:gproject/common/component/textformfield.dart';
+import 'package:gproject/common/dio/dio.dart';
 import 'package:gproject/common/variable/validator.dart';
 
-class FindPWScreen extends StatelessWidget {
-  const FindPWScreen({super.key});
+class FindPwScreen extends StatelessWidget {
+  const FindPwScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     final gkey = GlobalKey<FormState>();
     TextEditingController emailController = TextEditingController();
     TextEditingController nameController = TextEditingController();
+    TextEditingController idController = TextEditingController();
     return Form(
       key: gkey,
       child: Column(
         children: [
+          CustomTextFormField(
+            validator: idValidator,
+            controller: idController,
+            hintText: '아이디 입력',
+          ),
+          SizedBox(
+            height: 10,
+          ),
           CustomTextFormField(
             validator: emailValidator,
             controller: emailController,
@@ -33,18 +43,32 @@ class FindPWScreen extends StatelessWidget {
             height: 30,
           ),
           CustomButton(
-            text: '아이디 찾기',
-            func: () {
-              if(gkey.currentState!.validate()){
-                CustomDialog(
-              context: context,
-              title: "회원님의 비밀번호는\n'chlgustn123'입니다.",
-              buttonText: '확인',
-              buttonCount: 1,
-              func: () {
-                Navigator.pop(context);
-              },
-            );
+            text: '비밀번호 찾기',
+            func: () async {
+              if (gkey.currentState!.validate()) {
+                try {
+                  final resp = await dio.post(
+                      'http://ceprj.gachon.ac.kr:60006/api/user/find-id',
+                      data: {
+                        "login_id": idController.text,
+                        "email": emailController.text,
+                        "name": nameController.text,
+                      });
+                  if (resp.statusCode == 200) {
+                    final password = resp.data['password'];
+                    CustomDialog(
+                      context: context,
+                      title: "회원님의 비밀번호는\n'${password}'입니다.",
+                      buttonText: '확인',
+                      buttonCount: 1,
+                      func: () {
+                        Navigator.pop(context);
+                      },
+                    );
+                  }
+                } catch (e) {
+                  print(e);
+                }
               }
             },
           )

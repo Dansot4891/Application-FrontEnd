@@ -7,12 +7,16 @@ class CustomTextFormField extends StatelessWidget {
   final String hintText;
   bool expand;
   bool obsecure;
+  bool enabled;
+  final String? initialValue;
   final String? Function(String?)? validator;
   CustomTextFormField({
     required this.controller,
     required this.hintText,
     this.expand = false,
     this.obsecure = false,
+    this.enabled = true,
+    this.initialValue,
     this.validator,
     super.key,
   });
@@ -20,6 +24,8 @@ class CustomTextFormField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      initialValue: initialValue,
+      enabled: enabled,
       obscureText: obsecure,
       validator: validator == null ? null : validator,
       expands: expand,
@@ -30,8 +36,14 @@ class CustomTextFormField extends StatelessWidget {
       ),
       minLines: !expand ? 1 : null,
       maxLines: !expand ? 1 : null,
-      controller: controller,
+      controller: initialValue == null ? controller : null,
       decoration: InputDecoration(
+        disabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8),
+          borderSide: BorderSide(
+            color: PColors.grey1.withOpacity(0.2),
+          ),
+        ),
         focusedErrorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
           borderSide: BorderSide(
@@ -84,7 +96,7 @@ class BirthTextField extends StatelessWidget {
       onChanged: (value) {
         if (value.length == 8) {
           String formattedDate =
-              "${value.substring(0, 4)}.${value.substring(4, 6)}.${value.substring(6, 8)}";
+              "${value.substring(0, 4)}-${value.substring(4, 6)}-${value.substring(6, 8)}";
           controller.value = TextEditingValue(
             text: formattedDate,
             selection: TextSelection.fromPosition(

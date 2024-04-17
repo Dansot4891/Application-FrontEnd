@@ -85,8 +85,8 @@ class _FindScreenState extends State<FindScreen>
                 controller: tabController,
                 physics: NeverScrollableScrollPhysics(),
                 children: [
-                  FindIDScreen(),
-                  FindPWScreen(),
+                  FindIdScreen(),
+                  FindPwScreen(),
                 ],
               ),
             ),
