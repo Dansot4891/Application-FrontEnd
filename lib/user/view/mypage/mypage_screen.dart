@@ -4,7 +4,6 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gproject/common/component/dialog.dart';
 import 'package:gproject/common/dio/dio.dart';
-import 'package:gproject/common/secure_storage/secure_storage.dart';
 import 'package:gproject/common/variable/color.dart';
 import 'package:gproject/common/view/default_layout.dart';
 import 'package:gproject/common/view/home_screen.dart';
@@ -90,7 +89,14 @@ class MyPageScreen extends ConsumerWidget {
                 size: 40,
               ),
               text: '전체 성분 확인하기',
-              func: () {
+              func: () async {
+                if (loginState) {
+                  await ref.read(IngredientProvider.notifier).fetchAllData(userData!.id!);
+                }
+                if (!loginState) {
+                  await ref.read(IngredientProvider.notifier).fetchAllData(0);
+                }
+                ref.read(previousDataProvider.notifier).setData(ref);
                 Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -107,7 +113,9 @@ class MyPageScreen extends ConsumerWidget {
                 size: 40,
               ),
               text: '나의 성분 확인하기',
-              func: () {
+              func: () async {
+                await ref.read(IngredientProvider.notifier).fetchBookMarkData(userData!.id!);
+                ref.read(previousDataProvider.notifier).setData(ref);
                 Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -193,11 +201,12 @@ class MyPageScreen extends ConsumerWidget {
               text: '성분 확인하기',
               func: () async {
                 if (loginState) {
-                  await ref.read(IngredientProvider.notifier).fetchAllData(ref.watch(userDataProvider)!.id!);
+                  await ref
+                      .read(IngredientProvider.notifier)
+                      .fetchAllData(ref.watch(userDataProvider)!.id!);
                 }
                 if (!loginState) {
                   await ref.read(IngredientProvider.notifier).fetchAllData(0);
-                  
                 }
                 ref.read(previousDataProvider.notifier).setData(ref);
                 Navigator.push(

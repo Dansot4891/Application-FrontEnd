@@ -51,12 +51,12 @@ class IngredientScreen extends ConsumerWidget {
     ];
     return DefaultLayout(
       func: () async {
-        // if(ref.watch(loginStateProvider)){
-        //   final result = ref.read(IngredientProvider.notifier).getBookMarkData(ref.watch(previousDataProvider), ref.watch(userDataProvider)!.id!);
-        //   if(result == false){
-        //     CustomDialog(context: context, title: '오류가 발생했습니다.', buttonText: '확인', buttonCount: 1, func: (){Navigator.pop(context);});
-        //   }
-        // }
+        if(ref.watch(loginStateProvider)){
+          final result = ref.read(IngredientProvider.notifier).getBookMarkData(ref.watch(previousDataProvider), ref.watch(userDataProvider)!.id!);
+          if(result == false){
+            CustomDialog(context: context, title: '오류가 발생했습니다.', buttonText: '확인', buttonCount: 1, func: (){Navigator.pop(context);});
+          }
+        }
         Navigator.pop(context);
       },
       child: CustomScrollView(

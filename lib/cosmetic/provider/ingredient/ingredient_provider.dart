@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gproject/common/dio/dio.dart';
 import 'package:gproject/cosmetic/model/ingredient/ingredient_model.dart';
@@ -80,9 +83,13 @@ class IngredientNotifier extends StateNotifier<List<IngredientModel>> {
         data.add(state[i].name);
       }
     }
+    if(data.length == 0){
+      return true;
+    }
     try{
-      final resp = await dio.put('${BASE_URL}/api/user/ingredient/list/${memberId}',
-        data: data,
+      final resp = await dio.put('${BASE_URL}/api/user/ingredient/preferenve/${memberId}',
+        data: jsonEncode(data),
+        
       );
       if(resp.statusCode==200){
         return true;
@@ -91,6 +98,7 @@ class IngredientNotifier extends StateNotifier<List<IngredientModel>> {
         return false;
       }
     }catch(e){
+      print(e);
       return false;
     }
   }
