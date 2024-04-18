@@ -129,16 +129,17 @@ class SignUpScreen2 extends ConsumerWidget {
                             skin_type: ref
                                 .read(typeButtonProvider.notifier)
                                 .postValue(),
-                            skin_concerns: ref
+                            skin_concern: ref
                                 .read(worryButtonProvider.notifier)
                                 .postValue(),
                             allergy: allergieController.text == "" ? "X" : allergieController.text,
                           );
                           final data = user.toJson();
                           data.remove('id');
+                          print(jsonEncode(data));
                           try {
                             final resp = await dio.post(
-                              'http://ceprj.gachon.ac.kr:60006/api/user/signup',
+                              '${BASE_URL}/api/user/signup',
                               data: jsonEncode(data),
                             );
                             if (resp.statusCode == 200) {

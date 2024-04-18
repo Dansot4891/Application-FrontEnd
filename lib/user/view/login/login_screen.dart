@@ -79,29 +79,14 @@ class LoginScreen extends ConsumerWidget {
                 text: '로그인',
                 func: () async {
                   if (gkey.currentState!.validate()) {
-                    //   final data = UserModel(name: '최현수', nickname: '최현수짱', login_id: 'chlgustn123', birth: '1999.01.01', gender: 'MALE', email: 'chlgustn@naver.com', skin_type: '중성', skin_concern: ['미백잡티', '아토피', '여드름', '각질',], allergy: '파인애플 알레르기');
-                    //   final storage = ref.watch(secureStorageProvider);
-                    //   await storage.write(key: 'user', value: jsonEncode(data.toJson()));
-                    //   ref.read(userDataProvider.notifier).updateUserModel(ref);
-                    //   // final data2 = await storage.readAll();
-                    //   // print(data2);
-                    //   Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(
-                    //     builder: (context) {
-                    //       return HomeScreen();
-                    //     },
-                    //   ),
-                    // );
                     final resp = await dio
-                        .post('http://ceprj.gachon.ac.kr:60006/api/user/login', data: {
+                        .post('${BASE_URL}/api/user/login', data: {
                       'login_id': idController.text,
                       'password': pwController.text,
                     });
                     try{
                       if (resp.statusCode == 200) {
                       final user = UserModel.fromJson(resp.data);
-                      print(user);
                       final storage = ref.watch(secureStorageProvider);
                       await storage.write(
                           key: 'user', value: jsonEncode(user.toJson()));
@@ -118,6 +103,7 @@ class LoginScreen extends ConsumerWidget {
                       
                     }
                     }catch(e){
+                      print(e);
                       print('실패');
                     }
                   }

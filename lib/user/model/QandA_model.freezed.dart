@@ -20,11 +20,11 @@ QandAModel _$QandAModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$QandAModel {
-  String get qna_id => throw _privateConstructorUsedError;
-  String get qna_subject => throw _privateConstructorUsedError;
-  String get qna_content => throw _privateConstructorUsedError;
+  int get id => throw _privateConstructorUsedError;
+  String get title => throw _privateConstructorUsedError;
+  String get description => throw _privateConstructorUsedError;
   bool get answer_status => throw _privateConstructorUsedError;
-  String get answer => throw _privateConstructorUsedError;
+  String? get answer => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -39,11 +39,11 @@ abstract class $QandAModelCopyWith<$Res> {
       _$QandAModelCopyWithImpl<$Res, QandAModel>;
   @useResult
   $Res call(
-      {String qna_id,
-      String qna_subject,
-      String qna_content,
+      {int id,
+      String title,
+      String description,
       bool answer_status,
-      String answer});
+      String? answer});
 }
 
 /// @nodoc
@@ -59,33 +59,33 @@ class _$QandAModelCopyWithImpl<$Res, $Val extends QandAModel>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? qna_id = null,
-    Object? qna_subject = null,
-    Object? qna_content = null,
+    Object? id = null,
+    Object? title = null,
+    Object? description = null,
     Object? answer_status = null,
-    Object? answer = null,
+    Object? answer = freezed,
   }) {
     return _then(_value.copyWith(
-      qna_id: null == qna_id
-          ? _value.qna_id
-          : qna_id // ignore: cast_nullable_to_non_nullable
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
+      title: null == title
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
               as String,
-      qna_subject: null == qna_subject
-          ? _value.qna_subject
-          : qna_subject // ignore: cast_nullable_to_non_nullable
-              as String,
-      qna_content: null == qna_content
-          ? _value.qna_content
-          : qna_content // ignore: cast_nullable_to_non_nullable
+      description: null == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
               as String,
       answer_status: null == answer_status
           ? _value.answer_status
           : answer_status // ignore: cast_nullable_to_non_nullable
               as bool,
-      answer: null == answer
+      answer: freezed == answer
           ? _value.answer
           : answer // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ) as $Val);
   }
 }
@@ -99,11 +99,11 @@ abstract class _$$QandAModelImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String qna_id,
-      String qna_subject,
-      String qna_content,
+      {int id,
+      String title,
+      String description,
       bool answer_status,
-      String answer});
+      String? answer});
 }
 
 /// @nodoc
@@ -117,33 +117,33 @@ class __$$QandAModelImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? qna_id = null,
-    Object? qna_subject = null,
-    Object? qna_content = null,
+    Object? id = null,
+    Object? title = null,
+    Object? description = null,
     Object? answer_status = null,
-    Object? answer = null,
+    Object? answer = freezed,
   }) {
     return _then(_$QandAModelImpl(
-      null == qna_id
-          ? _value.qna_id
-          : qna_id // ignore: cast_nullable_to_non_nullable
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
+      title: null == title
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
               as String,
-      null == qna_subject
-          ? _value.qna_subject
-          : qna_subject // ignore: cast_nullable_to_non_nullable
+      description: null == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
               as String,
-      null == qna_content
-          ? _value.qna_content
-          : qna_content // ignore: cast_nullable_to_non_nullable
-              as String,
-      null == answer_status
+      answer_status: null == answer_status
           ? _value.answer_status
           : answer_status // ignore: cast_nullable_to_non_nullable
               as bool,
-      null == answer
+      answer: freezed == answer
           ? _value.answer
           : answer // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ));
   }
 }
@@ -151,26 +151,30 @@ class __$$QandAModelImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$QandAModelImpl implements _QandAModel {
-  _$QandAModelImpl(this.qna_id, this.qna_subject, this.qna_content,
-      this.answer_status, this.answer);
+  _$QandAModelImpl(
+      {required this.id,
+      required this.title,
+      required this.description,
+      required this.answer_status,
+      this.answer});
 
   factory _$QandAModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$QandAModelImplFromJson(json);
 
   @override
-  final String qna_id;
+  final int id;
   @override
-  final String qna_subject;
+  final String title;
   @override
-  final String qna_content;
+  final String description;
   @override
   final bool answer_status;
   @override
-  final String answer;
+  final String? answer;
 
   @override
   String toString() {
-    return 'QandAModel(qna_id: $qna_id, qna_subject: $qna_subject, qna_content: $qna_content, answer_status: $answer_status, answer: $answer)';
+    return 'QandAModel(id: $id, title: $title, description: $description, answer_status: $answer_status, answer: $answer)';
   }
 
   @override
@@ -178,11 +182,10 @@ class _$QandAModelImpl implements _QandAModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$QandAModelImpl &&
-            (identical(other.qna_id, qna_id) || other.qna_id == qna_id) &&
-            (identical(other.qna_subject, qna_subject) ||
-                other.qna_subject == qna_subject) &&
-            (identical(other.qna_content, qna_content) ||
-                other.qna_content == qna_content) &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.title, title) || other.title == title) &&
+            (identical(other.description, description) ||
+                other.description == description) &&
             (identical(other.answer_status, answer_status) ||
                 other.answer_status == answer_status) &&
             (identical(other.answer, answer) || other.answer == answer));
@@ -190,8 +193,8 @@ class _$QandAModelImpl implements _QandAModel {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, qna_id, qna_subject, qna_content, answer_status, answer);
+  int get hashCode =>
+      Object.hash(runtimeType, id, title, description, answer_status, answer);
 
   @JsonKey(ignore: true)
   @override
@@ -209,25 +212,25 @@ class _$QandAModelImpl implements _QandAModel {
 
 abstract class _QandAModel implements QandAModel {
   factory _QandAModel(
-      final String qna_id,
-      final String qna_subject,
-      final String qna_content,
-      final bool answer_status,
-      final String answer) = _$QandAModelImpl;
+      {required final int id,
+      required final String title,
+      required final String description,
+      required final bool answer_status,
+      final String? answer}) = _$QandAModelImpl;
 
   factory _QandAModel.fromJson(Map<String, dynamic> json) =
       _$QandAModelImpl.fromJson;
 
   @override
-  String get qna_id;
+  int get id;
   @override
-  String get qna_subject;
+  String get title;
   @override
-  String get qna_content;
+  String get description;
   @override
   bool get answer_status;
   @override
-  String get answer;
+  String? get answer;
   @override
   @JsonKey(ignore: true)
   _$$QandAModelImplCopyWith<_$QandAModelImpl> get copyWith =>

@@ -8,18 +8,18 @@ part of 'QandA_model.dart';
 
 _$QandAModelImpl _$$QandAModelImplFromJson(Map<String, dynamic> json) =>
     _$QandAModelImpl(
-      json['qna_id'] as String,
-      json['qna_subject'] as String,
-      json['qna_content'] as String,
-      json['answer_status'] as bool,
-      json['answer'] as String,
+      id: json['id'] as int,
+      title: json['title'] as String,
+      description: json['description'] as String,
+      answer_status: json['answer_status'] as bool,
+      answer: json['answer'] as String?,
     );
 
 Map<String, dynamic> _$$QandAModelImplToJson(_$QandAModelImpl instance) =>
     <String, dynamic>{
-      'qna_id': instance.qna_id,
-      'qna_subject': instance.qna_subject,
-      'qna_content': instance.qna_content,
+      'id': instance.id,
+      'title': instance.title,
+      'description': instance.description,
       'answer_status': instance.answer_status,
       'answer': instance.answer,
     };

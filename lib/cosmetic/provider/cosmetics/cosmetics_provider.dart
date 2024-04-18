@@ -1,9 +1,6 @@
-import 'dart:convert';
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gproject/common/dio/dio.dart';
 import 'package:gproject/cosmetic/model/cosmetics/cosmetic_model.dart';
-import 'package:gproject/cosmetic/model/cosmetics/cosmetic_purchase.dart';
 
 final CosmeticProvider = StateNotifierProvider<CosmeticNotifier, List<CosmeticModel>>((ref) => CosmeticNotifier());
 

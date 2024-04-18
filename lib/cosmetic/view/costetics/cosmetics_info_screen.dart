@@ -103,7 +103,7 @@ class CosmeticsInfoScreen extends ConsumerWidget {
           GestureDetector(
               onTap: () async {
                 final url = Uri.parse(
-                  'https:/${price.url}',
+                  '${price.url}',
                 );
                 if (await canLaunchUrl(url)) {
                   launchUrl(url);

@@ -6,7 +6,7 @@ import 'package:gproject/common/view/default_layout.dart';
 import 'package:gproject/user/provider/QandA_provider.dart';
 
 class MyAnswerScreen extends ConsumerWidget {
-  final String id;
+  final int id;
   const MyAnswerScreen({
     required this.id,
     super.key,
@@ -16,7 +16,7 @@ class MyAnswerScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final model = ref.read(QandAProvider.notifier).getDetail(id);
     return DefaultLayout(
-      child: model.qna_id == '오류'
+      child: model == null
           ? Center(
               child: Text(
                 '오류입니다. 다시 시도해주세요.',
@@ -43,8 +43,8 @@ class MyAnswerScreen extends ConsumerWidget {
                         fontWeight: FontWeight.w600,
                       ),
                     ),
-                    TextBox(text: model.qna_subject),
-                    TextBox(text: model.qna_content),
+                    TextBox(text: model.title),
+                    TextBox(text: model.description),
                     SizedBox(
                       height: MediaQuery.of(context).size.height / 15 * 1,
                     ),
@@ -67,7 +67,7 @@ class MyAnswerScreen extends ConsumerWidget {
   }
 
   Container TextBox({
-    required String text,
+    required String? text,
   }) {
     return Container(
       margin: const EdgeInsets.symmetric(
@@ -85,7 +85,7 @@ class MyAnswerScreen extends ConsumerWidget {
         ),
       ),
       child: Text(
-        text,
+        text!,
         style: TextStyle(
           fontSize: 16,
           fontWeight: FontWeight.w500,

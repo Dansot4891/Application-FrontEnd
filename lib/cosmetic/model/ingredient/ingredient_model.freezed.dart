@@ -20,10 +20,9 @@ IngredientModel _$IngredientModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$IngredientModel {
-  int get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   int get grade => throw _privateConstructorUsedError;
-  List<String> get purposes => throw _privateConstructorUsedError;
+  List<String> get purpose => throw _privateConstructorUsedError;
   bool get preference => throw _privateConstructorUsedError;
   List<String> get features => throw _privateConstructorUsedError;
 
@@ -40,10 +39,9 @@ abstract class $IngredientModelCopyWith<$Res> {
       _$IngredientModelCopyWithImpl<$Res, IngredientModel>;
   @useResult
   $Res call(
-      {int id,
-      String name,
+      {String name,
       int grade,
-      List<String> purposes,
+      List<String> purpose,
       bool preference,
       List<String> features});
 }
@@ -61,18 +59,13 @@ class _$IngredientModelCopyWithImpl<$Res, $Val extends IngredientModel>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
     Object? name = null,
     Object? grade = null,
-    Object? purposes = null,
+    Object? purpose = null,
     Object? preference = null,
     Object? features = null,
   }) {
     return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -81,9 +74,9 @@ class _$IngredientModelCopyWithImpl<$Res, $Val extends IngredientModel>
           ? _value.grade
           : grade // ignore: cast_nullable_to_non_nullable
               as int,
-      purposes: null == purposes
-          ? _value.purposes
-          : purposes // ignore: cast_nullable_to_non_nullable
+      purpose: null == purpose
+          ? _value.purpose
+          : purpose // ignore: cast_nullable_to_non_nullable
               as List<String>,
       preference: null == preference
           ? _value.preference
@@ -106,10 +99,9 @@ abstract class _$$IngredientModelImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {int id,
-      String name,
+      {String name,
       int grade,
-      List<String> purposes,
+      List<String> purpose,
       bool preference,
       List<String> features});
 }
@@ -125,18 +117,13 @@ class __$$IngredientModelImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
     Object? name = null,
     Object? grade = null,
-    Object? purposes = null,
+    Object? purpose = null,
     Object? preference = null,
     Object? features = null,
   }) {
     return _then(_$IngredientModelImpl(
-      null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int,
       null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -145,9 +132,9 @@ class __$$IngredientModelImplCopyWithImpl<$Res>
           ? _value.grade
           : grade // ignore: cast_nullable_to_non_nullable
               as int,
-      null == purposes
-          ? _value._purposes
-          : purposes // ignore: cast_nullable_to_non_nullable
+      null == purpose
+          ? _value._purpose
+          : purpose // ignore: cast_nullable_to_non_nullable
               as List<String>,
       null == preference
           ? _value.preference
@@ -164,26 +151,24 @@ class __$$IngredientModelImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$IngredientModelImpl implements _IngredientModel {
-  _$IngredientModelImpl(this.id, this.name, this.grade,
-      final List<String> purposes, this.preference, final List<String> features)
-      : _purposes = purposes,
+  _$IngredientModelImpl(this.name, this.grade, final List<String> purpose,
+      this.preference, final List<String> features)
+      : _purpose = purpose,
         _features = features;
 
   factory _$IngredientModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$IngredientModelImplFromJson(json);
 
   @override
-  final int id;
-  @override
   final String name;
   @override
   final int grade;
-  final List<String> _purposes;
+  final List<String> _purpose;
   @override
-  List<String> get purposes {
-    if (_purposes is EqualUnmodifiableListView) return _purposes;
+  List<String> get purpose {
+    if (_purpose is EqualUnmodifiableListView) return _purpose;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_purposes);
+    return EqualUnmodifiableListView(_purpose);
   }
 
   @override
@@ -198,7 +183,7 @@ class _$IngredientModelImpl implements _IngredientModel {
 
   @override
   String toString() {
-    return 'IngredientModel(id: $id, name: $name, grade: $grade, purposes: $purposes, preference: $preference, features: $features)';
+    return 'IngredientModel(name: $name, grade: $grade, purpose: $purpose, preference: $preference, features: $features)';
   }
 
   @override
@@ -206,10 +191,9 @@ class _$IngredientModelImpl implements _IngredientModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$IngredientModelImpl &&
-            (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.grade, grade) || other.grade == grade) &&
-            const DeepCollectionEquality().equals(other._purposes, _purposes) &&
+            const DeepCollectionEquality().equals(other._purpose, _purpose) &&
             (identical(other.preference, preference) ||
                 other.preference == preference) &&
             const DeepCollectionEquality().equals(other._features, _features));
@@ -219,10 +203,9 @@ class _$IngredientModelImpl implements _IngredientModel {
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      id,
       name,
       grade,
-      const DeepCollectionEquality().hash(_purposes),
+      const DeepCollectionEquality().hash(_purpose),
       preference,
       const DeepCollectionEquality().hash(_features));
 
@@ -243,10 +226,9 @@ class _$IngredientModelImpl implements _IngredientModel {
 
 abstract class _IngredientModel implements IngredientModel {
   factory _IngredientModel(
-      final int id,
       final String name,
       final int grade,
-      final List<String> purposes,
+      final List<String> purpose,
       final bool preference,
       final List<String> features) = _$IngredientModelImpl;
 
@@ -254,13 +236,11 @@ abstract class _IngredientModel implements IngredientModel {
       _$IngredientModelImpl.fromJson;
 
   @override
-  int get id;
-  @override
   String get name;
   @override
   int get grade;
   @override
-  List<String> get purposes;
+  List<String> get purpose;
   @override
   bool get preference;
   @override

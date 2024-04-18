@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gproject/common/component/dialog.dart';
+import 'package:gproject/common/dio/dio.dart';
 import 'package:gproject/common/secure_storage/secure_storage.dart';
 import 'package:gproject/common/variable/color.dart';
 import 'package:gproject/common/view/default_layout.dart';
@@ -10,6 +11,7 @@ import 'package:gproject/common/view/home_screen.dart';
 import 'package:gproject/common/view/splash_screen.dart';
 import 'package:gproject/cosmetic/provider/ingredient/ingredient_provider.dart';
 import 'package:gproject/cosmetic/view/ingredient/ingredient_screen.dart';
+import 'package:gproject/user/provider/QandA_provider.dart';
 import 'package:gproject/user/provider/login_provider.dart';
 import 'package:gproject/user/view/login/login_screen.dart';
 import 'package:gproject/user/view/mypage/answer_screen.dart';
@@ -66,12 +68,17 @@ class MyPageScreen extends ConsumerWidget {
                 size: 40,
               ),
               text: '문의내역',
-              func: () {
+              func: () async {
+                await ref.read(QandAProvider.notifier).getData(userData!.id!);
                 Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (context) {
-                      return AnswerScreen();
+                      return AnswerScreen(
+                        yesList:
+                            ref.read(QandAProvider.notifier).fetchYesData(),
+                        noList: ref.read(QandAProvider.notifier).fetchNoData(),
+                      );
                     },
                   ),
                 );
@@ -124,16 +131,7 @@ class MyPageScreen extends ConsumerWidget {
                   buttonText: null,
                   buttonCount: 2,
                   func: () async {
-                    await ref.watch(secureStorageProvider).deleteAll();
-                    await ref.read(userDataProvider.notifier).deleteData();
-                    Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return LoginScreen();
-                    },
-                  ),
-                );
+                    ref.read(userDataProvider.notifier).logout(ref, context);
                   },
                 );
               },
@@ -144,27 +142,31 @@ class MyPageScreen extends ConsumerWidget {
                 size: 40,
               ),
               text: '회원탈퇴',
-              func: () {
+              func: () async {
                 signupDialog(
                   context: context,
-                  func: () {
+                  func: () async {
                     if (controller.text == '회원탈퇴') {
-                      CustomDialog(
-                        context: context,
-                        title: '회원탈퇴가 완료되었습니다.',
-                        buttonText: '확인',
-                        buttonCount: 1,
-                        func: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) {
-                                return SplashScreen();
-                              },
-                            ),
-                          );
-                        },
-                      );
+                      final resp = await dio.delete(
+                          '${BASE_URL}/api/user/userDelete/${userData!.login_id}');
+                      if (resp.statusCode == 200) {
+                        CustomDialog(
+                          context: context,
+                          title: '회원탈퇴가 완료되었습니다.',
+                          buttonText: '확인',
+                          buttonCount: 1,
+                          func: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) {
+                                  return SplashScreen();
+                                },
+                              ),
+                            );
+                          },
+                        );
+                      } else {}
                     } else {
                       CustomDialog(
                         context: context,
@@ -190,7 +192,14 @@ class MyPageScreen extends ConsumerWidget {
               ),
               text: '성분 확인하기',
               func: () async {
-                ref.read(IngredientProvider.notifier).fetchDate();
+                if (loginState) {
+                  await ref.read(IngredientProvider.notifier).fetchAllData(ref.watch(userDataProvider)!.id!);
+                }
+                if (!loginState) {
+                  await ref.read(IngredientProvider.notifier).fetchAllData(0);
+                  
+                }
+                ref.read(previousDataProvider.notifier).setData(ref);
                 Navigator.push(
                   context,
                   MaterialPageRoute(

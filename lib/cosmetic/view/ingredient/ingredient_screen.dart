@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:gproject/common/component/dialog.dart';
 import 'package:gproject/common/variable/color.dart';
 import 'package:gproject/common/view/default_layout.dart';
 import 'package:gproject/cosmetic/component/ingredient/ingredient_bar.dart';
@@ -9,6 +10,7 @@ import 'package:gproject/cosmetic/component/ingredient/ingredient_info.dart';
 import 'package:gproject/cosmetic/model/ingredient/ingredient_model.dart';
 import 'package:gproject/cosmetic/provider/ingredient/ingredient_button_provider.dart';
 import 'package:gproject/cosmetic/provider/ingredient/ingredient_provider.dart';
+import 'package:gproject/user/provider/login_provider.dart';
 
 class IngredientScreen extends ConsumerWidget {
   IngredientScreen({super.key});
@@ -33,14 +35,14 @@ class IngredientScreen extends ConsumerWidget {
         selected: state[1],
       ),
       IngredientButton(
-        title: '3~5 등급',
+        title: '3~6 등급',
         func: () {
           ref.read(buttonIndexProvider.notifier).changeValue(2);
         },
         selected: state[2],
       ),
       IngredientButton(
-        title: '6~7 등급',
+        title: '7~10 등급',
         func: () {
           ref.read(buttonIndexProvider.notifier).changeValue(3);
         },
@@ -48,8 +50,13 @@ class IngredientScreen extends ConsumerWidget {
       ),
     ];
     return DefaultLayout(
-      func: (){
-        print(ref.read(IngredientProvider.notifier).getBookMarkData(ref.watch(previousDataProvider)));
+      func: () async {
+        // if(ref.watch(loginStateProvider)){
+        //   final result = ref.read(IngredientProvider.notifier).getBookMarkData(ref.watch(previousDataProvider), ref.watch(userDataProvider)!.id!);
+        //   if(result == false){
+        //     CustomDialog(context: context, title: '오류가 발생했습니다.', buttonText: '확인', buttonCount: 1, func: (){Navigator.pop(context);});
+        //   }
+        // }
         Navigator.pop(context);
       },
       child: CustomScrollView(
@@ -73,8 +80,8 @@ class IngredientScreen extends ConsumerWidget {
                 delegate: SliverChildBuilderDelegate(
               (context, index) => Padding(
                 padding: const EdgeInsets.only(bottom: 20),
-                child: IngredientBar(level: list[index].grade, ingredientName: list[index].name, purposes: list[index].purposes, features: list[index].features, bookMark: list[index].preference, func: (){
-                  ref.read(IngredientProvider.notifier).changeBookmark(list[index].id);
+                child: IngredientBar(level: list[index].grade, ingredientName: list[index].name, purpose: list[index].purpose, features: list[index].features, bookMark: list[index].preference, func: (){
+                  ref.read(IngredientProvider.notifier).changeBookmark(list[index].name);
                 },),
               ),
               childCount: list.length,

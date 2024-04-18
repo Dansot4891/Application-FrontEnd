@@ -7,7 +7,6 @@ import 'package:gproject/cosmetic/view/analysis/evaluation_screen.dart';
 import 'package:gproject/cosmetic/view/analysis/ingredient_component_screen.dart';
 import 'package:gproject/cosmetic/view/analysis/ingredient_effect_screen.dart';
 import 'package:gproject/cosmetic/view/analysis/skintype_screen.dart';
-import 'package:gproject/common/view/home_screen.dart';
 
 class AnalysisScreen extends StatefulWidget {
   const AnalysisScreen({super.key});
@@ -36,57 +35,58 @@ class _AnalysisScreenState extends State<AnalysisScreen>
   @override
   Widget build(BuildContext context) {
     return DefaultLayout(
-        func: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) {
-                return EvaluationScreen();
-              },
+      func: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) {
+              return EvaluationScreen();
+            },
+          ),
+        );
+      },
+      child: Column(
+        children: [
+          TabBar(
+            indicatorColor: PColors.mainColor,
+            indicatorWeight: 2,
+            indicatorSize: TabBarIndicatorSize.tab,
+            overlayColor: MaterialStatePropertyAll(
+              PColors.mainColor.withOpacity(0.5),
             ),
-          );
-        },
-        child: Column(
-          children: [
-            TabBar(
-              indicatorColor: PColors.mainColor,
-              indicatorWeight: 2,
-              indicatorSize: TabBarIndicatorSize.tab,
-              overlayColor: MaterialStatePropertyAll(
-                PColors.mainColor.withOpacity(0.5),
+            splashBorderRadius: BorderRadius.circular(20),
+            controller: tabController,
+            unselectedLabelColor: PColors.grey3,
+            labelColor: Colors.black,
+            tabs: [
+              Tab(
+                text: '분석',
               ),
-              splashBorderRadius: BorderRadius.circular(20),
+              Tab(
+                text: '성분 구성',
+              ),
+              Tab(
+                text: '효과별',
+              ),
+              Tab(
+                text: '피부 타입별',
+              ),
+            ],
+          ),
+          Expanded(
+            child: TabBarView(
               controller: tabController,
-              unselectedLabelColor: PColors.grey3,
-              labelColor: Colors.black,
-              tabs: [
-                Tab(
-                  text: '분석',
-                ),
-                Tab(
-                  text: '성분 구성',
-                ),
-                Tab(
-                  text: '효과별',
-                ),
-                Tab(
-                  text: '피부 타입별',
-                ),
+              physics: NeverScrollableScrollPhysics(),
+              children: [
+                AIAnalysisScreen(),
+                IngredientComponentScreen(),
+                IngredientEffectScreen(),
+                SkinTypeScreen(),
               ],
             ),
-            Expanded(
-              child: TabBarView(
-                controller: tabController,
-                physics: NeverScrollableScrollPhysics(),
-                children: [
-                  AIAnalysisScreen(),
-                  IngredientComponentScreen(),
-                  IngredientEffectScreen(),
-                  SkinTypeScreen(),
-                ],
-              ),
-            ),
-          ],
-        ));
+          ),
+        ],
+      ),
+    );
   }
 }

@@ -1,57 +1,74 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gproject/common/variable/color.dart';
+import 'package:gproject/cosmetic/provider/anlysis/analysis_provider.dart';
 import 'package:gproject/main.dart';
+import 'package:gproject/user/provider/login_provider.dart';
 
-class AIAnalysisScreen extends StatelessWidget {
+class AIAnalysisScreen extends ConsumerWidget {
   const AIAnalysisScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    List<String> scoreList = [
+      '찰떡궁합',
+      '추천해요',
+      '꽤 괜찮아요',
+      '보통이에요',
+      '글쎄요',
+      '다시\n생각해보세요',
+    ];
+    List<String> typeList = [
+      '없음', '부족', '보통', '충분',
+    ];
+    final data = ref.watch(AnalysisProvider);
+    print(typeList[data.type_posit-1]);
+    print(typeList[data.type_neger-1]);
+    print(typeList[data.type_danger-1]);
     return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 20,
-        vertical: 40
-      ),
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
       child: Column(
         children: [
-          AIAnalysis(),
-          SizedBox(height: ratio.height * 40,),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              GridViewBox(title: '찰떡궁합', right: true, bottom : true),
-              GridViewBox(title: '추천해요', left: true, bottom: true),
-            ],
+          AIAnalysis(
+              comment: data.Ai_description),
+          SizedBox(
+            height: ratio.height * 40,
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              GridViewBox(title: '꽤 괜찮아요', right: true, bottom: true, top: true),
-              GridViewBox(title: '보통이에요', left: true, bottom: true, top: true),
-            ],
+          Expanded(
+            child: GridView.builder(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  childAspectRatio: 2,
+                ),
+                itemCount: scoreList.length,
+                itemBuilder: (BuildContext context, index) {
+                  return index == (data.score-1) ? GridViewBox(title: scoreList[index], selected: true) : GridViewBox(title: scoreList[index]);
+                },),
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              GridViewBox(title: '글쎄요', right: true, top: true),
-              GridViewBox(title: '다시\n생각해 보세요', left: true, top: true),
-            ],
-          ),
-          Spacer(),
           Container(
             width: double.infinity,
             padding: const EdgeInsets.only(bottom: 10),
             decoration: BoxDecoration(
-              border: Border(
-                bottom: BorderSide(color: PColors.mainColor,)
-              )
-            ),
+                border: Border(
+                    bottom: BorderSide(
+              color: PColors.mainColor,
+            ))),
             child: Center(
-              child: Text('건성피부 타입', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold,),),
+              child: Text(
+                '민감성 피부',
+                // ref.watch(userDataProvider)!.skin_type,
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ),
           ),
-          SizedBox(height: ratio.height * 20,),
+          SizedBox(
+            height: ratio.height * 20,
+          ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Row(
@@ -59,32 +76,73 @@ class AIAnalysisScreen extends StatelessWidget {
               children: [
                 Column(
                   children: [
-                    Text('긍정 성분 수', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500,),),
-                    Text('충분', style: TextStyle(color: PColors.mainColor, fontSize: 18, fontWeight: FontWeight.w500,),),
+                    Text(
+                      '긍정 성분 수',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    Text(
+                      typeList[data.type_posit-1],
+                      style: TextStyle(
+                        color: typeList[data.type_posit-1] == 4 ? PColors.mainColor : Colors.black,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
                   ],
                 ),
                 Column(
                   children: [
-                    Text('부정 성분 수', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500,),),
-                    Text('충분', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500,),),
+                    Text(
+                      '부정 성분 수',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    Text(
+                      typeList[data.type_neger-1],
+                      style: TextStyle(
+                        color: typeList[data.type_neger-1] == 4 ? PColors.mainColor : Colors.black,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
                   ],
                 ),
                 Column(
                   children: [
-                    Text('주의 성분 수', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500,),),
-                    Text('충분', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500,),),
+                    Text(
+                      '주의 성분 수',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    Text(
+                      typeList[data.type_danger-1],
+                      style: TextStyle(
+                        color: typeList[data.type_danger-1] == 4 ? PColors.mainColor : Colors.black,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
                   ],
                 ),
               ],
             ),
           ),
-          SizedBox(height: ratio.height * 40,)
+          SizedBox(
+            height: ratio.height * 40,
+          ),
         ],
       ),
     );
   }
 
-  Container AIAnalysis() {
+  Container AIAnalysis({required String comment}) {
     return Container(
       padding: const EdgeInsets.symmetric(
         vertical: 15,
@@ -116,7 +174,7 @@ class AIAnalysisScreen extends StatelessWidget {
             height: 10,
           ),
           Text(
-            '블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라',
+            comment,
             style: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w500,
@@ -129,30 +187,25 @@ class AIAnalysisScreen extends StatelessWidget {
 
   Container GridViewBox({
     required String title,
-    bool left = false,
-    bool right = false,
-    bool top = false,
-    bool bottom = false,
+    bool selected = false,
   }) {
     return Container(
-      width: ratio.width * 180,
-      height: ratio.height * 80,
-      decoration: BoxDecoration(
-          border: Border(
-        left: left ? BorderSide(color: PColors.mainColor.withOpacity(0.4), width: 1) : BorderSide(color: Colors.white,),
-        top: top ? BorderSide(color: PColors.mainColor.withOpacity(0.4), width: 1)  : BorderSide(color: Colors.white,),
-        right: right ? BorderSide(color: PColors.mainColor.withOpacity(0.4), width: 1) : BorderSide(color: Colors.white,),
-        bottom: bottom ? BorderSide(color: PColors.mainColor.withOpacity(0.4), width: 1) : BorderSide(color: Colors.white,),
-      )),
-      child: Center(
-        child: Container(
-          width: ratio.width * 140,
-          height: ratio.height * 60,
-          decoration: BoxDecoration(
-              color: PColors.subColor2,
-              borderRadius: BorderRadius.circular(16)),
-          child: Center(
-            child: Text(title, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold,), textAlign: TextAlign.center,),
+      margin: const EdgeInsets.all(12),
+      width: 140,
+      height: 60,
+      child: Container(
+        decoration: BoxDecoration(
+          color: selected ? PColors.subColor2 : Colors.white,
+          borderRadius: BorderRadius.circular(16),
+        ),
+        child: Center(
+          child: Text(
+            title,
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+            ),
+            textAlign: TextAlign.center,
           ),
         ),
       ),

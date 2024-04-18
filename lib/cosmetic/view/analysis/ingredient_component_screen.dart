@@ -1,34 +1,22 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gproject/common/variable/color.dart';
 import 'package:gproject/cosmetic/component/ingredient/ingredient_bar.dart';
 import 'package:gproject/cosmetic/component/ingredient/ingredient_info.dart';
+import 'package:gproject/cosmetic/provider/anlysis/analysis_provider.dart';
 import 'package:gproject/main.dart';
 
-class IngredientComponentScreen extends StatelessWidget {
+class IngredientComponentScreen extends ConsumerWidget {
   const IngredientComponentScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    List<Widget> lists = [
-      IngredientBar(
-          level: 1, ingredientName: '정제수, 물', purposes: ['피부 보습1','피부 보습2'], features: ['습윤1', '습윤2'], bookMark: true, func: (){},),
-      IngredientBar(
-          level: 1, ingredientName: '정제수, 물', purposes: ['피부 보습1','피부 보습2'], features: ['습윤1', '습윤2'], bookMark: true, func: (){},),
-      IngredientBar(
-          level: 2, ingredientName: '정제수, 물', purposes: ['피부 보습1','피부 보습2'], features: ['습윤1', '습윤2'], bookMark: true, func: (){},),
-      IngredientBar(
-          level: 2, ingredientName: '정제수, 물', purposes: ['피부 보습1','피부 보습2'], features: ['습윤1', '습윤2'], bookMark: true, func: (){},),
-      IngredientBar(
-          level: 1, ingredientName: '정제수, 물', purposes: ['피부 보습1','피부 보습2'], features: ['습윤1', '습윤2'], bookMark: true, func: (){},),
-      IngredientBar(
-          level: 4, ingredientName: '정제수, 물', purposes: ['피부 보습1','피부 보습2'], features: ['습윤1', '습윤2'], bookMark: true, func: (){},),
-      IngredientBar(
-          level: 6, ingredientName: '정제수, 물', purposes: ['피부 보습1','피부 보습2'], features: ['습윤1', '습윤2'], bookMark: true, func: (){},),
-      IngredientBar(
-          level: 7, ingredientName: '정제수, 물', purposes: ['피부 보습1','피부 보습2'], features: ['습윤1', '습윤2'], bookMark: true, func: (){},),
-    ];
+  Widget build(BuildContext context, WidgetRef ref) {
+    final data = ref.watch(AnalysisProvider);
+    final lists = data.ingredientDTO;
+    final ingreNum = lists.length;
+    final percentList = ref.read(AnalysisProvider.notifier).percentList();
     return CustomScrollView(
       slivers: [
         SliverPadding(
@@ -38,7 +26,7 @@ class IngredientComponentScreen extends StatelessWidget {
           sliver: SliverToBoxAdapter(
             child: Column(
               children: [
-                IngredientBox(context: context),
+                IngredientBox(context: context, aDanger: data.AllArg_danger, mDanger: data.danger, safeRating: (percentList[0].toDouble()/ingreNum.toDouble() * 100).toInt(), halfSafeRating: (percentList[1].toDouble()/ingreNum.toDouble() * 100).toInt(), dangerRating: (percentList[2].toDouble()/ingreNum.toDouble() * 100).toInt()),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 20),
                   child: Divider(
@@ -49,7 +37,7 @@ class IngredientComponentScreen extends StatelessWidget {
                 Row(
                   children: [
                     Text(
-                      '성분 ${36}개',
+                      '성분 ${ingreNum}개',
                       style:
                           TextStyle(fontSize: 20, fontWeight: FontWeight.w400),
                     ),
@@ -69,7 +57,7 @@ class IngredientComponentScreen extends StatelessWidget {
             delegate: SliverChildBuilderDelegate(
               (context, index) => Padding(
                 padding: const EdgeInsets.only(bottom: 20),
-                child: lists[index],
+                child: IngredientBar(level: lists[index].grade, ingredientName: lists[index].name, purpose: lists[index].purpose, features: lists[index].features, bookMark: lists[index].preference, func: (){}),
               ),
               childCount: lists.length
             ),
@@ -81,6 +69,11 @@ class IngredientComponentScreen extends StatelessWidget {
 
   Container IngredientBox({
     required BuildContext context,
+    required int aDanger,
+    required int mDanger,
+    required int safeRating,
+    required int halfSafeRating,
+    required int dangerRating,
   }) {
     return Container(
       padding: const EdgeInsets.symmetric(
@@ -107,27 +100,27 @@ class IngredientComponentScreen extends StatelessWidget {
         children: [
           IngredientInfo(
             type: true,
-            safeRating: 81,
-            halfSafeRating: 11,
-            dangerRating: 8,
+            safeRating: safeRating,
+            halfSafeRating: halfSafeRating,
+            dangerRating: dangerRating,
           ),
           SizedBox(
             height: ratio.height * 10,
           ),
           CustomGraph(
             context: context,
-            safeRating: 81,
-            halfSafeRating: 11,
-            dangerRating: 8,
+            safeRating: safeRating,
+            halfSafeRating: halfSafeRating,
+            dangerRating: dangerRating,
           ),
           SizedBox(
             height: ratio.height * 10,
           ),
-          DangerRow(title: '알레르기 위험성분', num: 2),
+          DangerRow(title: '알레르기 위험성분', num: aDanger),
           SizedBox(
             height: ratio.height * 15,
           ),
-          DangerRow(title: '의약처 위험성분', num: 1),
+          DangerRow(title: '의약처 위험성분', num: mDanger),
         ],
       ),
     );

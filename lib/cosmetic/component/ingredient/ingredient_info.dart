@@ -26,8 +26,8 @@ class IngredientInfo extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
         IngredientMiniBar(text: '1~2 등급', color: PColors.safe, rating: safeRating),
-        IngredientMiniBar(text: '3~5 등급', color: PColors.halfDanger, rating: halfSafeRating),
-        IngredientMiniBar(text: '6~7 등급', color: PColors.danger, rating: dangerRating),
+        IngredientMiniBar(text: '3~6 등급', color: PColors.halfDanger, rating: halfSafeRating),
+        IngredientMiniBar(text: '7~10 등급', color: PColors.danger, rating: dangerRating),
       ],
     );
   }

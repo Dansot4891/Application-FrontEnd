@@ -1,16 +1,18 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gproject/common/secure_storage/secure_storage.dart';
 import 'package:gproject/user/model/user_model.dart';
 import 'package:gproject/user/provider/signup_provider.dart';
+import 'package:gproject/user/view/login/login_screen.dart';
 
 final loginStateProvider = Provider<bool>((ref) {
   final userData = ref.watch(userDataProvider);
 
-  if(userData == null){
+  if (userData == null) {
     return false;
-  }else{
+  } else {
     return true;
   }
 });
@@ -27,12 +29,11 @@ final loginStateProvider = Provider<bool>((ref) {
 //   }
 // }
 
-final userDataProvider = StateNotifierProvider<UserDataNotifer, UserModel?>((ref) => UserDataNotifer());
+final userDataProvider = StateNotifierProvider<UserDataNotifer, UserModel?>(
+    (ref) => UserDataNotifer());
 
-class UserDataNotifer extends StateNotifier<UserModel?>{
-  UserDataNotifer():super(
-    null
-  );
+class UserDataNotifer extends StateNotifier<UserModel?> {
+  UserDataNotifer() : super(null);
 
   Future<void> updateUserModel(WidgetRef ref) async {
     final storage = ref.watch(secureStorageProvider);
@@ -40,45 +41,42 @@ class UserDataNotifer extends StateNotifier<UserModel?>{
     String userData = userDataNullable ?? "";
     Map<String, dynamic> userDataMap = jsonDecode(userData);
     UserModel user = UserModel.fromJson(userDataMap);
-
-    print(user);
     //개인정보 때를 위한 provider 데이터 변경
-    if(user.gender == 'MALE'){
+    if (user.gender == 'MALE') {
       ref.read(genderButtonProvider.notifier).changeValue(0);
-    }else if(user.gender == 'FEMALE'){
+    } else if (user.gender == 'FEMALE') {
       ref.read(genderButtonProvider.notifier).changeValue(1);
     }
 
-    if(user.skin_type == 'DRY'){
+    if (user.skin_type == 'DRY') {
       ref.read(typeButtonProvider.notifier).changeValue(0);
-    }else if(user.skin_type == 'OILY'){
+    } else if (user.skin_type == 'OILY') {
       ref.read(typeButtonProvider.notifier).changeValue(1);
-    }else if(user.skin_type == 'SENSITIVE'){
+    } else if (user.skin_type == 'SENSITIVE') {
       ref.read(typeButtonProvider.notifier).changeValue(2);
     }
 
     ref.read(worryButtonProvider.notifier).reset();
-    if(user.skin_concerns.contains('해당없음') || user.skin_concerns.length == 0){
+    if (user.skin_concern.contains('해당없음') || user.skin_concern.length == 0) {
       state = user;
       return;
     }
-    if(!user.skin_concerns.contains('해당없음')){
+    if (!user.skin_concern.contains('해당없음')) {
       ref.read(worryButtonProvider.notifier).changeValue(0);
     }
-    if(user.skin_concerns.contains('아토피')){
-      print(ref.read(worryButtonProvider));
+    if (user.skin_concern.contains('아토피')) {
       ref.read(worryButtonProvider.notifier).changeValue(1);
     }
-    if(user.skin_concerns.contains('여드름')){
+    if (user.skin_concern.contains('여드름')) {
       ref.read(worryButtonProvider.notifier).changeValue(2);
     }
-    if(user.skin_concerns.contains('각질')){
+    if (user.skin_concern.contains('각질')) {
       ref.read(worryButtonProvider.notifier).changeValue(3);
     }
-    if(user.skin_concerns.contains('미백잡티')){
+    if (user.skin_concern.contains('미백잡티')) {
       ref.read(worryButtonProvider.notifier).changeValue(4);
     }
-    if(user.skin_concerns.contains('주름탄력')){
+    if (user.skin_concern.contains('주름탄력')) {
       ref.read(worryButtonProvider.notifier).changeValue(5);
     }
     state = user;
@@ -86,6 +84,19 @@ class UserDataNotifer extends StateNotifier<UserModel?>{
 
   Future<void> deleteData() async {
     state = null;
+  }
+
+  Future<void> logout(WidgetRef ref, BuildContext context) async {
+    await ref.watch(secureStorageProvider).deleteAll();
+    await ref.read(userDataProvider.notifier).deleteData();
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) {
+          return LoginScreen();
+        },
+      ),
+    );
   }
 }
 

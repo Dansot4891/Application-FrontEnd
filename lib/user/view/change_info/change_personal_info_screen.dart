@@ -158,10 +158,11 @@ class ChangePersonalInfoScreen extends ConsumerWidget {
                               skin_type: ref
                                   .read(typeButtonProvider.notifier)
                                   .postValue(),
-                              skin_concerns: ref
+                              skin_concern: ref
                                   .read(worryButtonProvider.notifier)
                                   .postValue(),
                               allergy: allergieController.text);
+                              print(jsonEncode(user.toJson()));
                           final resp = await dio.put(
                               'http://ceprj.gachon.ac.kr:60006/api/user/update_profile/ghdrlfehd',
                               data: jsonEncode(user.toJson()));

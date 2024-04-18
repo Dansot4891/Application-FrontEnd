@@ -16,6 +16,7 @@ import 'package:gproject/cosmetic/view/ingredient/ingredient_screen.dart';
 import 'package:gproject/cosmetic/view/recommend/recommend_screen.dart';
 import 'package:gproject/main.dart';
 import 'package:gproject/cosmetic/view/analysis/image_upload_screen.dart';
+import 'package:gproject/user/provider/QandA_provider.dart';
 import 'package:gproject/user/provider/login_provider.dart';
 import 'package:gproject/user/view/login/login_screen.dart';
 import 'package:gproject/user/view/mypage/answer_screen.dart';
@@ -59,16 +60,7 @@ class HomeScreen extends ConsumerWidget {
                     buttonText: '확인',
                     buttonCount: 2,
                     func: () async {
-                      await ref.watch(secureStorageProvider).deleteAll();
-                      ref.read(userDataProvider.notifier).deleteData();
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) {
-                            return LoginScreen();
-                          },
-                        ),
-                      );
+                      ref.read(userDataProvider.notifier).logout(ref, context);
                     },) : Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -129,7 +121,12 @@ class HomeScreen extends ConsumerWidget {
                             ImgPath.ingredientLogo,
                             "성분",
                             () async {
-                              await ref.read(IngredientProvider.notifier).fetchDate();
+                              if(loginState){
+                                await ref.read(IngredientProvider.notifier).fetchAllData(ref.watch(userDataProvider)!.id!);
+                              }
+                              if(!loginState){
+                                await ref.read(IngredientProvider.notifier).fetchAllData(0);
+                              }
                               ref.read(previousDataProvider.notifier).setData(ref);
                               Navigator.push(
                                 context,
@@ -159,12 +156,16 @@ class HomeScreen extends ConsumerWidget {
                           mainButton(
                             ImgPath.QandALogo,
                             "Q&A",
-                            () {
+                            () async {
+                              await ref.read(QandAProvider.notifier).getData(ref.watch(userDataProvider)!.id!);
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) {
-                                    return AnswerScreen();
+                                    return AnswerScreen(
+                                      yesList: ref.read(QandAProvider.notifier).fetchYesData(),
+                                      noList: ref.read(QandAProvider.notifier).fetchNoData(),
+                                    );
                                   },
                                 ),
                               );

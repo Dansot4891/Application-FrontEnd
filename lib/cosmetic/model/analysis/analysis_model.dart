@@ -8,15 +8,14 @@ part 'analysis_model.g.dart';
 class AnalysisModel with _$AnalysisModel {
 
   factory AnalysisModel({
-    required String aiComment,
-    required String matchText,
-    required String skinType,
-    required String goodCount,
-    required String badCount,
-    required String dangerCount,
-    required int allergieCount,
-    required int medicCount,
-    required List<IngredientModel> ingredientList,
+    required String Ai_description, // AI 분석 코멘트
+    required int score, // AI 사용자와의 적합도
+    required int type_posit, // 피부타입에 대한 긍정 성분 기준
+    required int type_neger, // 피부타입에 대한 부정 성분 기준
+    required int type_danger, // 피부타입에 대한 주의 성분 기준
+    required int AllArg_danger, // 알레르기 위험 성분 개수
+    required int danger, // 의약처 위험 성분 개수
+    required List<IngredientModel> ingredientDTO, // 성분 리스트
     
   }) = _AnalysisModel;
 

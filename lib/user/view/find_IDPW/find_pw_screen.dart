@@ -48,7 +48,7 @@ class FindPwScreen extends StatelessWidget {
               if (gkey.currentState!.validate()) {
                 try {
                   final resp = await dio.post(
-                      'http://ceprj.gachon.ac.kr:60006/api/user/find_password',
+                      '${BASE_URL}/api/user/find_password',
                       data: {
                         "login_id": idController.text,
                         "email": emailController.text,

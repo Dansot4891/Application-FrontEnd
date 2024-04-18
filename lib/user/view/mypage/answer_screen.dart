@@ -7,24 +7,24 @@ import 'package:gproject/common/variable/color.dart';
 import 'package:gproject/common/view/default_layout.dart';
 import 'package:gproject/main.dart';
 import 'package:gproject/user/model/QandA_model.dart';
-import 'package:gproject/user/provider/QandA_provider.dart';
 import 'package:gproject/user/view/mypage/myanswer_screen.dart';
 import 'package:gproject/user/view/mypage/question_screen.dart';
 
 class AnswerScreen extends ConsumerWidget {
-  const AnswerScreen({super.key});
+  final List<QandAModel> yesList;
+  final List<QandAModel> noList;
+  const AnswerScreen({
+    required this.yesList,
+    required this.noList,
+    super.key,});
 
   @override
-  Widget build(
-    BuildContext context,
-    WidgetRef ref,
-  ) {
-    List<QandAModel> yesList = ref.read(QandAProvider.notifier).fetchYesData();
-    List<QandAModel> noList = ref.read(QandAProvider.notifier).fetchNoData();
+  Widget build(BuildContext context,WidgetRef ref,) {
     return DefaultLayout(
       child: (noList.length == 0 && yesList.length == 0)
           ? Center(
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Icon(
                     Icons.close,
@@ -113,8 +113,8 @@ class AnswerScreen extends ConsumerWidget {
               itemCount: model.length,
               itemBuilder: (BuildContext context, int index) {
                 return AnswerBox(
-                  title: model[index].qna_subject,
-                  content: model[index].qna_content,
+                  title: model[index].title,
+                  content: model[index].description,
                   answer: model[index].answer_status,
                   func: () {
                     Navigator.push(
@@ -122,7 +122,7 @@ class AnswerScreen extends ConsumerWidget {
                       MaterialPageRoute(
                         builder: (context) {
                           return MyAnswerScreen(
-                            id: model[index].qna_id,
+                            id: model[index].id,
                           );
                         },
                       ),
@@ -144,7 +144,7 @@ class AnswerScreen extends ConsumerWidget {
     bool answer = true,
   }) {
     return GestureDetector(
-      onTap: func,
+      onTap: answer ? func :() {},
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
         margin: const EdgeInsets.only(bottom: 20),

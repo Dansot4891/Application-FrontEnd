@@ -100,6 +100,7 @@ Future<void> signupDialog({
   required TextEditingController controller,
 }) {
   return showDialog(
+    barrierDismissible: false,
     context: context,
     builder: (context) {
       return AlertDialog(

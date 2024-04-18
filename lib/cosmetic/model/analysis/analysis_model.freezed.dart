@@ -20,16 +20,15 @@ AnalysisModel _$AnalysisModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$AnalysisModel {
-  String get aiComment => throw _privateConstructorUsedError;
-  String get matchText => throw _privateConstructorUsedError;
-  String get skinType => throw _privateConstructorUsedError;
-  String get goodCount => throw _privateConstructorUsedError;
-  String get badCount => throw _privateConstructorUsedError;
-  String get dangerCount => throw _privateConstructorUsedError;
-  int get allergieCount => throw _privateConstructorUsedError;
-  int get medicCount => throw _privateConstructorUsedError;
-  List<IngredientModel> get ingredientList =>
-      throw _privateConstructorUsedError;
+  String get Ai_description => throw _privateConstructorUsedError; // AI 분석 코멘트
+  int get score => throw _privateConstructorUsedError; // AI 사용자와의 적합도
+  int get type_posit => throw _privateConstructorUsedError; // 피부타입에 대한 긍정 성분 기준
+  int get type_neger => throw _privateConstructorUsedError; // 피부타입에 대한 부정 성분 기준
+  int get type_danger =>
+      throw _privateConstructorUsedError; // 피부타입에 대한 주의 성분 기준
+  int get AllArg_danger => throw _privateConstructorUsedError; // 알레르기 위험 성분 개수
+  int get danger => throw _privateConstructorUsedError; // 의약처 위험 성분 개수
+  List<IngredientModel> get ingredientDTO => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -44,15 +43,14 @@ abstract class $AnalysisModelCopyWith<$Res> {
       _$AnalysisModelCopyWithImpl<$Res, AnalysisModel>;
   @useResult
   $Res call(
-      {String aiComment,
-      String matchText,
-      String skinType,
-      String goodCount,
-      String badCount,
-      String dangerCount,
-      int allergieCount,
-      int medicCount,
-      List<IngredientModel> ingredientList});
+      {String Ai_description,
+      int score,
+      int type_posit,
+      int type_neger,
+      int type_danger,
+      int AllArg_danger,
+      int danger,
+      List<IngredientModel> ingredientDTO});
 }
 
 /// @nodoc
@@ -68,52 +66,47 @@ class _$AnalysisModelCopyWithImpl<$Res, $Val extends AnalysisModel>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? aiComment = null,
-    Object? matchText = null,
-    Object? skinType = null,
-    Object? goodCount = null,
-    Object? badCount = null,
-    Object? dangerCount = null,
-    Object? allergieCount = null,
-    Object? medicCount = null,
-    Object? ingredientList = null,
+    Object? Ai_description = null,
+    Object? score = null,
+    Object? type_posit = null,
+    Object? type_neger = null,
+    Object? type_danger = null,
+    Object? AllArg_danger = null,
+    Object? danger = null,
+    Object? ingredientDTO = null,
   }) {
     return _then(_value.copyWith(
-      aiComment: null == aiComment
-          ? _value.aiComment
-          : aiComment // ignore: cast_nullable_to_non_nullable
+      Ai_description: null == Ai_description
+          ? _value.Ai_description
+          : Ai_description // ignore: cast_nullable_to_non_nullable
               as String,
-      matchText: null == matchText
-          ? _value.matchText
-          : matchText // ignore: cast_nullable_to_non_nullable
-              as String,
-      skinType: null == skinType
-          ? _value.skinType
-          : skinType // ignore: cast_nullable_to_non_nullable
-              as String,
-      goodCount: null == goodCount
-          ? _value.goodCount
-          : goodCount // ignore: cast_nullable_to_non_nullable
-              as String,
-      badCount: null == badCount
-          ? _value.badCount
-          : badCount // ignore: cast_nullable_to_non_nullable
-              as String,
-      dangerCount: null == dangerCount
-          ? _value.dangerCount
-          : dangerCount // ignore: cast_nullable_to_non_nullable
-              as String,
-      allergieCount: null == allergieCount
-          ? _value.allergieCount
-          : allergieCount // ignore: cast_nullable_to_non_nullable
+      score: null == score
+          ? _value.score
+          : score // ignore: cast_nullable_to_non_nullable
               as int,
-      medicCount: null == medicCount
-          ? _value.medicCount
-          : medicCount // ignore: cast_nullable_to_non_nullable
+      type_posit: null == type_posit
+          ? _value.type_posit
+          : type_posit // ignore: cast_nullable_to_non_nullable
               as int,
-      ingredientList: null == ingredientList
-          ? _value.ingredientList
-          : ingredientList // ignore: cast_nullable_to_non_nullable
+      type_neger: null == type_neger
+          ? _value.type_neger
+          : type_neger // ignore: cast_nullable_to_non_nullable
+              as int,
+      type_danger: null == type_danger
+          ? _value.type_danger
+          : type_danger // ignore: cast_nullable_to_non_nullable
+              as int,
+      AllArg_danger: null == AllArg_danger
+          ? _value.AllArg_danger
+          : AllArg_danger // ignore: cast_nullable_to_non_nullable
+              as int,
+      danger: null == danger
+          ? _value.danger
+          : danger // ignore: cast_nullable_to_non_nullable
+              as int,
+      ingredientDTO: null == ingredientDTO
+          ? _value.ingredientDTO
+          : ingredientDTO // ignore: cast_nullable_to_non_nullable
               as List<IngredientModel>,
     ) as $Val);
   }
@@ -128,15 +121,14 @@ abstract class _$$AnalysisModelImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String aiComment,
-      String matchText,
-      String skinType,
-      String goodCount,
-      String badCount,
-      String dangerCount,
-      int allergieCount,
-      int medicCount,
-      List<IngredientModel> ingredientList});
+      {String Ai_description,
+      int score,
+      int type_posit,
+      int type_neger,
+      int type_danger,
+      int AllArg_danger,
+      int danger,
+      List<IngredientModel> ingredientDTO});
 }
 
 /// @nodoc
@@ -150,52 +142,47 @@ class __$$AnalysisModelImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? aiComment = null,
-    Object? matchText = null,
-    Object? skinType = null,
-    Object? goodCount = null,
-    Object? badCount = null,
-    Object? dangerCount = null,
-    Object? allergieCount = null,
-    Object? medicCount = null,
-    Object? ingredientList = null,
+    Object? Ai_description = null,
+    Object? score = null,
+    Object? type_posit = null,
+    Object? type_neger = null,
+    Object? type_danger = null,
+    Object? AllArg_danger = null,
+    Object? danger = null,
+    Object? ingredientDTO = null,
   }) {
     return _then(_$AnalysisModelImpl(
-      aiComment: null == aiComment
-          ? _value.aiComment
-          : aiComment // ignore: cast_nullable_to_non_nullable
+      Ai_description: null == Ai_description
+          ? _value.Ai_description
+          : Ai_description // ignore: cast_nullable_to_non_nullable
               as String,
-      matchText: null == matchText
-          ? _value.matchText
-          : matchText // ignore: cast_nullable_to_non_nullable
-              as String,
-      skinType: null == skinType
-          ? _value.skinType
-          : skinType // ignore: cast_nullable_to_non_nullable
-              as String,
-      goodCount: null == goodCount
-          ? _value.goodCount
-          : goodCount // ignore: cast_nullable_to_non_nullable
-              as String,
-      badCount: null == badCount
-          ? _value.badCount
-          : badCount // ignore: cast_nullable_to_non_nullable
-              as String,
-      dangerCount: null == dangerCount
-          ? _value.dangerCount
-          : dangerCount // ignore: cast_nullable_to_non_nullable
-              as String,
-      allergieCount: null == allergieCount
-          ? _value.allergieCount
-          : allergieCount // ignore: cast_nullable_to_non_nullable
+      score: null == score
+          ? _value.score
+          : score // ignore: cast_nullable_to_non_nullable
               as int,
-      medicCount: null == medicCount
-          ? _value.medicCount
-          : medicCount // ignore: cast_nullable_to_non_nullable
+      type_posit: null == type_posit
+          ? _value.type_posit
+          : type_posit // ignore: cast_nullable_to_non_nullable
               as int,
-      ingredientList: null == ingredientList
-          ? _value._ingredientList
-          : ingredientList // ignore: cast_nullable_to_non_nullable
+      type_neger: null == type_neger
+          ? _value.type_neger
+          : type_neger // ignore: cast_nullable_to_non_nullable
+              as int,
+      type_danger: null == type_danger
+          ? _value.type_danger
+          : type_danger // ignore: cast_nullable_to_non_nullable
+              as int,
+      AllArg_danger: null == AllArg_danger
+          ? _value.AllArg_danger
+          : AllArg_danger // ignore: cast_nullable_to_non_nullable
+              as int,
+      danger: null == danger
+          ? _value.danger
+          : danger // ignore: cast_nullable_to_non_nullable
+              as int,
+      ingredientDTO: null == ingredientDTO
+          ? _value._ingredientDTO
+          : ingredientDTO // ignore: cast_nullable_to_non_nullable
               as List<IngredientModel>,
     ));
   }
@@ -205,47 +192,52 @@ class __$$AnalysisModelImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$AnalysisModelImpl implements _AnalysisModel {
   _$AnalysisModelImpl(
-      {required this.aiComment,
-      required this.matchText,
-      required this.skinType,
-      required this.goodCount,
-      required this.badCount,
-      required this.dangerCount,
-      required this.allergieCount,
-      required this.medicCount,
-      required final List<IngredientModel> ingredientList})
-      : _ingredientList = ingredientList;
+      {required this.Ai_description,
+      required this.score,
+      required this.type_posit,
+      required this.type_neger,
+      required this.type_danger,
+      required this.AllArg_danger,
+      required this.danger,
+      required final List<IngredientModel> ingredientDTO})
+      : _ingredientDTO = ingredientDTO;
 
   factory _$AnalysisModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$AnalysisModelImplFromJson(json);
 
   @override
-  final String aiComment;
+  final String Ai_description;
+// AI 분석 코멘트
   @override
-  final String matchText;
+  final int score;
+// AI 사용자와의 적합도
   @override
-  final String skinType;
+  final int type_posit;
+// 피부타입에 대한 긍정 성분 기준
   @override
-  final String goodCount;
+  final int type_neger;
+// 피부타입에 대한 부정 성분 기준
   @override
-  final String badCount;
+  final int type_danger;
+// 피부타입에 대한 주의 성분 기준
   @override
-  final String dangerCount;
+  final int AllArg_danger;
+// 알레르기 위험 성분 개수
   @override
-  final int allergieCount;
+  final int danger;
+// 의약처 위험 성분 개수
+  final List<IngredientModel> _ingredientDTO;
+// 의약처 위험 성분 개수
   @override
-  final int medicCount;
-  final List<IngredientModel> _ingredientList;
-  @override
-  List<IngredientModel> get ingredientList {
-    if (_ingredientList is EqualUnmodifiableListView) return _ingredientList;
+  List<IngredientModel> get ingredientDTO {
+    if (_ingredientDTO is EqualUnmodifiableListView) return _ingredientDTO;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_ingredientList);
+    return EqualUnmodifiableListView(_ingredientDTO);
   }
 
   @override
   String toString() {
-    return 'AnalysisModel(aiComment: $aiComment, matchText: $matchText, skinType: $skinType, goodCount: $goodCount, badCount: $badCount, dangerCount: $dangerCount, allergieCount: $allergieCount, medicCount: $medicCount, ingredientList: $ingredientList)';
+    return 'AnalysisModel(Ai_description: $Ai_description, score: $score, type_posit: $type_posit, type_neger: $type_neger, type_danger: $type_danger, AllArg_danger: $AllArg_danger, danger: $danger, ingredientDTO: $ingredientDTO)';
   }
 
   @override
@@ -253,39 +245,34 @@ class _$AnalysisModelImpl implements _AnalysisModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$AnalysisModelImpl &&
-            (identical(other.aiComment, aiComment) ||
-                other.aiComment == aiComment) &&
-            (identical(other.matchText, matchText) ||
-                other.matchText == matchText) &&
-            (identical(other.skinType, skinType) ||
-                other.skinType == skinType) &&
-            (identical(other.goodCount, goodCount) ||
-                other.goodCount == goodCount) &&
-            (identical(other.badCount, badCount) ||
-                other.badCount == badCount) &&
-            (identical(other.dangerCount, dangerCount) ||
-                other.dangerCount == dangerCount) &&
-            (identical(other.allergieCount, allergieCount) ||
-                other.allergieCount == allergieCount) &&
-            (identical(other.medicCount, medicCount) ||
-                other.medicCount == medicCount) &&
+            (identical(other.Ai_description, Ai_description) ||
+                other.Ai_description == Ai_description) &&
+            (identical(other.score, score) || other.score == score) &&
+            (identical(other.type_posit, type_posit) ||
+                other.type_posit == type_posit) &&
+            (identical(other.type_neger, type_neger) ||
+                other.type_neger == type_neger) &&
+            (identical(other.type_danger, type_danger) ||
+                other.type_danger == type_danger) &&
+            (identical(other.AllArg_danger, AllArg_danger) ||
+                other.AllArg_danger == AllArg_danger) &&
+            (identical(other.danger, danger) || other.danger == danger) &&
             const DeepCollectionEquality()
-                .equals(other._ingredientList, _ingredientList));
+                .equals(other._ingredientDTO, _ingredientDTO));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      aiComment,
-      matchText,
-      skinType,
-      goodCount,
-      badCount,
-      dangerCount,
-      allergieCount,
-      medicCount,
-      const DeepCollectionEquality().hash(_ingredientList));
+      Ai_description,
+      score,
+      type_posit,
+      type_neger,
+      type_danger,
+      AllArg_danger,
+      danger,
+      const DeepCollectionEquality().hash(_ingredientDTO));
 
   @JsonKey(ignore: true)
   @override
@@ -303,38 +290,35 @@ class _$AnalysisModelImpl implements _AnalysisModel {
 
 abstract class _AnalysisModel implements AnalysisModel {
   factory _AnalysisModel(
-          {required final String aiComment,
-          required final String matchText,
-          required final String skinType,
-          required final String goodCount,
-          required final String badCount,
-          required final String dangerCount,
-          required final int allergieCount,
-          required final int medicCount,
-          required final List<IngredientModel> ingredientList}) =
+          {required final String Ai_description,
+          required final int score,
+          required final int type_posit,
+          required final int type_neger,
+          required final int type_danger,
+          required final int AllArg_danger,
+          required final int danger,
+          required final List<IngredientModel> ingredientDTO}) =
       _$AnalysisModelImpl;
 
   factory _AnalysisModel.fromJson(Map<String, dynamic> json) =
       _$AnalysisModelImpl.fromJson;
 
   @override
-  String get aiComment;
-  @override
-  String get matchText;
-  @override
-  String get skinType;
-  @override
-  String get goodCount;
-  @override
-  String get badCount;
-  @override
-  String get dangerCount;
-  @override
-  int get allergieCount;
-  @override
-  int get medicCount;
-  @override
-  List<IngredientModel> get ingredientList;
+  String get Ai_description;
+  @override // AI 분석 코멘트
+  int get score;
+  @override // AI 사용자와의 적합도
+  int get type_posit;
+  @override // 피부타입에 대한 긍정 성분 기준
+  int get type_neger;
+  @override // 피부타입에 대한 부정 성분 기준
+  int get type_danger;
+  @override // 피부타입에 대한 주의 성분 기준
+  int get AllArg_danger;
+  @override // 알레르기 위험 성분 개수
+  int get danger;
+  @override // 의약처 위험 성분 개수
+  List<IngredientModel> get ingredientDTO;
   @override
   @JsonKey(ignore: true)
   _$$AnalysisModelImplCopyWith<_$AnalysisModelImpl> get copyWith =>

@@ -8,28 +8,26 @@ part of 'analysis_model.dart';
 
 _$AnalysisModelImpl _$$AnalysisModelImplFromJson(Map<String, dynamic> json) =>
     _$AnalysisModelImpl(
-      aiComment: json['aiComment'] as String,
-      matchText: json['matchText'] as String,
-      skinType: json['skinType'] as String,
-      goodCount: json['goodCount'] as String,
-      badCount: json['badCount'] as String,
-      dangerCount: json['dangerCount'] as String,
-      allergieCount: json['allergieCount'] as int,
-      medicCount: json['medicCount'] as int,
-      ingredientList: (json['ingredientList'] as List<dynamic>)
+      Ai_description: json['Ai_description'] as String,
+      score: json['score'] as int,
+      type_posit: json['type_posit'] as int,
+      type_neger: json['type_neger'] as int,
+      type_danger: json['type_danger'] as int,
+      AllArg_danger: json['AllArg_danger'] as int,
+      danger: json['danger'] as int,
+      ingredientDTO: (json['ingredientDTO'] as List<dynamic>)
           .map((e) => IngredientModel.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
 Map<String, dynamic> _$$AnalysisModelImplToJson(_$AnalysisModelImpl instance) =>
     <String, dynamic>{
-      'aiComment': instance.aiComment,
-      'matchText': instance.matchText,
-      'skinType': instance.skinType,
-      'goodCount': instance.goodCount,
-      'badCount': instance.badCount,
-      'dangerCount': instance.dangerCount,
-      'allergieCount': instance.allergieCount,
-      'medicCount': instance.medicCount,
-      'ingredientList': instance.ingredientList,
+      'Ai_description': instance.Ai_description,
+      'score': instance.score,
+      'type_posit': instance.type_posit,
+      'type_neger': instance.type_neger,
+      'type_danger': instance.type_danger,
+      'AllArg_danger': instance.AllArg_danger,
+      'danger': instance.danger,
+      'ingredientDTO': instance.ingredientDTO,
     };

@@ -39,7 +39,7 @@ class FindIdScreen extends StatelessWidget {
               if (gkey.currentState!.validate()) {
                 try {
                   final resp = await dio.post(
-                    'http://ceprj.gachon.ac.kr:60006/api/user/find-id',
+                    '${BASE_URL}/api/user/find-id',
                     data: {
                       "email": emailController.text,
                       "name": nameController.text,
