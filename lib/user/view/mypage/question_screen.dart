@@ -8,6 +8,7 @@ import 'package:gproject/common/dio/dio.dart';
 import 'package:gproject/common/variable/validator.dart';
 import 'package:gproject/common/view/default_layout.dart';
 import 'package:gproject/main.dart';
+import 'package:gproject/user/provider/QandA_provider.dart';
 import 'package:gproject/user/provider/login_provider.dart';
 import 'package:gproject/user/view/mypage/mypage_screen.dart';
 

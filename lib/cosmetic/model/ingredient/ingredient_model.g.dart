@@ -9,11 +9,16 @@ part of 'ingredient_model.dart';
 _$IngredientModelImpl _$$IngredientModelImplFromJson(
         Map<String, dynamic> json) =>
     _$IngredientModelImpl(
-      json['name'] as String,
-      json['grade'] as int,
-      (json['purpose'] as List<dynamic>).map((e) => e as String).toList(),
-      json['preference'] as bool,
-      (json['features'] as List<dynamic>).map((e) => e as String).toList(),
+      name: json['name'] as String,
+      grade: json['grade'] as int,
+      purpose:
+          (json['purpose'] as List<dynamic>).map((e) => e as String).toList(),
+      preference: json['preference'] as bool,
+      features:
+          (json['features'] as List<dynamic>).map((e) => e as String).toList(),
+      skin_type: (json['skin_type'] as List<dynamic>?)
+          ?.map((e) => SkinTypeModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$$IngredientModelImplToJson(
@@ -24,4 +29,5 @@ Map<String, dynamic> _$$IngredientModelImplToJson(
       'purpose': instance.purpose,
       'preference': instance.preference,
       'features': instance.features,
+      'skin_type': instance.skin_type,
     };

@@ -8,6 +8,7 @@ import 'package:gproject/common/component/textformfield.dart';
 import 'package:gproject/common/variable/validator.dart';
 import 'package:gproject/main.dart';
 import 'package:gproject/user/provider/id_check_provider.dart';
+import 'package:gproject/user/view/login/login_screen.dart';
 import 'package:gproject/user/view/login/signup_screen2.dart';
 
 class SignUpScreen1 extends ConsumerWidget {
@@ -26,7 +27,15 @@ class SignUpScreen1 extends ConsumerWidget {
       appBar: AppBar(
         leading: IconButton(
           onPressed: () {
-            Navigator.pop(context);
+            ref.read(idCheckProvider.notifier).resetValue();
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) {
+                  return LoginScreen();
+                },
+              ),
+            );
           },
           icon: Icon(Icons.arrow_back),
         ),
@@ -81,12 +90,21 @@ class SignUpScreen1 extends ConsumerWidget {
                   children: [
                     InkWell(
                       onTap: () async {
-                        if(idController.text == ""){
-                          CustomDialog(context: context, title: '아이디를 입력해주세요.', buttonText: '확인', buttonCount: 1, func: (){Navigator.pop(context);});
+                        if (idController.text == "") {
+                          CustomDialog(
+                              context: context,
+                              title: '아이디를 입력해주세요.',
+                              buttonText: '확인',
+                              buttonCount: 1,
+                              func: () {
+                                Navigator.pop(context);
+                              });
                           return;
                         }
                         ref.read(idProvider.notifier).setId(idController.text);
-                        ref.read(idCheckProvider.notifier).checkId(idController.text, context);
+                        ref
+                            .read(idCheckProvider.notifier)
+                            .checkId(idController.text, context);
                       },
                       child: Container(
                         padding: const EdgeInsets.symmetric(

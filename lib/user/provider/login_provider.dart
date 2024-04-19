@@ -98,6 +98,21 @@ class UserDataNotifer extends StateNotifier<UserModel?> {
       ),
     );
   }
+
+  String skinTypeData(){
+    String data = '';
+    if(state!.skin_type == 'DRY'){
+      data = '건성';
+    }
+    if(state!.skin_type == 'OILY'){
+      data = '지성';
+    }
+    if(state!.skin_type == 'SENSITIVE'){
+      data = '민감성';
+    }
+    return data;
+  }
+
 }
 
 // final storage = ref.watch(secureStorageProvider);
