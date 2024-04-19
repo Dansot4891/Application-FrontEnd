@@ -65,12 +65,18 @@ class IngredientScreen extends ConsumerWidget {
             child: Column(
               children: [
                 SizedBox(
-                  height: 15,
+                  height: 25,
                 ),
                 IngredientInfo(),
+                SizedBox(
+                  height: 20,
+                ),
                 Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: levelButton)
+                    children: levelButton),
+                    SizedBox(
+                  height: 20,
+                ),
               ],
             ),
           ),

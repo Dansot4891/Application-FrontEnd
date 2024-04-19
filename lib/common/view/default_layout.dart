@@ -12,8 +12,10 @@ class DefaultLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       resizeToAvoidBottomInset: keyboard,
       appBar: AppBar(
+        backgroundColor: Colors.white,
         shape: isBoard ? Border(
           bottom: BorderSide(
             color: PColors.mainColor,

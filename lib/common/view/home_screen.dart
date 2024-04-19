@@ -30,6 +30,7 @@ class HomeScreen extends ConsumerWidget {
     final loginState = ref.watch(loginStateProvider);
     return Scaffold(
         appBar: AppBar(
+          backgroundColor: Colors.white,
           automaticallyImplyLeading: false,
           title: MainText(
             size: 30,
