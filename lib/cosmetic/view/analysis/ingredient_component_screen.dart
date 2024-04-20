@@ -6,6 +6,7 @@ import 'package:gproject/common/variable/color.dart';
 import 'package:gproject/cosmetic/component/ingredient/ingredient_bar.dart';
 import 'package:gproject/cosmetic/component/ingredient/ingredient_info.dart';
 import 'package:gproject/cosmetic/provider/anlysis/analysis_provider.dart';
+import 'package:gproject/cosmetic/provider/ingredient/ingredient_provider.dart';
 import 'package:gproject/main.dart';
 
 class IngredientComponentScreen extends ConsumerWidget {
@@ -14,9 +15,10 @@ class IngredientComponentScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final data = ref.watch(AnalysisProvider);
-    final lists = data.ingredient;
+    final lists = ref.watch(IngredientProvider);
     final ingreNum = lists.length;
     final percentList = ref.read(AnalysisProvider.notifier).percentList();
+    print(percentList);
     return CustomScrollView(
       slivers: [
         SliverPadding(
@@ -26,7 +28,7 @@ class IngredientComponentScreen extends ConsumerWidget {
           sliver: SliverToBoxAdapter(
             child: Column(
               children: [
-                IngredientBox(context: context, aDanger: data.AllArg_danger, mDanger: data.danger, safeRating: (percentList[0].toDouble()/ingreNum.toDouble() * 100).toInt(), halfSafeRating: (percentList[1].toDouble()/ingreNum.toDouble() * 100).toInt(), dangerRating: (percentList[2].toDouble()/ingreNum.toDouble() * 100).toInt()),
+                IngredientBox(context: context, aDanger: data.allArg_danger, mDanger: data.danger, safeRating: (percentList[0].toDouble()/ingreNum.toDouble() * 100).toInt(), halfSafeRating: (percentList[1].toDouble()/ingreNum.toDouble() * 100).toInt(), dangerRating: (percentList[2].toDouble()/ingreNum.toDouble() * 100).toInt()),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 20),
                   child: Divider(
@@ -57,7 +59,9 @@ class IngredientComponentScreen extends ConsumerWidget {
             delegate: SliverChildBuilderDelegate(
               (context, index) => Padding(
                 padding: const EdgeInsets.only(bottom: 20),
-                child: IngredientBar(level: lists[index].grade, ingredientName: lists[index].name, purpose: lists[index].purpose, features: lists[index].features, bookMark: lists[index].preference, func: (){}),
+                child: IngredientBar(level: lists[index].grade, ingredientName: lists[index].name, purpose: lists[index].purpose, features: lists[index].features, bookMark: lists[index].preference, func: (){
+                  ref.read(IngredientProvider.notifier).changeBookmark(lists[index].name);
+                }),
               ),
               childCount: lists.length
             ),

@@ -13,7 +13,6 @@ class SkinTypeScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final data = ref.read(AnalysisProvider.notifier).skinEffectList();
-    final ingreList = ref.watch(AnalysisProvider).ingredient;
     return CustomScrollView(
       slivers: [
         SliverToBoxAdapter(
@@ -57,7 +56,7 @@ class SkinTypeScreen extends ConsumerWidget {
                     ),
                     children: [
                       TextSpan(
-                        text: '지성피부',
+                        text: ref.read(AnalysisProvider.notifier).skinTypeVal(ref),
                         style: TextStyle(
                           fontSize: 16,
                           color: PColors.subColor3,
@@ -109,7 +108,7 @@ class SkinTypeScreen extends ConsumerWidget {
                   ),
                   Container(
                     margin: const EdgeInsets.symmetric(vertical: 10),
-                    height: ratio.height * 5 * goodNum,
+                    height: ratio.height * 7 * goodNum,
                     width: 30,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(6),
@@ -137,7 +136,7 @@ class SkinTypeScreen extends ConsumerWidget {
                   ),
                   Container(
                     margin: const EdgeInsets.symmetric(vertical: 10),
-                    height: ratio.height * 5 * badNum,
+                    height: ratio.height * 7 * badNum,
                     width: 30,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(6),

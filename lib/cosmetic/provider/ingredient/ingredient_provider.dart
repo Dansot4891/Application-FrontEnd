@@ -1,6 +1,4 @@
 import 'dart:convert';
-
-import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gproject/common/dio/dio.dart';
 import 'package:gproject/cosmetic/model/ingredient/ingredient_model.dart';
@@ -65,6 +63,10 @@ class IngredientNotifier extends StateNotifier<List<IngredientModel>> {
       }
     }catch(e){
     }
+  }
+
+  void setData(List<IngredientModel> data){
+    state = data;
   }
 
   void changeBookmark(String name) {

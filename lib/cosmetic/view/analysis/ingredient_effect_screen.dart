@@ -7,6 +7,7 @@ import 'package:gproject/common/variable/color.dart';
 import 'package:gproject/cosmetic/component/ingredient/ingredient_mini_bar.dart';
 import 'package:gproject/cosmetic/model/analysis/effect_model.dart';
 import 'package:gproject/cosmetic/provider/anlysis/analysis_provider.dart';
+import 'package:gproject/cosmetic/provider/ingredient/ingredient_provider.dart';
 import 'package:gproject/main.dart';
 
 class IngredientEffectScreen extends ConsumerWidget {
@@ -14,8 +15,9 @@ class IngredientEffectScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final data = ref.watch(AnalysisProvider);
-    final ingreList = data.ingredient;
+    // final data = ref.watch(AnalysisProvider);
+    // final ingreList = data.ingredient;
+    final ingreList = ref.watch(IngredientProvider);
     final effectList = ref.read(AnalysisProvider.notifier).effectList();
     return CustomScrollView(
       slivers: [
@@ -102,7 +104,9 @@ class IngredientEffectScreen extends ConsumerWidget {
                           name: ingreList[idx].name,
                           grade: ingreList[idx].grade,
                           fontSize: 16,
-                          func: () {},
+                          func: () {
+                            ref.read(IngredientProvider.notifier).changeBookmark(ingreList[idx].name);
+                          },
                           preference: ingreList[idx].preference,
                         ),
                         if(ingreList[idx].purpose.contains(effectList[index].text) || ingreList[idx].features.contains(effectList[index].text))

@@ -31,7 +31,6 @@ class CosmeticNotifier extends StateNotifier<List<CosmeticModel>> {
     try{
       final resp = await dio.get('${BASE_URL}/api/user/cosmetic_detail/${id}');
       if(resp.statusCode == 200){
-        print(resp.data);
         data = CosmeticModel.fromJson(resp.data);
       }
     }catch(e){

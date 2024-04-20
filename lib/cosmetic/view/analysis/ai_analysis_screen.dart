@@ -35,7 +35,7 @@ class AIAnalysisScreen extends ConsumerWidget {
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
             child: Column(
               children: [
-                AIAnalysis(comment: data.Ai_description),
+                AIAnalysis(comment: data.ai_description),
                 SizedBox(
                   height: ratio.height * 40,
                 ),
@@ -47,7 +47,7 @@ class AIAnalysisScreen extends ConsumerWidget {
                     ),
                     itemCount: scoreList.length,
                     itemBuilder: (BuildContext context, index) {
-                      return index == (data.score - 1)
+                      return index == (data.score-1)
                           ? GridViewBox(title: scoreList[index], selected: true)
                           : GridViewBox(title: scoreList[index]);
                     },
@@ -89,9 +89,9 @@ class AIAnalysisScreen extends ConsumerWidget {
                             ),
                           ),
                           Text(
-                            typeList[data.type_posit - 1],
+                            typeList[data.type_posit],
                             style: TextStyle(
-                              color: typeList[data.type_posit - 1] == 4
+                              color: typeList[data.type_posit] == 4
                                   ? PColors.mainColor
                                   : Colors.black,
                               fontSize: 18,
@@ -110,9 +110,9 @@ class AIAnalysisScreen extends ConsumerWidget {
                             ),
                           ),
                           Text(
-                            typeList[data.type_neger - 1],
+                            typeList[data.type_nega],
                             style: TextStyle(
-                              color: typeList[data.type_neger - 1] == 4
+                              color: typeList[data.type_nega] == 4
                                   ? PColors.mainColor
                                   : Colors.black,
                               fontSize: 18,
@@ -131,9 +131,9 @@ class AIAnalysisScreen extends ConsumerWidget {
                             ),
                           ),
                           Text(
-                            typeList[data.type_danger - 1],
+                            typeList[data.type_danger],
                             style: TextStyle(
-                              color: typeList[data.type_danger - 1] == 4
+                              color: typeList[data.type_danger] == 4
                                   ? PColors.mainColor
                                   : Colors.black,
                               fontSize: 18,
@@ -144,9 +144,6 @@ class AIAnalysisScreen extends ConsumerWidget {
                       ),
                     ],
                   ),
-                ),
-                SizedBox(
-                  height: ratio.height * 40,
                 ),
               ],
             ),

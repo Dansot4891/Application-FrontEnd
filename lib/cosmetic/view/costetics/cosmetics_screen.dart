@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:gproject/common/dio/dio.dart';
 import 'package:gproject/common/variable/color.dart';
-import 'package:gproject/common/variable/image_path.dart';
 import 'package:gproject/common/view/default_layout.dart';
 import 'package:gproject/cosmetic/provider/cosmetics/cosmetics_provider.dart';
 import 'package:gproject/cosmetic/view/costetics/cosmetics_info_screen.dart';
@@ -26,6 +26,7 @@ class CosmeticsScreen extends ConsumerWidget {
         itemBuilder: (BuildContext context, index) {
           return gridViewBox(
             name: state[index].name,
+            imgPath: state[index].imagePath,
             price: state[index].lowestPrice,
             func: () async {
               final data = await ref.read(CosmeticProvider.notifier).getDetail(state[index].id);
@@ -46,6 +47,7 @@ class CosmeticsScreen extends ConsumerWidget {
 
   GestureDetector gridViewBox({
     required String name,
+    required String imgPath,
     required int price,
     required VoidCallback func,
   }) {
@@ -58,8 +60,8 @@ class CosmeticsScreen extends ConsumerWidget {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(12),
-              child: Image.asset(
-                ImgPath.sample,
+              child: Image.network(
+                imgPath == '-' ? "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4aNIlrin0wKvaB1KEly8LMJ3Pj5QlcEraE4YwAutekA&s" : '${BASE_URL}/image/${imgPath}',
                 width: ratio.width * 130,
                 height: ratio.height * 170,
                 fit: BoxFit.cover,

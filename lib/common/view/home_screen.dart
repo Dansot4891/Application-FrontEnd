@@ -5,7 +5,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gproject/chatbot/view/chatbot_screen.dart';
 import 'package:gproject/common/component/dialog.dart';
 import 'package:gproject/common/component/main_text.dart';
-import 'package:gproject/common/secure_storage/secure_storage.dart';
 import 'package:gproject/common/variable/color.dart';
 import 'package:gproject/common/variable/image_path.dart';
 import 'package:gproject/common/view/splash_screen.dart';
@@ -18,7 +17,6 @@ import 'package:gproject/main.dart';
 import 'package:gproject/cosmetic/view/analysis/image_upload_screen.dart';
 import 'package:gproject/user/provider/QandA_provider.dart';
 import 'package:gproject/user/provider/login_provider.dart';
-import 'package:gproject/user/view/login/login_screen.dart';
 import 'package:gproject/user/view/mypage/answer_screen.dart';
 import 'package:gproject/user/view/mypage/mypage_screen.dart';
 

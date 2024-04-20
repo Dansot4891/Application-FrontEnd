@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gproject/common/component/dialog.dart';
+import 'package:gproject/common/dio/dio.dart';
 import 'package:gproject/common/variable/color.dart';
-import 'package:gproject/common/variable/image_path.dart';
 import 'package:gproject/common/view/default_layout.dart';
 import 'package:gproject/cosmetic/model/cosmetics/cosmetic_model.dart';
 import 'package:gproject/cosmetic/model/cosmetics/cosmetic_purchase.dart';
@@ -20,10 +20,11 @@ class CosmeticsInfoScreen extends ConsumerWidget {
     return DefaultLayout(
         child: Column(
       children: [
-        Image.asset(
-          ImgPath.sample,
-          width: double.infinity,
-        ),
+        Image.network(
+                data.imagePath == '-' ? "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4aNIlrin0wKvaB1KEly8LMJ3Pj5QlcEraE4YwAutekA&s" : '${BASE_URL}/image/${data.imagePath}',
+                width: double.infinity,
+                fit: BoxFit.cover,
+              ),
         Container(
           padding: const EdgeInsets.symmetric(
             horizontal: 30,

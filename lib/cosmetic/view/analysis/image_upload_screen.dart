@@ -4,21 +4,25 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gproject/common/component/button.dart';
 import 'package:gproject/common/component/dialog.dart';
 import 'package:gproject/common/variable/color.dart';
 import 'package:gproject/common/variable/image_path.dart';
 import 'package:gproject/common/view/default_layout.dart';
 import 'package:gproject/common/view/loading_screen.dart';
+import 'package:gproject/cosmetic/provider/anlysis/analysis_provider.dart';
+import 'package:gproject/cosmetic/provider/ingredient/ingredient_provider.dart';
 import 'package:gproject/cosmetic/view/analysis/analysis_screen.dart';
 import 'package:gproject/main.dart';
+import 'package:gproject/user/provider/login_provider.dart';
 import 'package:image_picker/image_picker.dart';
 
-class ImageUpLoadScreen extends StatefulWidget {
+class ImageUpLoadScreen extends ConsumerStatefulWidget {
   const ImageUpLoadScreen({super.key});
 
   @override
-  State<ImageUpLoadScreen> createState() => _ImageUpLoadScreenState();
+  ConsumerState<ImageUpLoadScreen> createState() => _ImageUpLoadScreenState();
 }
 
 final picker = ImagePicker();
@@ -26,9 +30,11 @@ XFile? image; //카메라 촬영 이미지
 List<XFile?> multiImage = [];
 List<XFile?> images = [];
 
-class _ImageUpLoadScreenState extends State<ImageUpLoadScreen> {
+class _ImageUpLoadScreenState extends ConsumerState<ImageUpLoadScreen> {
   @override
   Widget build(BuildContext context) {
+    final userData = ref.watch(userDataProvider);
+    int memberId = userData == null ? 0 : ref.watch(userDataProvider)!.id!;
     return DefaultLayout(
       child: Column(
         children: [
@@ -80,15 +86,16 @@ class _ImageUpLoadScreenState extends State<ImageUpLoadScreen> {
                     },
                   ),
                 );
-
-                await Future.delayed(Duration(seconds: 3));
-
+                await Future.delayed(Duration(seconds: 1));
                 CustomDialog(
                   context: context,
                   title: '분석이 완료되었습니다!',
                   buttonText: '확인',
                   buttonCount: 1,
-                  func: () {
+                  func: () async {
+                    await ref.read(AnalysisProvider.notifier).fetchData(memberId);
+                    ref.read(IngredientProvider.notifier).setData(ref.watch(AnalysisProvider).ingredient);
+                    ref.read(previousDataProvider.notifier).setData(ref);
                     Navigator.push(
                       context,
                       MaterialPageRoute(
