@@ -22,6 +22,7 @@ EffectModel _$EffectModelFromJson(Map<String, dynamic> json) {
 mixin _$EffectModel {
   int get num => throw _privateConstructorUsedError;
   String get text => throw _privateConstructorUsedError;
+  int? get badnum => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -35,7 +36,7 @@ abstract class $EffectModelCopyWith<$Res> {
           EffectModel value, $Res Function(EffectModel) then) =
       _$EffectModelCopyWithImpl<$Res, EffectModel>;
   @useResult
-  $Res call({int num, String text});
+  $Res call({int num, String text, int? badnum});
 }
 
 /// @nodoc
@@ -53,6 +54,7 @@ class _$EffectModelCopyWithImpl<$Res, $Val extends EffectModel>
   $Res call({
     Object? num = null,
     Object? text = null,
+    Object? badnum = freezed,
   }) {
     return _then(_value.copyWith(
       num: null == num
@@ -63,6 +65,10 @@ class _$EffectModelCopyWithImpl<$Res, $Val extends EffectModel>
           ? _value.text
           : text // ignore: cast_nullable_to_non_nullable
               as String,
+      badnum: freezed == badnum
+          ? _value.badnum
+          : badnum // ignore: cast_nullable_to_non_nullable
+              as int?,
     ) as $Val);
   }
 }
@@ -75,7 +81,7 @@ abstract class _$$EffectModelImplCopyWith<$Res>
       __$$EffectModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int num, String text});
+  $Res call({int num, String text, int? badnum});
 }
 
 /// @nodoc
@@ -91,6 +97,7 @@ class __$$EffectModelImplCopyWithImpl<$Res>
   $Res call({
     Object? num = null,
     Object? text = null,
+    Object? badnum = freezed,
   }) {
     return _then(_$EffectModelImpl(
       num: null == num
@@ -101,6 +108,10 @@ class __$$EffectModelImplCopyWithImpl<$Res>
           ? _value.text
           : text // ignore: cast_nullable_to_non_nullable
               as String,
+      badnum: freezed == badnum
+          ? _value.badnum
+          : badnum // ignore: cast_nullable_to_non_nullable
+              as int?,
     ));
   }
 }
@@ -108,7 +119,7 @@ class __$$EffectModelImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$EffectModelImpl implements _EffectModel {
-  _$EffectModelImpl({required this.num, required this.text});
+  _$EffectModelImpl({required this.num, required this.text, this.badnum});
 
   factory _$EffectModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$EffectModelImplFromJson(json);
@@ -117,10 +128,12 @@ class _$EffectModelImpl implements _EffectModel {
   final int num;
   @override
   final String text;
+  @override
+  final int? badnum;
 
   @override
   String toString() {
-    return 'EffectModel(num: $num, text: $text)';
+    return 'EffectModel(num: $num, text: $text, badnum: $badnum)';
   }
 
   @override
@@ -129,12 +142,13 @@ class _$EffectModelImpl implements _EffectModel {
         (other.runtimeType == runtimeType &&
             other is _$EffectModelImpl &&
             (identical(other.num, num) || other.num == num) &&
-            (identical(other.text, text) || other.text == text));
+            (identical(other.text, text) || other.text == text) &&
+            (identical(other.badnum, badnum) || other.badnum == badnum));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, num, text);
+  int get hashCode => Object.hash(runtimeType, num, text, badnum);
 
   @JsonKey(ignore: true)
   @override
@@ -151,8 +165,10 @@ class _$EffectModelImpl implements _EffectModel {
 }
 
 abstract class _EffectModel implements EffectModel {
-  factory _EffectModel({required final int num, required final String text}) =
-      _$EffectModelImpl;
+  factory _EffectModel(
+      {required final int num,
+      required final String text,
+      final int? badnum}) = _$EffectModelImpl;
 
   factory _EffectModel.fromJson(Map<String, dynamic> json) =
       _$EffectModelImpl.fromJson;
@@ -161,6 +177,8 @@ abstract class _EffectModel implements EffectModel {
   int get num;
   @override
   String get text;
+  @override
+  int? get badnum;
   @override
   @JsonKey(ignore: true)
   _$$EffectModelImplCopyWith<_$EffectModelImpl> get copyWith =>

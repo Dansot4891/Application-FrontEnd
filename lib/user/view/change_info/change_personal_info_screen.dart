@@ -164,7 +164,7 @@ class ChangePersonalInfoScreen extends ConsumerWidget {
                               allergy: allergieController.text);
                               print(jsonEncode(user.toJson()));
                           final resp = await dio.put(
-                              'http://ceprj.gachon.ac.kr:60006/api/user/update_profile/ghdrlfehd',
+                              '${BASE_URL}/api/user/update_profile/${userData.login_id}',
                               data: jsonEncode(user.toJson()));
                           if (resp.statusCode == 200) {
                             final storage = ref.watch(secureStorageProvider);

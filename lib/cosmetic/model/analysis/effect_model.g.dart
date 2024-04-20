@@ -10,10 +10,12 @@ _$EffectModelImpl _$$EffectModelImplFromJson(Map<String, dynamic> json) =>
     _$EffectModelImpl(
       num: json['num'] as int,
       text: json['text'] as String,
+      badnum: json['badnum'] as int?,
     );
 
 Map<String, dynamic> _$$EffectModelImplToJson(_$EffectModelImpl instance) =>
     <String, dynamic>{
       'num': instance.num,
       'text': instance.text,
+      'badnum': instance.badnum,
     };

@@ -1,20 +1,28 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gproject/common/variable/color.dart';
+import 'package:gproject/cosmetic/model/ingredient/ingredient_model.dart';
+import 'package:gproject/cosmetic/provider/anlysis/analysis_provider.dart';
 import 'package:gproject/main.dart';
 
-class SkinTypeScreen extends StatelessWidget {
+class SkinTypeScreen extends ConsumerWidget {
   const SkinTypeScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final data = ref.read(AnalysisProvider.notifier).skinEffectList();
+    final ingreList = ref.watch(AnalysisProvider).ingredient;
     return CustomScrollView(
       slivers: [
         SliverToBoxAdapter(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              SizedBox(
+                height: 30,
+              ),
               SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Row(
@@ -24,31 +32,12 @@ class SkinTypeScreen extends StatelessWidget {
                     SizedBox(
                       width: 10,
                     ),
-                    CustomStickGraph(
-                      goodNum: 18,
-                      badNum: 2,
-                      title: '수분 흡수 증진',
-                    ),
-                    CustomStickGraph(
-                      goodNum: 31,
-                      badNum: 5,
-                      title: '각질 제거',
-                    ),
-                    CustomStickGraph(
-                      goodNum: 11,
-                      badNum: 7,
-                      title: '지속 시간 증가',
-                    ),
-                    CustomStickGraph(
-                      goodNum: 21,
-                      badNum: 0,
-                      title: '미백',
-                    ),
-                    CustomStickGraph(
-                      goodNum: 32,
-                      badNum: 1,
-                      title: '블라블라',
-                    ),
+                    ...List.generate(
+                        data.length,
+                        (index) => CustomStickGraph(
+                            goodNum: data[index].num,
+                            badNum: data[index].badnum ?? 0,
+                            title: data[index].text))
                   ],
                 ),
               ),
@@ -71,7 +60,7 @@ class SkinTypeScreen extends StatelessWidget {
                         text: '지성피부',
                         style: TextStyle(
                           fontSize: 16,
-                          color: PColors.mainColor,
+                          color: PColors.subColor3,
                         ),
                       ),
                       TextSpan(text: '에게 효과가 있습니다.'),
@@ -85,8 +74,9 @@ class SkinTypeScreen extends StatelessWidget {
             ],
           ),
         ),
-        SliverBox(skinType: '지성 피부', list: []),
-        SliverBox(skinType: '민감성 피부', list: [])
+        SliverBox(skinType: '건성 피부', ingredient: ref.read(AnalysisProvider.notifier).skinTypeData('DRY')),
+        SliverBox(skinType: '지성 피부', ingredient: ref.read(AnalysisProvider.notifier).skinTypeData('OILY')),
+        SliverBox(skinType: '민감성 피부', ingredient: ref.read(AnalysisProvider.notifier).skinTypeData('SENSITIVE')),
       ],
     );
   }
@@ -169,84 +159,99 @@ class SkinTypeScreen extends StatelessWidget {
     );
   }
 
-  Row SkinTypeRow(
+  Padding SkinTypeRow(
     String name,
     String func,
     bool isgood,
   ) {
-    return Row(
-      children: [
-        Icon(
-          isgood ? Icons.sentiment_very_satisfied : Icons.sentiment_very_dissatisfied,
-          size: 40,
-          color: isgood ? PColors.mainColor : PColors.bad
-        ),
-        SizedBox(
-          width: ratio.width * 10,
-        ),
-        Text(
-          name,
-          style: TextStyle(
-            fontSize: 16,
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 5),
+      child: Row(
+        children: [
+          Icon(
+              isgood
+                  ? Icons.sentiment_very_satisfied
+                  : Icons.sentiment_very_dissatisfied,
+              size: 40,
+              color: isgood ? PColors.mainColor : PColors.bad),
+          SizedBox(
+            width: ratio.width * 10,
           ),
-        ),
-        SizedBox(
-          width: ratio.width * 15,
-        ),
-        Text(
-          '|',
-          style: TextStyle(
-            fontSize: 16,
-            color: PColors.grey3.withOpacity(0.5),
+          Text(
+            name,
+            style: TextStyle(
+              fontSize: 16,
+            ),
           ),
-        ),
-        SizedBox(
-          width: ratio.width * 15,
-        ),
-        Text(
-          func,
-          style: TextStyle(
-            fontSize: 16,
+          SizedBox(
+            width: ratio.width * 15,
           ),
-        ),
-        SizedBox(
-          width: ratio.width * 15,
-        ),
-      ],
+          Text(
+            '|',
+            style: TextStyle(
+              fontSize: 16,
+              color: PColors.grey3.withOpacity(0.5),
+            ),
+          ),
+          SizedBox(
+            width: ratio.width * 15,
+          ),
+          Text(
+            func,
+            style: TextStyle(
+              fontSize: 16,
+            ),
+          ),
+          SizedBox(
+            width: ratio.width * 15,
+          ),
+        ],
+      ),
     );
   }
 
   SliverPadding SliverBox({
     required String skinType,
-    required list,
+    required List<IngredientModel> ingredient,
   }) {
     return SliverPadding(
       padding: const EdgeInsets.only(left: 30, top: 30),
       sliver: SliverList(
         delegate: SliverChildBuilderDelegate(
           (context, index) {
-            if(index == 0)
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [Text(
-                  '지성 피부',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
+            if (index == 0)
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    skinType,
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                ),
-                SizedBox(
-                  height: ratio.height * 15,
-                ),],
-            );
+                  SizedBox(
+                    height: ratio.height * 15,
+                  ),
+                ],
+              );
             return Padding(
               padding: const EdgeInsets.symmetric(vertical: 10),
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: SkinTypeRow('정제수', '습윤, 예민현상 차단, 습윤, 습윤, 예민현상 차단,', true),),
+              child: ingredient[index].skin_type != null ? ListView.builder(
+                      itemCount: ingredient[index].skin_type!.length,
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemBuilder: (context, idx) {
+                        return SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: ingredient[index].skin_type![idx].positivity_status ?
+                          SkinTypeRow(ingredient[index].name,'${ingredient[index].skin_type![idx].skinDescription}',ingredient[index].skin_type![idx].positivity_status) : null
+                        );
+                      },
+                    ) : SizedBox(height: 50,),
             );
           },
-          childCount: 10,
+          childCount: ingredient.length,
         ),
       ),
     );

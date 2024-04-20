@@ -157,7 +157,7 @@ class AnalysisNotifier extends StateNotifier<AnalysisModel> {
                         id: 1,
                         skin_type: 'SENSITIVE',
                         skinDescription: "화학적 자외선 차단",
-                        positivity_status: true),
+                        positivity_status: false),
                     SkinTypeModel(
                         id: 2,
                         skin_type: 'DRY',
@@ -260,11 +260,56 @@ class AnalysisNotifier extends StateNotifier<AnalysisModel> {
     return effectList;
   }
 
-  // List<List<IngredientModel>> seperEffectList(WidgetRef ref){
-  //   final data = ref.read(AnalysisProvider.notifier).effectList();
-  //   for(var val in data){
-  //     if()
-  //   }
-  //   return [];
-  // }
+  // 피부 타입 리스트
+  List<EffectModel> skinEffectList(){
+    List<String> effectText = [];
+    List<IngredientModel> list = state.ingredient;
+    for(var data in list){
+      for(var skinType in data.skin_type ?? []){
+        effectText.add(skinType.skinDescription);
+      }
+    }
+    effectText = effectText.toSet().toList();
+    
+    List<EffectModel> effectList = [];
+
+    for(var data in effectText){
+      effectList.add(EffectModel(num: 0, text: data));
+    }
+    for(var data in list){
+      for(var skinType in data.skin_type ?? []){
+        for(int i = 0; i<effectList.length; i++){
+          if((effectList[i].text == skinType.skinDescription && skinType.positivity_status == true)){
+            effectList[i] = effectList[i].copyWith(text: effectList[i].text, num: effectList[i].num + 1);
+          }
+          if((effectList[i].text == skinType.skinDescription && skinType.positivity_status == false)){
+            effectList[i] = effectList[i].copyWith(text: effectList[i].text, num: effectList[i].num, badnum: effectList[i].badnum == null ? 1 : effectList[i].badnum! + 1);
+          }
+        }
+      }
+    }
+    return effectList;
+  }
+
+  List<IngredientModel> skinTypeData(String type){
+    List<IngredientModel> list = [];
+    for(var data in state.ingredient){
+      if(data.skin_type != null){
+        for(int i = 0; i < data.skin_type!.length; i++){
+          if(!data.skin_type![i].positivity_status){
+            data.skin_type!.remove(data.skin_type![i]);
+          }
+          if(data.skin_type![i].positivity_status && data.skin_type![i].skin_type == type){
+            list.add(data);
+          }
+        }
+      }
+      // for(var data2 in data.skin_type ?? []){
+      //   if(data2.positivity_status && data2.skin_type == type){
+      //     list.add(data);
+      //   }
+      // }
+    }
+    return list;
+  }
 }

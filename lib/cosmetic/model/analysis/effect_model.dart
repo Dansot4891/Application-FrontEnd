@@ -6,7 +6,7 @@ part 'effect_model.g.dart';
 @freezed
 class EffectModel with _$EffectModel {
 
-  factory EffectModel({required int num, required String text}) = _EffectModel;
+  factory EffectModel({required int num, required String text, int? badnum}) = _EffectModel;
 
   factory EffectModel.fromJson(Map<String, dynamic> json) => _$EffectModelFromJson(json);
 }
