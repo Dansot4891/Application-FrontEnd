@@ -25,7 +25,7 @@ class IdCheckNotifier extends StateNotifier<bool> {
   Future<void> checkId(String id, BuildContext context) async {
     try {
       final resp = await dio.get(
-          'http://ceprj.gachon.ac.kr:60006/api/user/existLoginId/${id}',
+          '${BASE_URL}/api/user/existLoginId/${id}',
         );
       if (resp.statusCode == 200) {
         print('성공');

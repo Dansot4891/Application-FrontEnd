@@ -14,7 +14,7 @@ class IngredientComponentScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final data = ref.watch(AnalysisProvider);
-    final lists = data.ingredientDTO;
+    final lists = data.ingredient;
     final ingreNum = lists.length;
     final percentList = ref.read(AnalysisProvider.notifier).percentList();
     return CustomScrollView(

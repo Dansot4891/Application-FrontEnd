@@ -15,7 +15,7 @@ class AnalysisModel with _$AnalysisModel {
     required int type_danger, // 피부타입에 대한 주의 성분 기준
     required int AllArg_danger, // 알레르기 위험 성분 개수
     required int danger, // 의약처 위험 성분 개수
-    required List<IngredientModel> ingredientDTO, // 성분 리스트
+    required List<IngredientModel> ingredient, // 성분 리스트
     
   }) = _AnalysisModel;
 

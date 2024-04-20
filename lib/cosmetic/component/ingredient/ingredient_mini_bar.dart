@@ -1,21 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gproject/common/variable/color.dart';
+import 'package:gproject/user/provider/login_provider.dart';
 
-class IngredientMiniBar extends StatelessWidget {
+class IngredientMiniBar extends ConsumerWidget {
   final int grade;
   final String name;
   final double fontSize;
+  final bool preference;
   final VoidCallback func;
   const IngredientMiniBar({
     required this.grade,
     required this.name,
     required this.fontSize,
+    required this.preference,
     required this.func,
     super.key,});
 
   @override
-  Widget build(BuildContext context) {
-    
+  Widget build(BuildContext context, WidgetRef ref) {
+    bool loginState = ref.watch(loginStateProvider);
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -24,7 +28,7 @@ class IngredientMiniBar extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
-                color: PColors.safe,
+                color: (grade == 1 || grade == 2) ? PColors.safe : (grade == 3 || grade == 4 || grade == 5 || grade == 6) ? PColors.halfDanger : PColors.danger,
                 shape: BoxShape.circle,
               ),
               child: Center(
@@ -47,9 +51,9 @@ class IngredientMiniBar extends StatelessWidget {
             ),
           ],
         ),
-        GestureDetector(
+        loginState ? GestureDetector(
           onTap: func,
-          child: Stack(
+          child: preference ? Stack(
             alignment: Alignment.center,
             children: [
               Icon(Icons.bookmark,
@@ -60,8 +64,19 @@ class IngredientMiniBar extends StatelessWidget {
                 color: PColors.bookMark,
               )
             ],
+          ) : Stack(
+            alignment: Alignment.center,
+            children: [
+              Icon(Icons.bookmark,
+                  size: 37, color: Color(0xFF636363).withOpacity(0.8)),
+              Icon(
+                Icons.bookmark,
+                size: 30,
+                color: Colors.white,
+              )
+            ],
           ),
-        )
+        ) : SizedBox()
       ],
     );
   }

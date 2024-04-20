@@ -28,7 +28,7 @@ mixin _$AnalysisModel {
       throw _privateConstructorUsedError; // 피부타입에 대한 주의 성분 기준
   int get AllArg_danger => throw _privateConstructorUsedError; // 알레르기 위험 성분 개수
   int get danger => throw _privateConstructorUsedError; // 의약처 위험 성분 개수
-  List<IngredientModel> get ingredientDTO => throw _privateConstructorUsedError;
+  List<IngredientModel> get ingredient => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -50,7 +50,7 @@ abstract class $AnalysisModelCopyWith<$Res> {
       int type_danger,
       int AllArg_danger,
       int danger,
-      List<IngredientModel> ingredientDTO});
+      List<IngredientModel> ingredient});
 }
 
 /// @nodoc
@@ -73,7 +73,7 @@ class _$AnalysisModelCopyWithImpl<$Res, $Val extends AnalysisModel>
     Object? type_danger = null,
     Object? AllArg_danger = null,
     Object? danger = null,
-    Object? ingredientDTO = null,
+    Object? ingredient = null,
   }) {
     return _then(_value.copyWith(
       Ai_description: null == Ai_description
@@ -104,9 +104,9 @@ class _$AnalysisModelCopyWithImpl<$Res, $Val extends AnalysisModel>
           ? _value.danger
           : danger // ignore: cast_nullable_to_non_nullable
               as int,
-      ingredientDTO: null == ingredientDTO
-          ? _value.ingredientDTO
-          : ingredientDTO // ignore: cast_nullable_to_non_nullable
+      ingredient: null == ingredient
+          ? _value.ingredient
+          : ingredient // ignore: cast_nullable_to_non_nullable
               as List<IngredientModel>,
     ) as $Val);
   }
@@ -128,7 +128,7 @@ abstract class _$$AnalysisModelImplCopyWith<$Res>
       int type_danger,
       int AllArg_danger,
       int danger,
-      List<IngredientModel> ingredientDTO});
+      List<IngredientModel> ingredient});
 }
 
 /// @nodoc
@@ -149,7 +149,7 @@ class __$$AnalysisModelImplCopyWithImpl<$Res>
     Object? type_danger = null,
     Object? AllArg_danger = null,
     Object? danger = null,
-    Object? ingredientDTO = null,
+    Object? ingredient = null,
   }) {
     return _then(_$AnalysisModelImpl(
       Ai_description: null == Ai_description
@@ -180,9 +180,9 @@ class __$$AnalysisModelImplCopyWithImpl<$Res>
           ? _value.danger
           : danger // ignore: cast_nullable_to_non_nullable
               as int,
-      ingredientDTO: null == ingredientDTO
-          ? _value._ingredientDTO
-          : ingredientDTO // ignore: cast_nullable_to_non_nullable
+      ingredient: null == ingredient
+          ? _value._ingredient
+          : ingredient // ignore: cast_nullable_to_non_nullable
               as List<IngredientModel>,
     ));
   }
@@ -199,8 +199,8 @@ class _$AnalysisModelImpl implements _AnalysisModel {
       required this.type_danger,
       required this.AllArg_danger,
       required this.danger,
-      required final List<IngredientModel> ingredientDTO})
-      : _ingredientDTO = ingredientDTO;
+      required final List<IngredientModel> ingredient})
+      : _ingredient = ingredient;
 
   factory _$AnalysisModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$AnalysisModelImplFromJson(json);
@@ -226,18 +226,18 @@ class _$AnalysisModelImpl implements _AnalysisModel {
   @override
   final int danger;
 // 의약처 위험 성분 개수
-  final List<IngredientModel> _ingredientDTO;
+  final List<IngredientModel> _ingredient;
 // 의약처 위험 성분 개수
   @override
-  List<IngredientModel> get ingredientDTO {
-    if (_ingredientDTO is EqualUnmodifiableListView) return _ingredientDTO;
+  List<IngredientModel> get ingredient {
+    if (_ingredient is EqualUnmodifiableListView) return _ingredient;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_ingredientDTO);
+    return EqualUnmodifiableListView(_ingredient);
   }
 
   @override
   String toString() {
-    return 'AnalysisModel(Ai_description: $Ai_description, score: $score, type_posit: $type_posit, type_neger: $type_neger, type_danger: $type_danger, AllArg_danger: $AllArg_danger, danger: $danger, ingredientDTO: $ingredientDTO)';
+    return 'AnalysisModel(Ai_description: $Ai_description, score: $score, type_posit: $type_posit, type_neger: $type_neger, type_danger: $type_danger, AllArg_danger: $AllArg_danger, danger: $danger, ingredient: $ingredient)';
   }
 
   @override
@@ -258,7 +258,7 @@ class _$AnalysisModelImpl implements _AnalysisModel {
                 other.AllArg_danger == AllArg_danger) &&
             (identical(other.danger, danger) || other.danger == danger) &&
             const DeepCollectionEquality()
-                .equals(other._ingredientDTO, _ingredientDTO));
+                .equals(other._ingredient, _ingredient));
   }
 
   @JsonKey(ignore: true)
@@ -272,7 +272,7 @@ class _$AnalysisModelImpl implements _AnalysisModel {
       type_danger,
       AllArg_danger,
       danger,
-      const DeepCollectionEquality().hash(_ingredientDTO));
+      const DeepCollectionEquality().hash(_ingredient));
 
   @JsonKey(ignore: true)
   @override
@@ -290,15 +290,14 @@ class _$AnalysisModelImpl implements _AnalysisModel {
 
 abstract class _AnalysisModel implements AnalysisModel {
   factory _AnalysisModel(
-          {required final String Ai_description,
-          required final int score,
-          required final int type_posit,
-          required final int type_neger,
-          required final int type_danger,
-          required final int AllArg_danger,
-          required final int danger,
-          required final List<IngredientModel> ingredientDTO}) =
-      _$AnalysisModelImpl;
+      {required final String Ai_description,
+      required final int score,
+      required final int type_posit,
+      required final int type_neger,
+      required final int type_danger,
+      required final int AllArg_danger,
+      required final int danger,
+      required final List<IngredientModel> ingredient}) = _$AnalysisModelImpl;
 
   factory _AnalysisModel.fromJson(Map<String, dynamic> json) =
       _$AnalysisModelImpl.fromJson;
@@ -318,7 +317,7 @@ abstract class _AnalysisModel implements AnalysisModel {
   @override // 알레르기 위험 성분 개수
   int get danger;
   @override // 의약처 위험 성분 개수
-  List<IngredientModel> get ingredientDTO;
+  List<IngredientModel> get ingredient;
   @override
   @JsonKey(ignore: true)
   _$$AnalysisModelImplCopyWith<_$AnalysisModelImpl> get copyWith =>

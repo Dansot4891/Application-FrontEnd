@@ -15,7 +15,7 @@ _$AnalysisModelImpl _$$AnalysisModelImplFromJson(Map<String, dynamic> json) =>
       type_danger: json['type_danger'] as int,
       AllArg_danger: json['AllArg_danger'] as int,
       danger: json['danger'] as int,
-      ingredientDTO: (json['ingredientDTO'] as List<dynamic>)
+      ingredient: (json['ingredient'] as List<dynamic>)
           .map((e) => IngredientModel.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
@@ -29,5 +29,5 @@ Map<String, dynamic> _$$AnalysisModelImplToJson(_$AnalysisModelImpl instance) =>
       'type_danger': instance.type_danger,
       'AllArg_danger': instance.AllArg_danger,
       'danger': instance.danger,
-      'ingredientDTO': instance.ingredientDTO,
+      'ingredient': instance.ingredient,
     };
