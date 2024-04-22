@@ -1,7 +1,5 @@
-import 'dart:convert';
 import 'dart:io';
 import 'dart:ui';
-
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -34,6 +32,12 @@ List<XFile?> multiImage = [];
 List<XFile?> images = [];
 
 class _ImageUpLoadScreenState extends ConsumerState<ImageUpLoadScreen> {
+  @override
+  void initState() {
+    super.initState();
+    image = null;
+  }
+
   @override
   Widget build(BuildContext context) {
     final userData = ref.watch(userDataProvider);

@@ -19,7 +19,6 @@ class IngredientEffectScreen extends ConsumerWidget {
     // final ingreList = data.ingredient;
     final ingreList = ref.watch(IngredientProvider);
     final effectList = ref.read(AnalysisProvider.notifier).effectList();
-    print(effectList);
     return CustomScrollView(
       slivers: [
         //맨위 상단 효과 텍스트

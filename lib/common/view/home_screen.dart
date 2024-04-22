@@ -199,10 +199,10 @@ class HomeScreen extends ConsumerWidget {
                           route: () {
                             CustomDialog(
                                 context: context,
-                                title: '안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요',
-                                buttonCount: 2,
+                                title: '미구현 기능입니다.',
+                                buttonCount: 1,
                                 buttonText: null,
-                                func: () {});
+                                func: () {Navigator.pop(context);});
                           },
                         ),
                         loginState ? mainBigButton(
