@@ -147,6 +147,7 @@ class ChangePersonalInfoScreen extends ConsumerWidget {
                       if (gkey.currentState!.validate()) {
                         try {
                           final user = UserModel(
+                            id: userData.id,
                               name: userData.name,
                               nickname: nameController.text,
                               login_id: userData.login_id,
@@ -170,9 +171,11 @@ class ChangePersonalInfoScreen extends ConsumerWidget {
                             // final storage = ref.watch(secureStorageProvider);
                             // await storage.write(
                             //     key: 'user', value: jsonEncode(user.toJson()));
+                            print(user);
                             ref
                                 .read(userDataProvider.notifier)
                                 .updateUserModel2(ref, user);
+                            print(ref.watch(userDataProvider));
                             CustomDialog(
                               context: context,
                               title: '수정이 완료되었습니다!',
