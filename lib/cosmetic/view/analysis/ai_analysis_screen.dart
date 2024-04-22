@@ -30,9 +30,6 @@ class AIAnalysisScreen extends ConsumerWidget {
     ];
     final data = ref.watch(AnalysisProvider);
     final loginState = ref.watch(loginStateProvider);
-    print(data.type_posit);
-    print(data.type_nega);
-    print(data.type_danger);
     return loginState
         ? Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),

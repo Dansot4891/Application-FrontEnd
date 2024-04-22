@@ -32,11 +32,11 @@ List<XFile?> multiImage = [];
 List<XFile?> images = [];
 
 class _ImageUpLoadScreenState extends ConsumerState<ImageUpLoadScreen> {
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   image = null;
-  // }
+  @override
+  void initState() {
+    super.initState();
+    image = null;
+  }
 
   @override
   Widget build(BuildContext context) {
