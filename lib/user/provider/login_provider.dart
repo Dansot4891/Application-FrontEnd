@@ -38,9 +38,55 @@ class UserDataNotifer extends StateNotifier<UserModel?> {
   Future<void> updateUserModel(WidgetRef ref) async {
     final storage = ref.watch(secureStorageProvider);
     String? userDataNullable = await storage.read(key: 'user');
+    print('storage 적은거 읽기 완료');
     String userData = userDataNullable ?? "";
     Map<String, dynamic> userDataMap = jsonDecode(userData);
     UserModel user = UserModel.fromJson(userDataMap);
+    print('storage에서 불러와서 json 현재 불러오기 완료');
+    print(user);
+    //개인정보 때를 위한 provider 데이터 변경
+    if (user.gender == 'MALE') {
+      ref.read(genderButtonProvider.notifier).changeValue(0);
+    } else if (user.gender == 'FEMALE') {
+      ref.read(genderButtonProvider.notifier).changeValue(1);
+    }
+
+    if (user.skin_type == 'DRY') {
+      ref.read(typeButtonProvider.notifier).changeValue(0);
+    } else if (user.skin_type == 'OILY') {
+      ref.read(typeButtonProvider.notifier).changeValue(1);
+    } else if (user.skin_type == 'SENSITIVE') {
+      ref.read(typeButtonProvider.notifier).changeValue(2);
+    }
+
+    ref.read(worryButtonProvider.notifier).reset();
+    if (user.skin_concern.contains('해당없음') || user.skin_concern.length == 0) {
+      state = user;
+      return;
+    }
+    if (!user.skin_concern.contains('해당없음')) {
+      ref.read(worryButtonProvider.notifier).changeValue(0);
+    }
+    if (user.skin_concern.contains('아토피')) {
+      ref.read(worryButtonProvider.notifier).changeValue(1);
+    }
+    if (user.skin_concern.contains('여드름')) {
+      ref.read(worryButtonProvider.notifier).changeValue(2);
+    }
+    if (user.skin_concern.contains('각질')) {
+      ref.read(worryButtonProvider.notifier).changeValue(3);
+    }
+    if (user.skin_concern.contains('미백잡티')) {
+      ref.read(worryButtonProvider.notifier).changeValue(4);
+    }
+    if (user.skin_concern.contains('주름탄력')) {
+      ref.read(worryButtonProvider.notifier).changeValue(5);
+    }
+    state = user;
+  }
+
+  Future<void> updateUserModel2(WidgetRef ref, UserModel user) async {
+    print(user);
     //개인정보 때를 위한 provider 데이터 변경
     if (user.gender == 'MALE') {
       ref.read(genderButtonProvider.notifier).changeValue(0);

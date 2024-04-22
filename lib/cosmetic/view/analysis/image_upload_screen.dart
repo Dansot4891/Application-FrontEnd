@@ -70,7 +70,8 @@ class _ImageUpLoadScreenState extends ConsumerState<ImageUpLoadScreen> {
                 func: () async {
                   image = await picker.pickImage(source: ImageSource.gallery);
                   setState(() {
-                    images.addAll(multiImage);
+                    images.add(image);
+                    //images.addAll(multiImage);
                   });
                 },
               ),
@@ -84,8 +85,7 @@ class _ImageUpLoadScreenState extends ConsumerState<ImageUpLoadScreen> {
             child: CustomButton(
               text: '성분 분석',
               func: () async {
-                try {
-                  if (image == null) {
+                if (image == null) {
                     CustomDialog(
                         context: context,
                         title: '이미지를 선택해주세요.',
@@ -95,8 +95,9 @@ class _ImageUpLoadScreenState extends ConsumerState<ImageUpLoadScreen> {
                           Navigator.pop(context);
                         });
                   }
-                  if(image != null){
-                    Navigator.push(
+                  if (image != null) {
+                    try{
+                      Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (context) {
@@ -104,45 +105,45 @@ class _ImageUpLoadScreenState extends ConsumerState<ImageUpLoadScreen> {
                         },
                       ),
                     );
-                  dynamic sendData = image!.path;
-                  var formData = FormData.fromMap(
-                      {'file': await MultipartFile.fromFile(sendData)});
-                  final resp = await dio.post(
-                      '${BASE_URL}/api/user/analysis/${memberId}',
-                      options: Options(
-                        headers: {
-                          "Content-Type": "multipart/form-data",
+                    dynamic sendData = image!.path;
+                    var formData = FormData.fromMap(
+                        {'file': await MultipartFile.fromFile(sendData)});
+                    final resp = await dio.post(
+                        '${BASE_URL}/api/user/analysis/${memberId}',
+                        options: Options(
+                          headers: {
+                            "Content-Type": "multipart/form-data",
+                          },
+                        ),
+                        data: formData);
+                    if (resp.statusCode == 200) {
+                      final analysisId = resp.data;
+                      CustomDialog(
+                        context: context,
+                        title: '분석이 완료되었습니다!',
+                        buttonText: '확인',
+                        buttonCount: 1,
+                        func: () async {
+                          await ref.read(AnalysisProvider.notifier).fetchData(memberId, analysisId);
+                          ref.read(IngredientProvider.notifier).setData(ref.watch(AnalysisProvider).ingredient);
+                          ref.read(previousDataProvider.notifier).setData(ref);
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) {
+                                return AnalysisScreen();
+                              },
+                            ),
+                          );
                         },
-                      ),
-                      data: formData);
-                  if (resp.statusCode == 200) {
-                    final analysisId = resp.data;
-                    CustomDialog(
-                      context: context,
-                      title: '분석이 완료되었습니다!',
-                      buttonText: '확인',
-                      buttonCount: 1,
-                      func: () async {
-                        await ref.read(AnalysisProvider.notifier).fetchData(memberId, analysisId);
-                        ref.read(IngredientProvider.notifier).setData(ref.watch(AnalysisProvider).ingredient);
-                        ref.read(previousDataProvider.notifier).setData(ref);
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) {
-                              return AnalysisScreen();
-                            },
-                          ),
-                        );
-                      },
-                    );
-                  } else {
-                    print('실패');
+                      );
+                    } else {
+                      print('실패');
+                    }
+                    }catch(e){
+                      print(e);
+                    }
                   }
-                  }
-                } catch (e) {
-                  print(e);
-                }
               },
             ),
           ),

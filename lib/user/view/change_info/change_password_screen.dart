@@ -89,8 +89,8 @@ class ChangePasswordScreen extends ConsumerWidget {
                         Navigator.pop(context);
                       },
                     );
-                  }
-                  try{
+                  }if(newPwController1.text == newPwController2.text){
+                    try{
                   final resp = await dio.put('${BASE_URL}/api/user/update/password/${user.login_id}',
                     data: {
                       'nowpassword' : nowPwController.text,
@@ -110,6 +110,7 @@ class ChangePasswordScreen extends ConsumerWidget {
                   }
                   }catch(e){
 
+                  }
                   }
                 }
               },

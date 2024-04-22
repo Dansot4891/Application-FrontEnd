@@ -167,12 +167,12 @@ class ChangePersonalInfoScreen extends ConsumerWidget {
                               '${BASE_URL}/api/user/update_profile/${userData.login_id}',
                               data: jsonEncode(user.toJson()));
                           if (resp.statusCode == 200) {
-                            final storage = ref.watch(secureStorageProvider);
-                            await storage.write(
-                                key: 'user', value: jsonEncode(user.toJson()));
+                            // final storage = ref.watch(secureStorageProvider);
+                            // await storage.write(
+                            //     key: 'user', value: jsonEncode(user.toJson()));
                             ref
                                 .read(userDataProvider.notifier)
-                                .updateUserModel(ref);
+                                .updateUserModel2(ref, user);
                             CustomDialog(
                               context: context,
                               title: '수정이 완료되었습니다!',
