@@ -1,12 +1,15 @@
+import 'dart:convert';
 import 'dart:io';
 import 'dart:ui';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gproject/common/component/button.dart';
 import 'package:gproject/common/component/dialog.dart';
+import 'package:gproject/common/dio/dio.dart';
 import 'package:gproject/common/variable/color.dart';
 import 'package:gproject/common/variable/image_path.dart';
 import 'package:gproject/common/view/default_layout.dart';
@@ -53,7 +56,6 @@ class _ImageUpLoadScreenState extends ConsumerState<ImageUpLoadScreen> {
                   if (image != null) {
                     setState(() {
                       images.add(image);
-                      
                     });
                   }
                 },
@@ -78,34 +80,63 @@ class _ImageUpLoadScreenState extends ConsumerState<ImageUpLoadScreen> {
             child: CustomButton(
               text: '성분 분석',
               func: () async {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return LoadingScreen();
-                    },
-                  ),
-                );
-                await Future.delayed(Duration(seconds: 1));
-                CustomDialog(
-                  context: context,
-                  title: '분석이 완료되었습니다!',
-                  buttonText: '확인',
-                  buttonCount: 1,
-                  func: () async {
-                    await ref.read(AnalysisProvider.notifier).fetchData(memberId);
-                    ref.read(IngredientProvider.notifier).setData(ref.watch(AnalysisProvider).ingredient);
-                    ref.read(previousDataProvider.notifier).setData(ref);
-                    Navigator.push(
+                try {
+                  if (image == null) {
+                    CustomDialog(
+                        context: context,
+                        title: '이미지를 선택해주세요.',
+                        buttonText: '확인',
+                        buttonCount: 1,
+                        func: () {
+                          Navigator.pop(context);
+                        });
+                  }
+                  Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (context) {
-                          return AnalysisScreen();
+                          return LoadingScreen();
                         },
                       ),
                     );
-                  },
-                );
+                  dynamic sendData = image!.path;
+                  var formData = FormData.fromMap(
+                      {'file': await MultipartFile.fromFile(sendData)});
+                  final resp = await dio.post(
+                      '${BASE_URL}/api/user/analysis/${memberId}',
+                      options: Options(
+                        headers: {
+                          "Content-Type": "multipart/form-data",
+                        },
+                      ),
+                      data: formData);
+                  if (resp.statusCode == 200) {
+                    final analysisId = resp.data;
+                    CustomDialog(
+                      context: context,
+                      title: '분석이 완료되었습니다!',
+                      buttonText: '확인',
+                      buttonCount: 1,
+                      func: () async {
+                        await ref.read(AnalysisProvider.notifier).fetchData(memberId, analysisId);
+                        ref.read(IngredientProvider.notifier).setData(ref.watch(AnalysisProvider).ingredient);
+                        ref.read(previousDataProvider.notifier).setData(ref);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return AnalysisScreen();
+                            },
+                          ),
+                        );
+                      },
+                    );
+                  } else {
+                    print('실패');
+                  }
+                } catch (e) {
+                  print(e);
+                }
               },
             ),
           ),

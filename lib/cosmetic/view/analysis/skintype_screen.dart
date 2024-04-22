@@ -108,7 +108,7 @@ class SkinTypeScreen extends ConsumerWidget {
                   ),
                   Container(
                     margin: const EdgeInsets.symmetric(vertical: 10),
-                    height: ratio.height * 7 * goodNum,
+                    height: ratio.height * 12 * goodNum,
                     width: 30,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(6),
@@ -136,7 +136,7 @@ class SkinTypeScreen extends ConsumerWidget {
                   ),
                   Container(
                     margin: const EdgeInsets.symmetric(vertical: 10),
-                    height: ratio.height * 7 * badNum,
+                    height: ratio.height * 12 * badNum,
                     width: 30,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(6),

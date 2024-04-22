@@ -91,9 +91,13 @@ class AIAnalysisScreen extends ConsumerWidget {
                           Text(
                             typeList[data.type_posit],
                             style: TextStyle(
-                              color: typeList[data.type_posit] == 4
+                              color: typeList[data.type_posit] == 3
+                                  ? PColors.subColor3 
+                                  : typeList[data.type_posit] == 2
                                   ? PColors.mainColor
-                                  : Colors.black,
+                                  : typeList[data.type_posit] == 1
+                                  ? PColors.grey3
+                                  : PColors.grey2,
                               fontSize: 18,
                               fontWeight: FontWeight.w500,
                             ),

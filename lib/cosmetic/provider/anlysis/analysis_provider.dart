@@ -14,14 +14,15 @@ class AnalysisNotifier extends StateNotifier<AnalysisModel> {
         AnalysisModel(ai_description: 'Ai_description', score: 0, type_posit: 0, type_nega: 0, type_danger: 0, allArg_danger: 0, danger: 0, ingredient: [])
         );
 
-  Future<void> fetchData(int id) async {
+  Future<void> fetchData(int id, dynamic aId) async {
     try{
-      final resp = await dio.get('${BASE_URL}/api/user/${id}/analysis/result/1');
+      print("analysis id : ${aId}");
+      final resp = await dio.get('${BASE_URL}/api/user/${id}/analysis/result/${aId}');
       if(resp.statusCode == 200){
         state = AnalysisModel.fromJson(resp.data);
       }
     }catch(e){
-
+      print(e);
     }
   }
 

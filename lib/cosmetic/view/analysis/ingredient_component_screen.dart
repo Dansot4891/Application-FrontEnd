@@ -18,7 +18,6 @@ class IngredientComponentScreen extends ConsumerWidget {
     final lists = ref.watch(IngredientProvider);
     final ingreNum = lists.length;
     final percentList = ref.read(AnalysisProvider.notifier).percentList();
-    print(percentList);
     return CustomScrollView(
       slivers: [
         SliverPadding(
