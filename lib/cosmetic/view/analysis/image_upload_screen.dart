@@ -32,11 +32,11 @@ List<XFile?> multiImage = [];
 List<XFile?> images = [];
 
 class _ImageUpLoadScreenState extends ConsumerState<ImageUpLoadScreen> {
-  @override
-  void initState() {
-    super.initState();
-    image = null;
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   image = null;
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -95,7 +95,8 @@ class _ImageUpLoadScreenState extends ConsumerState<ImageUpLoadScreen> {
                           Navigator.pop(context);
                         });
                   }
-                  Navigator.push(
+                  if(image != null){
+                    Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (context) {
@@ -137,6 +138,7 @@ class _ImageUpLoadScreenState extends ConsumerState<ImageUpLoadScreen> {
                     );
                   } else {
                     print('실패');
+                  }
                   }
                 } catch (e) {
                   print(e);

@@ -30,6 +30,9 @@ class AIAnalysisScreen extends ConsumerWidget {
     ];
     final data = ref.watch(AnalysisProvider);
     final loginState = ref.watch(loginStateProvider);
+    print(data.type_posit);
+    print(data.type_nega);
+    print(data.type_danger);
     return loginState
         ? Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
@@ -91,11 +94,11 @@ class AIAnalysisScreen extends ConsumerWidget {
                           Text(
                             typeList[data.type_posit],
                             style: TextStyle(
-                              color: typeList[data.type_posit] == 3
-                                  ? PColors.subColor3 
-                                  : typeList[data.type_posit] == 2
+                              color: data.type_posit == 3
+                                  ? PColors.subColor3
+                                  : data.type_posit == 2
                                   ? PColors.mainColor
-                                  : typeList[data.type_posit] == 1
+                                  : data.type_posit == 1
                                   ? PColors.grey3
                                   : PColors.grey2,
                               fontSize: 18,
@@ -116,9 +119,13 @@ class AIAnalysisScreen extends ConsumerWidget {
                           Text(
                             typeList[data.type_nega],
                             style: TextStyle(
-                              color: typeList[data.type_nega] == 4
+                            color: data.type_nega == 3
+                                  ? PColors.subColor3
+                                  : data.type_nega == 2
                                   ? PColors.mainColor
-                                  : Colors.black,
+                                  : data.type_nega == 1
+                                  ? PColors.grey3
+                                  : PColors.grey2,
                               fontSize: 18,
                               fontWeight: FontWeight.w500,
                             ),
@@ -137,9 +144,13 @@ class AIAnalysisScreen extends ConsumerWidget {
                           Text(
                             typeList[data.type_danger],
                             style: TextStyle(
-                              color: typeList[data.type_danger] == 4
+                            color: data.type_danger == 3
+                                  ? PColors.subColor3
+                                  : data.type_danger == 2
                                   ? PColors.mainColor
-                                  : Colors.black,
+                                  : data.type_danger == 1
+                                  ? PColors.grey3
+                                  : PColors.grey2,
                               fontSize: 18,
                               fontWeight: FontWeight.w500,
                             ),

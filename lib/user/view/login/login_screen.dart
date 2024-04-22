@@ -79,6 +79,7 @@ class LoginScreen extends ConsumerWidget {
                 text: '로그인',
                 func: () async {
                   if (gkey.currentState!.validate()) {
+                    print(BASE_URL);
                     final resp = await dio
                         .post('${BASE_URL}/api/user/login', data: {
                       'login_id': idController.text,
@@ -100,7 +101,7 @@ class LoginScreen extends ConsumerWidget {
                         ),
                       );
                     }else{
-                      
+                      print('실패했어요');
                     }
                     }catch(e){
                       print(e);

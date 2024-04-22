@@ -16,9 +16,9 @@ class AnalysisNotifier extends StateNotifier<AnalysisModel> {
 
   Future<void> fetchData(int id, dynamic aId) async {
     try{
-      print("analysis id : ${aId}");
       final resp = await dio.get('${BASE_URL}/api/user/${id}/analysis/result/${aId}');
       if(resp.statusCode == 200){
+        print(resp.data);
         state = AnalysisModel.fromJson(resp.data);
       }
     }catch(e){
