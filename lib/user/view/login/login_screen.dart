@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gproject/common/component/button.dart';
-import 'package:gproject/common/component/dialog.dart';
 import 'package:gproject/common/dio/dio.dart';
 import 'package:gproject/common/secure_storage/secure_storage.dart';
 import 'package:gproject/common/variable/color.dart';
@@ -88,8 +87,7 @@ class LoginScreen extends ConsumerWidget {
                       if (resp.statusCode == 200) {
                       final user = UserModel.fromJson(resp.data);
                       final storage = ref.watch(secureStorageProvider);
-                      await storage.write(
-                          key: 'user', value: jsonEncode(user.toJson()));
+                      await storage.write(key: 'user', value: jsonEncode(user.toJson()));
                       ref.read(userDataProvider.notifier).updateUserModel(ref);
                       Navigator.push(
                         context,
