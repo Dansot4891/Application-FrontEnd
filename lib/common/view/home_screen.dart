@@ -197,12 +197,14 @@ class HomeScreen extends ConsumerWidget {
                           text: '사진을 통해 화장품의\n성분을 비교 분석합니다.',
                           imgPath: ImgPath.compare_analysis,
                           route: () {
-                            CustomDialog(
-                                context: context,
-                                title: '미구현 기능입니다.',
-                                buttonCount: 1,
-                                buttonText: null,
-                                func: () {Navigator.pop(context);});
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) {
+                                    return ImageUpLoadScreen();
+                                  },
+                                ),
+                              );
                           },
                         ),
                         loginState ? mainBigButton(

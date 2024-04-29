@@ -7,7 +7,8 @@ class DefaultLayout extends StatelessWidget {
   final bool isBoard;
   final bool keyboard;
   final VoidCallback? func;
-  const DefaultLayout({required this.child, this.isBoard = false, this.keyboard = false, this.func, super.key,});
+  final Widget? bottomSheet;
+  const DefaultLayout({required this.child, this.isBoard = false, this.keyboard = false, this.func, this.bottomSheet, super.key,});
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +38,7 @@ class DefaultLayout extends StatelessWidget {
         ),
       ),
       body: child,
+      bottomSheet: bottomSheet,
     );
   }
 }
