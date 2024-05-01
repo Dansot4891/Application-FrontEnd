@@ -10,11 +10,30 @@ import 'package:gproject/common/variable/image_path.dart';
 import 'package:gproject/common/view/default_layout.dart';
 import 'package:gproject/main.dart';
 
-class ChatBotScreen extends ConsumerWidget {
+class ChatBotScreen extends ConsumerStatefulWidget {
   const ChatBotScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  _ChatBotScreenState createState() => _ChatBotScreenState();
+}
+
+class _ChatBotScreenState extends ConsumerState<ChatBotScreen> {
+  late ScrollController sController;
+
+  @override
+  void initState() {
+    super.initState();
+    sController = ScrollController();
+  }
+
+  @override
+  void dispose() {
+    sController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     List<ChatBotModel> data = ref.watch(ChatBotProvider);
     Date currentDate = Date();
     currentDate.setWeekend();
@@ -28,42 +47,17 @@ class ChatBotScreen extends ConsumerWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: data.length == 0
-            ? Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Image.asset(ImgPath.chatbotLogo),
-                    SizedBox(
-                      height: 15,
-                    ),
-                    Text(
-                      '무엇을 도와드릴까요?',
-                      style:
-                          TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.center,
-                    ),
-                    Text(
-                      '답변을 받으시는데 시간이 조금 걸릴 수 있습니다.',
-                      style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
-                          color: PColors.grey3),
-                      textAlign: TextAlign.center,
-                    ),
-                  ],
-                ),
-              )
+            ? noChat()
             : Column(
                 children: [
                   Expanded(
                     child: ListView.separated(
+                      controller: sController,
                       itemBuilder: ((context, index) {
                         if (index == 0) {
                           return Column(
                             children: [
-                              dateRow(
-                                  date:
-                                      '${currentDate.year}년 ${currentDate.month}월 ${currentDate.day}일 ${currentDate.weekend}'),
+                              dateRow(date:'${currentDate.year}년 ${currentDate.month}월 ${currentDate.day}일 ${currentDate.weekend}'),
                               ChatBox(
                                 type: data[index].type,
                                 text: data[index].comment,
@@ -107,6 +101,34 @@ class ChatBotScreen extends ConsumerWidget {
               ),
       ),
     );
+  }
+
+  Center noChat(){
+    return Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset(ImgPath.chatbotLogo),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    Text(
+                      '무엇을 도와드릴까요?',
+                      style:
+                          TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                      textAlign: TextAlign.center,
+                    ),
+                    Text(
+                      '답변을 받으시는데 시간이 조금 걸릴 수 있습니다.',
+                      style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                          color: PColors.grey3),
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
+                ),
+              );
   }
 
   Padding dateRow({required String date}) {
@@ -234,7 +256,6 @@ class ChatBotScreen extends ConsumerWidget {
     required bool enabled,
   }) {
     return TextField(
-      enabled: enabled,
       textAlignVertical: TextAlignVertical.top,
       style: TextStyle(
         fontSize: 16,
@@ -251,15 +272,17 @@ class ChatBotScreen extends ConsumerWidget {
         filled: true,
         fillColor: Colors.white,
         suffixIcon: IconButton(
-            onPressed: () {
-              if (controller.text == '') {
-                print('실패');
+            onPressed: () async {
+              if (controller.text == '' || !enabled) {
                 null;
               } else {
-                ref
-                    .read(ChatBotProvider.notifier)
-                    .userQuestion(controller.text, ref);
+                await ref.read(ChatBotProvider.notifier).userQuestion(controller.text, ref, sController);
                 controller.text = '';
+                sController.animateTo(
+                  sController.position.maxScrollExtent,
+                  duration: Duration(milliseconds: 300),
+                  curve: Curves.easeOut,
+                );
               }
             },
             icon: Icon(

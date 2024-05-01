@@ -1,26 +1,26 @@
 import 'dart:io';
 import 'dart:ui';
-import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gproject/common/component/button.dart';
 import 'package:gproject/common/component/dialog.dart';
-import 'package:gproject/common/dio/dio.dart';
 import 'package:gproject/common/variable/color.dart';
 import 'package:gproject/common/variable/image_path.dart';
 import 'package:gproject/common/view/default_layout.dart';
-import 'package:gproject/common/view/loading_screen.dart';
 import 'package:gproject/cosmetic/provider/anlysis/analysis_provider.dart';
-import 'package:gproject/cosmetic/provider/ingredient/ingredient_provider.dart';
-import 'package:gproject/cosmetic/view/analysis/analysis_screen.dart';
 import 'package:gproject/main.dart';
 import 'package:gproject/user/provider/login_provider.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:card_swiper/card_swiper.dart';
 
 class ImageUpLoadScreen extends ConsumerStatefulWidget {
-  const ImageUpLoadScreen({super.key});
+  final bool isCompare;
+  const ImageUpLoadScreen({
+    required this.isCompare,
+    super.key,
+  });
 
   @override
   ConsumerState<ImageUpLoadScreen> createState() => _ImageUpLoadScreenState();
@@ -36,16 +36,48 @@ class _ImageUpLoadScreenState extends ConsumerState<ImageUpLoadScreen> {
   void initState() {
     super.initState();
     image = null;
+    images = [];
   }
 
   @override
   Widget build(BuildContext context) {
     final userData = ref.watch(userDataProvider);
     int memberId = userData == null ? 0 : ref.watch(userDataProvider)!.id!;
+    List<Widget> areas = [
+      PhotoArea(img: images.length > 0 ? images[0] : null),
+      PhotoArea(img: images.length > 1 ? images[1] : null),
+    ];
     return DefaultLayout(
       child: Column(
         children: [
-          PhotoArea(),
+          // 비교분석
+          widget.isCompare ?
+          Container(
+            width: double.infinity,
+            height: MediaQuery.of(context).size.height / 7 * 4,
+            child: Swiper(
+              itemCount: 2,
+              scale: 0,
+              viewportFraction: 0.75,
+              scrollDirection: Axis.horizontal,
+              pagination: SwiperPagination(
+                alignment: Alignment.bottomCenter,
+                builder: DotSwiperPaginationBuilder(
+                  activeColor: PColors.mainColor,
+                  color: PColors.grey3.withOpacity(0.5),
+                  size: 12,
+                  activeSize: 14,
+                  space: 8,
+                ),
+              ),
+              loop: false,
+              itemBuilder: (context, index) {
+                return areas[index];
+              },
+            ),
+          ) : 
+          // 분석
+          PhotoArea(img: image),
           SizedBox(
             height: ratio.height * 20,
           ),
@@ -86,64 +118,31 @@ class _ImageUpLoadScreenState extends ConsumerState<ImageUpLoadScreen> {
               text: '성분 분석',
               func: () async {
                 if (image == null) {
-                    CustomDialog(
-                        context: context,
-                        title: '이미지를 선택해주세요.',
-                        buttonText: '확인',
-                        buttonCount: 1,
-                        func: () {
-                          Navigator.pop(context);
-                        });
-                  }
-                  if (image != null) {
-                    try{
-                      Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) {
-                          return LoadingScreen();
-                        },
-                      ),
-                    );
-                    dynamic sendData = image!.path;
-                    var formData = FormData.fromMap(
-                        {'file': await MultipartFile.fromFile(sendData)});
-                    final resp = await dio.post(
-                        '${BASE_URL}/api/user/analysis/${memberId}',
-                        options: Options(
-                          headers: {
-                            "Content-Type": "multipart/form-data",
-                          },
-                        ),
-                        data: formData);
-                    if (resp.statusCode == 200) {
-                      final analysisId = resp.data;
-                      CustomDialog(
-                        context: context,
-                        title: '분석이 완료되었습니다!',
-                        buttonText: '확인',
-                        buttonCount: 1,
-                        func: () async {
-                          await ref.read(AnalysisProvider.notifier).fetchData(memberId, analysisId);
-                          ref.read(IngredientProvider.notifier).setData(ref.watch(AnalysisProvider).ingredient);
-                          ref.read(previousDataProvider.notifier).setData(ref);
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) {
-                                return AnalysisScreen();
-                              },
-                            ),
-                          );
-                        },
-                      );
-                    } else {
-                      print('실패');
-                    }
-                    }catch(e){
-                      print(e);
-                    }
-                  }
+                  CustomDialog(
+                      context: context,
+                      title: '이미지를 선택해주세요.',
+                      buttonText: '확인',
+                      buttonCount: 1,
+                      func: () {
+                        Navigator.pop(context);
+                      });
+                }
+                if (images.length == 1 && widget.isCompare) {
+                  CustomDialog(
+                      context: context,
+                      title: '이미지를 모두 선택해주세요.',
+                      buttonText: '확인',
+                      buttonCount: 1,
+                      func: () {
+                        Navigator.pop(context);
+                      });
+                }
+                if (image != null && !widget.isCompare) {
+                  ref.read(AnalysisProvider.notifier).requestAnalysisList(context, ref, image!, memberId);
+                }
+                if (images.length == 2 && widget.isCompare){
+                  ref.read(AnalysisProvider.notifier).requestCompareAnalysisList(context, ref, images, memberId);
+                }
               },
             ),
           ),
@@ -152,20 +151,20 @@ class _ImageUpLoadScreenState extends ConsumerState<ImageUpLoadScreen> {
     );
   }
 
-  Container PhotoArea() {
+  Container PhotoArea({
+    required XFile? img,
+  }) {
     return Container(
-      margin: const EdgeInsets.symmetric(
-        horizontal: 50,
-      ),
+      margin: !widget.isCompare ? EdgeInsets.symmetric(horizontal: 50) : null,
+      width: !widget.isCompare ? double.infinity : null,
+      height: !widget.isCompare ? MediaQuery.of(context).size.height / 7 * 4 : null,
       decoration: BoxDecoration(
         border: Border.all(
           color: PColors.mainColor,
           width: 1,
         ),
       ),
-      width: double.infinity,
-      height: MediaQuery.of(context).size.height / 7 * 4,
-      child: (image == null || images.length == 0)
+      child: img == null
           ? Center(
               child: Text(
                 '선택된 이미지가 없습니다.',
@@ -173,7 +172,7 @@ class _ImageUpLoadScreenState extends ConsumerState<ImageUpLoadScreen> {
             )
           : Image.file(
               File(
-                image!.path,
+                img.path,
               ),
               fit: BoxFit.cover,
             ),

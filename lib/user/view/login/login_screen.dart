@@ -85,14 +85,12 @@ class LoginScreen extends ConsumerWidget {
                       'password': pwController.text,
                     });
                       if (resp.statusCode == 200) {
-                      print("응답 : ${resp.data}");
                       final user = UserModel.fromJson(resp.data);
                       // print("fromJson : ${user}");
                       // await ref.watch(secureStorageProvider).write(key: 'user', value: jsonEncode(user));//jsonEncode(user.toJson())
                       // print('storage 작성 완료');
                       await ref.read(userDataProvider.notifier).updateUserModel2(ref, user);
                       //await ref.read(userDataProvider.notifier).updateUserModel(ref);
-                      print('UserProvider에 저장 완료');
                       Navigator.push(
                         context,
                         MaterialPageRoute(

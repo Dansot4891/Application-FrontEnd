@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gproject/chatbot/model/chatbot_model.dart';
 import 'package:gproject/common/dio/dio.dart';
@@ -28,9 +29,9 @@ class ChatBotNotifier extends StateNotifier<List<ChatBotModel>> {
           
         ]);
 
-  Future userQuestion(String text, WidgetRef ref) async {
+  Future userQuestion(String text, WidgetRef ref, ScrollController sController) async {
     ref.read(textStateProvider.notifier).setState(false);
-    state = [
+    state = await [
       ...state,
       ChatBotModel(
         id: state.length + 1,
@@ -38,7 +39,12 @@ class ChatBotNotifier extends StateNotifier<List<ChatBotModel>> {
         type: 'user',
       ),
     ];
-
+    await Future.delayed(Duration(milliseconds: 100));
+    sController.animateTo(
+                  sController.position.maxScrollExtent,
+                  duration: Duration(milliseconds: 300),
+                  curve: Curves.easeOut,
+                );
     try {
       final resp = await dio.post(
         apiUrl,
@@ -59,7 +65,7 @@ class ChatBotNotifier extends StateNotifier<List<ChatBotModel>> {
 
       if (resp.statusCode == 200) {
         String respText = resp.data["choices"][0]["message"]["content"];
-        state = [
+        state = await [
           ...state,
           ChatBotModel(
             id: state.length + 1,
@@ -67,6 +73,7 @@ class ChatBotNotifier extends StateNotifier<List<ChatBotModel>> {
             type: 'ai',
           )
         ];
+        await Future.delayed(Duration(milliseconds: 100));
         ref.read(textStateProvider.notifier).setState(true);
       }
     } catch (e) {

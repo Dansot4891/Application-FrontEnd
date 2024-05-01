@@ -3,16 +3,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gproject/common/variable/color.dart';
+import 'package:gproject/cosmetic/model/analysis/analysis_model.dart';
 import 'package:gproject/cosmetic/model/ingredient/ingredient_model.dart';
 import 'package:gproject/cosmetic/provider/anlysis/analysis_provider.dart';
 import 'package:gproject/main.dart';
 
 class SkinTypeScreen extends ConsumerWidget {
-  const SkinTypeScreen({super.key});
+  final AnalysisModel? compareData;
+  const SkinTypeScreen({
+    this.compareData,
+    super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final data = ref.read(AnalysisProvider.notifier).skinEffectList();
+    final data = ref.read(AnalysisProvider.notifier).skinEffectList(compareData, 0);
     return CustomScrollView(
       slivers: [
         SliverToBoxAdapter(
@@ -56,7 +60,7 @@ class SkinTypeScreen extends ConsumerWidget {
                     ),
                     children: [
                       TextSpan(
-                        text: ref.read(AnalysisProvider.notifier).skinTypeVal(ref),
+                        text: ref.read(AnalysisProvider.notifier).skinTypeVal(ref, 0),
                         style: TextStyle(
                           fontSize: 16,
                           color: PColors.subColor3,
@@ -73,9 +77,9 @@ class SkinTypeScreen extends ConsumerWidget {
             ],
           ),
         ),
-        SliverBox(skinType: '건성 피부', ingredient: ref.read(AnalysisProvider.notifier).skinTypeData('DRY')),
-        SliverBox(skinType: '지성 피부', ingredient: ref.read(AnalysisProvider.notifier).skinTypeData('OILY')),
-        SliverBox(skinType: '민감성 피부', ingredient: ref.read(AnalysisProvider.notifier).skinTypeData('SENSITIVE')),
+        SliverBox(skinType: '건성 피부', ingredient: ref.read(AnalysisProvider.notifier).skinTypeData('DRY', 0)),
+        SliverBox(skinType: '지성 피부', ingredient: ref.read(AnalysisProvider.notifier).skinTypeData('OILY', 0)),
+        SliverBox(skinType: '민감성 피부', ingredient: ref.read(AnalysisProvider.notifier).skinTypeData('SENSITIVE', 0)),
       ],
     );
   }

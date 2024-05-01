@@ -3,13 +3,20 @@ import 'package:flutter/material.dart';
 import 'package:gproject/common/variable/color.dart';
 import 'package:gproject/common/view/default_layout.dart';
 import 'package:gproject/cosmetic/view/analysis/ai_analysis_screen.dart';
+import 'package:gproject/cosmetic/view/analysis/compare/compare_ai_analysis_screen.dart';
+import 'package:gproject/cosmetic/view/analysis/compare/compare_ingredient_component_screen.dart';
+import 'package:gproject/cosmetic/view/analysis/compare/compare_ingredient_effect_screen.dart';
+import 'package:gproject/cosmetic/view/analysis/compare/compare_skintype_screen.dart';
 import 'package:gproject/cosmetic/view/analysis/evaluation_screen.dart';
 import 'package:gproject/cosmetic/view/analysis/ingredient_component_screen.dart';
 import 'package:gproject/cosmetic/view/analysis/ingredient_effect_screen.dart';
 import 'package:gproject/cosmetic/view/analysis/skintype_screen.dart';
 
 class AnalysisScreen extends StatefulWidget {
-  const AnalysisScreen({super.key});
+  final bool isCompare;
+  const AnalysisScreen({
+    required this.isCompare,
+    super.key});
 
   @override
   State<AnalysisScreen> createState() => _AnalysisScreenState();
@@ -78,10 +85,10 @@ class _AnalysisScreenState extends State<AnalysisScreen>
               controller: tabController,
               physics: NeverScrollableScrollPhysics(),
               children: [
-                AIAnalysisScreen(),
-                IngredientComponentScreen(),
-                IngredientEffectScreen(),
-                SkinTypeScreen(),
+                widget.isCompare ? CompareAIAnalysisScreen() : AIAnalysisScreen(),
+                widget.isCompare ? CompareIngredientComponentScreen() : IngredientComponentScreen(),
+                widget.isCompare ? CompareIngredientEffectScreen() : IngredientEffectScreen(),
+                widget.isCompare ? CompareSkinTypeScreen() : SkinTypeScreen(),
               ],
             ),
           ),

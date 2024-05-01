@@ -1,82 +1,41 @@
+import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gproject/common/variable/color.dart';
-import 'package:gproject/cosmetic/component/ingredient/ingredient_bar.dart';
 import 'package:gproject/cosmetic/component/ingredient/ingredient_info.dart';
-import 'package:gproject/cosmetic/model/analysis/analysis_model.dart';
-import 'package:gproject/cosmetic/model/ingredient/ingredient_model.dart';
-import 'package:gproject/cosmetic/provider/anlysis/analysis_provider.dart';
+import 'package:gproject/cosmetic/provider/anlysis/compare_analysis_provider.dart';
 import 'package:gproject/cosmetic/provider/ingredient/ingredient_provider.dart';
+import 'package:gproject/cosmetic/view/analysis/ingredient_component_screen.dart';
 import 'package:gproject/main.dart';
 
-class IngredientComponentScreen extends ConsumerWidget {
-  final AnalysisModel? compareData;
-  final List<IngredientModel>? list;
-  const IngredientComponentScreen({
-    this.compareData,
-    this.list,
-    super.key});
+class CompareIngredientComponentScreen extends ConsumerWidget {
+  const CompareIngredientComponentScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    AnalysisModel data = compareData == null ? ref.watch(AnalysisProvider)[0] : compareData!;
-    final lists = ref.watch(IngredientProvider);
-    final ingreNum = lists.length;
-    print(lists);
-    print(ingreNum);
-    final percentList = ref.read(AnalysisProvider.notifier).percentList(0);
-    return CustomScrollView(
-      slivers: [
-        SliverPadding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 20,
-          ),
-          sliver: SliverToBoxAdapter(
-            child: Column(
-              children: [
-                IngredientBox(context: context, aDanger: data.allArg_danger, mDanger: data.danger, safeRating: (percentList[0].toDouble()/ingreNum.toDouble() * 100).toInt(), halfSafeRating: (percentList[1].toDouble()/ingreNum.toDouble() * 100).toInt(), dangerRating: (percentList[2].toDouble()/ingreNum.toDouble() * 100).toInt()),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 20),
-                  child: Divider(
-                    thickness: 2,
-                    color: PColors.mainColor,
-                  ),
+    final data = ref.watch(compareAnalysisProvider);
+    final iData = ref.watch(compareIngredientProvider);
+    return Swiper(
+              itemCount: 2,
+              viewportFraction: 1,
+              scrollDirection: Axis.horizontal,
+              pagination: SwiperPagination(
+                alignment: Alignment.topCenter,
+                builder: DotSwiperPaginationBuilder(
+                  activeColor: PColors.mainColor,
+                  color: PColors.grey3.withOpacity(0.5),
+                  size: 12,
+                  activeSize: 14,
+                  space: 8,
                 ),
-                Row(
-                  children: [
-                    Text(
-                      '성분 ${ingreNum}개',
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.w400),
-                    ),
-                    Expanded(child: IngredientInfo()),
-                  ],
-                ),
-                SizedBox(height: ratio.height * 20,),
-              ],
-            ),
-          ),
-        ),
-        SliverPadding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 15,
-          ),
-          sliver: SliverList(
-            delegate: SliverChildBuilderDelegate(
-              (context, index) => Padding(
-                padding: const EdgeInsets.only(bottom: 20),
-                child: IngredientBar(level: lists[index].grade, ingredientName: lists[index].name, purpose: lists[index].purpose, features: lists[index].features, bookMark: lists[index].preference, func: (){
-                  ref.read(IngredientProvider.notifier).changeBookmark(lists[index].name);
-                }),
               ),
-              childCount: lists.length
-            ),
-          ),
-        ),
-      ],
-    );
+              loop: false,
+              itemBuilder: (context, index) {
+                return IngredientComponentScreen(compareData: data.analysisList[index], list: index == 0 ? null : iData,);
+              },
+            );
   }
 
   Container IngredientBox({

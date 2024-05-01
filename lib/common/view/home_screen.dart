@@ -187,7 +187,7 @@ class HomeScreen extends ConsumerWidget {
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) {
-                                    return ImageUpLoadScreen();
+                                    return ImageUpLoadScreen(isCompare: false,);
                                   },
                                 ),
                               );
@@ -201,7 +201,7 @@ class HomeScreen extends ConsumerWidget {
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) {
-                                    return ImageUpLoadScreen();
+                                    return ImageUpLoadScreen(isCompare: true,);
                                   },
                                 ),
                               );

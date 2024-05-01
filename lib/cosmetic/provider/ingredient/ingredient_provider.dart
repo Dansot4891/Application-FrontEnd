@@ -4,10 +4,6 @@ import 'package:gproject/common/dio/dio.dart';
 import 'package:gproject/cosmetic/model/ingredient/ingredient_model.dart';
 import 'package:gproject/cosmetic/provider/ingredient/ingredient_button_provider.dart';
 
-final IngredientProvider =
-    StateNotifierProvider<IngredientNotifier, List<IngredientModel>>(
-        (ref) => IngredientNotifier());
-
 final IngredientFilterProvider =
     Provider<List<IngredientModel>>(
         (ref) {
@@ -30,6 +26,9 @@ final IngredientFilterProvider =
           return [];
         },);
 
+final IngredientProvider =
+    StateNotifierProvider<IngredientNotifier, List<IngredientModel>>(
+        (ref) => IngredientNotifier());
 
 class IngredientNotifier extends StateNotifier<List<IngredientModel>> {
   IngredientNotifier()
@@ -115,5 +114,104 @@ class PreviousDataNotifier extends StateNotifier<List<IngredientModel>>{
 
   void setData(WidgetRef ref){
     state = ref.watch(IngredientProvider);
+  }
+}
+
+final ingredientSortProvider = StateNotifierProvider<IngredientSortNotifier, int>((ref) => IngredientSortNotifier());
+
+class IngredientSortNotifier extends StateNotifier<int>{
+  IngredientSortNotifier():super(0);
+
+  setIndex(int num){
+    state = num;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+final compareIngredientProvider =
+    StateNotifierProvider<CompareIngredientNotifier, List<IngredientModel>>(
+        (ref) => CompareIngredientNotifier());
+
+class CompareIngredientNotifier extends StateNotifier<List<IngredientModel>> {
+  CompareIngredientNotifier()
+      : super([
+
+        ]);
+
+  Future<void> fetchBookMarkData(int memberId) async {
+    List<IngredientModel> data = [];
+    try{
+      final resp = await dio.get("${BASE_URL}/api/user/preference/ingredient/list/${memberId}");
+      if(resp.statusCode == 200){
+        for(var json in resp.data){
+          data.add(IngredientModel.fromJson(json));
+        }
+        state = data;
+      }
+    }catch(e){
+    }
+  }
+
+  void setData(List<IngredientModel> data){
+    state = data;
+  }
+
+  void changeBookmark(String name) {
+    state = state.map((ingredient) {
+      if (ingredient.name == name) {
+        return ingredient.copyWith(preference: !ingredient.preference);
+      }
+      return ingredient;
+    }).toList();
+  }
+
+  Future<bool> getBookMarkData(List<IngredientModel> previousData, int memberId) async {
+    List<String> data = [];
+    for(int i = 0; i<previousData.length; i++){
+      if(previousData[i].preference != state[i].preference){
+        data.add(state[i].name);
+      }
+    }
+    if(data.length == 0){
+      return true;
+    }
+    try{
+      final resp = await dio.put('${BASE_URL}/api/user/ingredient/preferenve/${memberId}',
+        data: jsonEncode(data),
+        
+      );
+      if(resp.statusCode==200){
+        return true;
+      }
+      else{
+        return false;
+      }
+    }catch(e){
+      print(e);
+      return false;
+    }
+  }
+}
+
+final comparePreviousDataProvider = StateNotifierProvider<ComparePreviousDataNotifier, List<IngredientModel>>((ref) => ComparePreviousDataNotifier());
+
+class ComparePreviousDataNotifier extends StateNotifier<List<IngredientModel>>{
+  ComparePreviousDataNotifier():super(
+    []
+  );
+
+  void setData(WidgetRef ref){
+    state = ref.watch(compareIngredientProvider);
   }
 }

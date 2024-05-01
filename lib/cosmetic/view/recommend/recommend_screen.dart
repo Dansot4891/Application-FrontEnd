@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:gproject/common/component/stick_graph.dart';
 import 'package:gproject/common/variable/color.dart';
 import 'package:gproject/common/variable/image_path.dart';
 import 'package:gproject/common/view/default_layout.dart';
@@ -76,7 +77,7 @@ class RecommendScreen extends StatelessWidget {
                     "궁합력",
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
                   ),
-                  CustomGraph(context: context, percent: 82),
+                  StickGraph(percent: 82, padding: 50),
                   RichText(
                     text: TextSpan(
                       text: '본 화장품은 ',
@@ -144,43 +145,6 @@ class RecommendScreen extends StatelessWidget {
           ],
         ),
       ),
-    );
-  }
-
-  Stack CustomGraph({
-    required BuildContext context,
-    required int percent,
-  }) {
-    return Stack(
-      children: [
-        Container(
-          margin: const EdgeInsets.symmetric(vertical: 20),
-          width: MediaQuery.of(context).size.width,
-          height: ratio.height * 35,
-          decoration: BoxDecoration(
-            color: PColors.grey2,
-            borderRadius: BorderRadius.circular(24),
-          ),
-        ),
-        Container(
-          margin: const EdgeInsets.symmetric(vertical: 20),
-          width: (MediaQuery.of(context).size.width - 50) / 100 * percent,
-          height: ratio.height * 35,
-          decoration: BoxDecoration(
-            color: PColors.mainColor,
-            borderRadius: BorderRadius.circular(24),
-          ),
-          child: Center(
-            child: Text(
-              '${percent}%',
-              style: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-          ),
-        ),
-      ],
     );
   }
 

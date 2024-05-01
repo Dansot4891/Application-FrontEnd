@@ -4,13 +4,17 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gproject/common/component/button.dart';
 import 'package:gproject/common/variable/color.dart';
+import 'package:gproject/cosmetic/model/analysis/analysis_model.dart';
 import 'package:gproject/cosmetic/provider/anlysis/analysis_provider.dart';
 import 'package:gproject/main.dart';
 import 'package:gproject/user/provider/login_provider.dart';
 import 'package:gproject/user/view/login/signup_screen1.dart';
 
 class AIAnalysisScreen extends ConsumerWidget {
-  const AIAnalysisScreen({super.key});
+  final AnalysisModel? compareData;
+  const AIAnalysisScreen({
+    this.compareData,
+    super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -28,7 +32,7 @@ class AIAnalysisScreen extends ConsumerWidget {
       '보통',
       '충분',
     ];
-    final data = ref.watch(AnalysisProvider);
+    AnalysisModel data = compareData == null ? ref.watch(AnalysisProvider)[0] : compareData!;
     final loginState = ref.watch(loginStateProvider);
     return loginState
         ? Padding(

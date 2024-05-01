@@ -5,20 +5,24 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gproject/common/variable/color.dart';
 import 'package:gproject/cosmetic/component/ingredient/ingredient_mini_bar.dart';
+import 'package:gproject/cosmetic/model/analysis/analysis_model.dart';
 import 'package:gproject/cosmetic/model/analysis/effect_model.dart';
 import 'package:gproject/cosmetic/provider/anlysis/analysis_provider.dart';
 import 'package:gproject/cosmetic/provider/ingredient/ingredient_provider.dart';
 import 'package:gproject/main.dart';
 
 class IngredientEffectScreen extends ConsumerWidget {
-  const IngredientEffectScreen({super.key});
+  final AnalysisModel? compareData;
+  const IngredientEffectScreen({
+    this.compareData,
+    super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     // final data = ref.watch(AnalysisProvider);
     // final ingreList = data.ingredient;
     final ingreList = ref.watch(IngredientProvider);
-    final effectList = ref.read(AnalysisProvider.notifier).effectList();
+    final effectList = ref.read(AnalysisProvider.notifier).effectList(compareData, 0);
     return CustomScrollView(
       slivers: [
         //맨위 상단 효과 텍스트
