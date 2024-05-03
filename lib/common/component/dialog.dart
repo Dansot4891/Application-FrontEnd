@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:gproject/common/component/textformfield.dart';
 import 'package:gproject/common/variable/color.dart';
 
 Future<void> CustomDialog({
   bool withDraw = false,
+  bool barrierDismissible = true,
   required BuildContext context,
   required String title,
   required String? buttonText,
@@ -14,6 +14,7 @@ Future<void> CustomDialog({
 }) {
   return showDialog(
     context: context,
+    barrierDismissible: barrierDismissible,
     builder: (context) {
       return AlertDialog(
         backgroundColor: Colors.white,

@@ -54,9 +54,9 @@ class CompareAnalysisNotifier extends StateNotifier<CompareAnalysisModel> {
             ])
       ], ratio: [60,40], AI_total_description: '엄청 좋은듯? ㅋㅋ 엄청 좋은듯? ㅋㅋ 엄청 좋은듯? ㅋㅋ 엄청 좋은듯? ㅋㅋ 엄청 좋은듯? ㅋㅋ 엄청 좋은듯? ㅋㅋ 엄청 좋은듯? ㅋㅋ 엄청 좋은듯? ㅋㅋ 엄청 좋은듯? ㅋㅋ 엄청 좋은듯? ㅋㅋ 엄청 좋은듯? ㅋㅋ 엄청 좋은듯? ㅋㅋ '));
 
-  Future fetchData(int memberId) async {
+  Future fetchData(int memberId, int aid) async {
     try{
-      final resp = await dio.get('${BASE_URL}/api2/user/${memberId}/comparisonAnalysis/result/1',);
+      final resp = await dio.get('${BASE_URL}/api2/user/${memberId}/comparisonAnalysis/result/${aid}',);
       if(resp.statusCode == 200){
         state = CompareAnalysisModel.fromJson(resp.data);
       }

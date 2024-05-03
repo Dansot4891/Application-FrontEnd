@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gproject/common/variable/color.dart';
 import 'package:gproject/common/view/default_layout.dart';
+import 'package:gproject/cosmetic/provider/ingredient/ingredient_provider.dart';
 import 'package:gproject/cosmetic/view/analysis/ai_analysis_screen.dart';
 import 'package:gproject/cosmetic/view/analysis/compare/compare_ai_analysis_screen.dart';
 import 'package:gproject/cosmetic/view/analysis/compare/compare_ingredient_component_screen.dart';
@@ -12,17 +14,17 @@ import 'package:gproject/cosmetic/view/analysis/ingredient_component_screen.dart
 import 'package:gproject/cosmetic/view/analysis/ingredient_effect_screen.dart';
 import 'package:gproject/cosmetic/view/analysis/skintype_screen.dart';
 
-class AnalysisScreen extends StatefulWidget {
+class AnalysisScreen extends ConsumerStatefulWidget {
   final bool isCompare;
   const AnalysisScreen({
     required this.isCompare,
     super.key});
 
   @override
-  State<AnalysisScreen> createState() => _AnalysisScreenState();
+  ConsumerState<AnalysisScreen> createState() => _AnalysisScreenState();
 }
 
-class _AnalysisScreenState extends State<AnalysisScreen>
+class _AnalysisScreenState extends ConsumerState<AnalysisScreen>
     with SingleTickerProviderStateMixin {
   late TabController tabController = TabController(
     length: 4,
@@ -47,7 +49,7 @@ class _AnalysisScreenState extends State<AnalysisScreen>
           context,
           MaterialPageRoute(
             builder: (context) {
-              return EvaluationScreen();
+              return EvaluationScreen(isCompare: widget.isCompare,);
             },
           ),
         );

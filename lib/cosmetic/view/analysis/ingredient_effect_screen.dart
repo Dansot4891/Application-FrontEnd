@@ -7,22 +7,25 @@ import 'package:gproject/common/variable/color.dart';
 import 'package:gproject/cosmetic/component/ingredient/ingredient_mini_bar.dart';
 import 'package:gproject/cosmetic/model/analysis/analysis_model.dart';
 import 'package:gproject/cosmetic/model/analysis/effect_model.dart';
+import 'package:gproject/cosmetic/model/ingredient/ingredient_model.dart';
 import 'package:gproject/cosmetic/provider/anlysis/analysis_provider.dart';
 import 'package:gproject/cosmetic/provider/ingredient/ingredient_provider.dart';
 import 'package:gproject/main.dart';
 
 class IngredientEffectScreen extends ConsumerWidget {
   final AnalysisModel? compareData;
+  final int index;
+  final List<IngredientModel>? list;
   const IngredientEffectScreen({
+    this.list,
     this.compareData,
+    this.index = 0,
     super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // final data = ref.watch(AnalysisProvider);
-    // final ingreList = data.ingredient;
-    final ingreList = ref.watch(IngredientProvider);
-    final effectList = ref.read(AnalysisProvider.notifier).effectList(compareData, 0);
+    final ingreList = list == null ? ref.watch(IngredientProvider) : list;
+    final effectList = ref.read(AnalysisProvider.notifier).effectList(compareData, index);
     return CustomScrollView(
       slivers: [
         //맨위 상단 효과 텍스트
@@ -69,7 +72,7 @@ class IngredientEffectScreen extends ConsumerWidget {
                 child: ListView.builder(
                   physics: NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
-                  itemCount: ingreList.length,
+                  itemCount: ingreList!.length,
                   itemBuilder: (context, idx) {
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -109,7 +112,11 @@ class IngredientEffectScreen extends ConsumerWidget {
                           grade: ingreList[idx].grade,
                           fontSize: 16,
                           func: () {
-                            ref.read(IngredientProvider.notifier).changeBookmark(ingreList[idx].name);
+                            if(list == null){
+                              ref.read(IngredientProvider.notifier).changeBookmark(ingreList[idx].name);  
+                            }else{
+                              ref.read(compareIngredientProvider.notifier).changeBookmark(ingreList[idx].name);
+                            }
                           },
                           preference: ingreList[idx].preference,
                         ),

@@ -20,10 +20,7 @@ class CompareIngredientEffectScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // final data = ref.watch(AnalysisProvider);
-    // final ingreList = data.ingredient;
-    final ingreList = ref.watch(IngredientProvider);
-    final effectList = ref.read(AnalysisProvider.notifier).effectList(compareData, 0);
+    final iData2 = ref.watch(compareIngredientProvider);
     return Swiper(
       itemCount: 2,
       scrollDirection: Axis.horizontal,
@@ -39,7 +36,8 @@ class CompareIngredientEffectScreen extends ConsumerWidget {
       ),
       loop: false,
       itemBuilder: (context, index) {
-        return IngredientEffectScreen();
+        print(ref.watch(AnalysisProvider)[index]);
+        return IngredientEffectScreen(index: index, compareData: ref.watch(AnalysisProvider)[index], list: index == 0 ? null : iData2,);
       },
     );
   }

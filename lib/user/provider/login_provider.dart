@@ -86,7 +86,6 @@ class UserDataNotifer extends StateNotifier<UserModel?> {
   }
 
   Future<void> updateUserModel2(WidgetRef ref, UserModel user) async {
-    print(user);
     //개인정보 때를 위한 provider 데이터 변경
     if (user.gender == 'MALE') {
       ref.read(genderButtonProvider.notifier).changeValue(0);

@@ -10,13 +10,15 @@ import 'package:gproject/main.dart';
 
 class SkinTypeScreen extends ConsumerWidget {
   final AnalysisModel? compareData;
+  final int index;
   const SkinTypeScreen({
+    this.index = 0,
     this.compareData,
     super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final data = ref.read(AnalysisProvider.notifier).skinEffectList(compareData, 0);
+    final data = ref.read(AnalysisProvider.notifier).skinEffectList(compareData, index);
     return CustomScrollView(
       slivers: [
         SliverToBoxAdapter(
@@ -60,7 +62,7 @@ class SkinTypeScreen extends ConsumerWidget {
                     ),
                     children: [
                       TextSpan(
-                        text: ref.read(AnalysisProvider.notifier).skinTypeVal(ref, 0),
+                        text: ref.read(AnalysisProvider.notifier).skinTypeVal(ref, index),
                         style: TextStyle(
                           fontSize: 16,
                           color: PColors.subColor3,
@@ -77,9 +79,9 @@ class SkinTypeScreen extends ConsumerWidget {
             ],
           ),
         ),
-        SliverBox(skinType: '건성 피부', ingredient: ref.read(AnalysisProvider.notifier).skinTypeData('DRY', 0)),
-        SliverBox(skinType: '지성 피부', ingredient: ref.read(AnalysisProvider.notifier).skinTypeData('OILY', 0)),
-        SliverBox(skinType: '민감성 피부', ingredient: ref.read(AnalysisProvider.notifier).skinTypeData('SENSITIVE', 0)),
+        SliverBox(skinType: '건성 피부', ingredient: ref.read(AnalysisProvider.notifier).skinTypeData('DRY', index)),
+        SliverBox(skinType: '지성 피부', ingredient: ref.read(AnalysisProvider.notifier).skinTypeData('OILY', index)),
+        SliverBox(skinType: '민감성 피부', ingredient: ref.read(AnalysisProvider.notifier).skinTypeData('SENSITIVE', index)),
       ],
     );
   }

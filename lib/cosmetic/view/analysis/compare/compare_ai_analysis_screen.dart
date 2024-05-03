@@ -41,7 +41,7 @@ class CompareAIAnalysisScreen extends ConsumerWidget {
                   return TotalAIAnalysisScreen();
                 }
                 else{
-                  return AIAnalysisScreen(compareData: data.analysisList[index-1],);
+                  return AIAnalysisScreen(compareData: data.analysisList[index-1], text: Text('${index}번 이미지'),);
                 }
               },
             )

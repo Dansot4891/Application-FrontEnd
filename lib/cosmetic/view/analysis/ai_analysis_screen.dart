@@ -12,8 +12,10 @@ import 'package:gproject/user/view/login/signup_screen1.dart';
 
 class AIAnalysisScreen extends ConsumerWidget {
   final AnalysisModel? compareData;
-  const AIAnalysisScreen({
+  final Widget? text;
+  AIAnalysisScreen({
     this.compareData,
+    this.text = null,
     super.key});
 
   @override
@@ -39,10 +41,11 @@ class AIAnalysisScreen extends ConsumerWidget {
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
             child: Column(
               children: [
+                text == null ? SizedBox() : text!,
                 AIAnalysis(comment: data.ai_description),
-                SizedBox(
-                  height: ratio.height * 40,
-                ),
+                // SizedBox(
+                //   height: ratio.height * 20,
+                // ),
                 Expanded(
                   child: GridView.builder(
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(

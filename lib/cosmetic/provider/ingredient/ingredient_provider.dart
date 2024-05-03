@@ -93,9 +93,12 @@ class IngredientNotifier extends StateNotifier<List<IngredientModel>> {
         
       );
       if(resp.statusCode==200){
+        print(data);
+        print('성공');
         return true;
       }
       else{
+        print('실패');
         return false;
       }
     }catch(e){
@@ -126,8 +129,6 @@ class IngredientSortNotifier extends StateNotifier<int>{
     state = num;
   }
 }
-
-
 
 
 
@@ -192,6 +193,8 @@ class CompareIngredientNotifier extends StateNotifier<List<IngredientModel>> {
         
       );
       if(resp.statusCode==200){
+        print(data);
+        print('성공');
         return true;
       }
       else{

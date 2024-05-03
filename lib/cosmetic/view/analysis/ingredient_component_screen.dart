@@ -14,19 +14,18 @@ import 'package:gproject/main.dart';
 class IngredientComponentScreen extends ConsumerWidget {
   final AnalysisModel? compareData;
   final List<IngredientModel>? list;
+  final int index;
   const IngredientComponentScreen({
     this.compareData,
     this.list,
+    this.index = 0,
     super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     AnalysisModel data = compareData == null ? ref.watch(AnalysisProvider)[0] : compareData!;
-    final lists = ref.watch(IngredientProvider);
-    final ingreNum = lists.length;
-    print(lists);
-    print(ingreNum);
-    final percentList = ref.read(AnalysisProvider.notifier).percentList(0);
+    final lists = list == null ? ref.watch(IngredientProvider) : list;
+    final percentList = ref.read(AnalysisProvider.notifier).percentList(index);
     return CustomScrollView(
       slivers: [
         SliverPadding(
@@ -36,7 +35,7 @@ class IngredientComponentScreen extends ConsumerWidget {
           sliver: SliverToBoxAdapter(
             child: Column(
               children: [
-                IngredientBox(context: context, aDanger: data.allArg_danger, mDanger: data.danger, safeRating: (percentList[0].toDouble()/ingreNum.toDouble() * 100).toInt(), halfSafeRating: (percentList[1].toDouble()/ingreNum.toDouble() * 100).toInt(), dangerRating: (percentList[2].toDouble()/ingreNum.toDouble() * 100).toInt()),
+                IngredientBox(context: context, aDanger: data.allArg_danger, mDanger: data.danger, safeRating: (percentList[0].toDouble()/lists!.length.toDouble() * 100).toInt(), halfSafeRating: (percentList[1].toDouble()/lists.length.toDouble() * 100).toInt(), dangerRating: (percentList[2].toDouble()/lists.length.toDouble() * 100).toInt()),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 20),
                   child: Divider(
@@ -47,7 +46,7 @@ class IngredientComponentScreen extends ConsumerWidget {
                 Row(
                   children: [
                     Text(
-                      '성분 ${ingreNum}개',
+                      '성분 ${lists.length}개',
                       style:
                           TextStyle(fontSize: 20, fontWeight: FontWeight.w400),
                     ),
@@ -68,7 +67,13 @@ class IngredientComponentScreen extends ConsumerWidget {
               (context, index) => Padding(
                 padding: const EdgeInsets.only(bottom: 20),
                 child: IngredientBar(level: lists[index].grade, ingredientName: lists[index].name, purpose: lists[index].purpose, features: lists[index].features, bookMark: lists[index].preference, func: (){
-                  ref.read(IngredientProvider.notifier).changeBookmark(lists[index].name);
+                  if(list == null){
+                    ref.read(IngredientProvider.notifier).changeBookmark(lists[index].name);
+                    print(lists[index].preference);
+                  }else{
+                    print(lists[index].preference);
+                    ref.read(compareIngredientProvider.notifier).changeBookmark(lists[index].name);
+                  }
                 }),
               ),
               childCount: lists.length

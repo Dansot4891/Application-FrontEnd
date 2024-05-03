@@ -5,6 +5,7 @@ import 'package:gproject/common/component/button.dart';
 import 'package:gproject/common/component/dialog.dart';
 import 'package:gproject/common/variable/color.dart';
 import 'package:gproject/common/view/default_layout.dart';
+import 'package:gproject/cosmetic/provider/anlysis/analysis_provider.dart';
 import 'package:gproject/cosmetic/provider/evaluation/evaluation_provider.dart';
 import 'package:gproject/common/view/home_screen.dart';
 import 'package:gproject/cosmetic/provider/ingredient/ingredient_provider.dart';
@@ -13,13 +14,20 @@ import 'package:gproject/main.dart';
 import 'package:gproject/user/provider/login_provider.dart';
 
 class EvaluationScreen extends ConsumerWidget {
-  const EvaluationScreen({super.key});
+  final bool isCompare;
+  const EvaluationScreen({this.isCompare = false, super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // final state = ref.watch(starIndexProvider1);
+    // final state2 = ref.watch(starIndexProvider2);
     final state = ref.watch(starIndexProvider);
-    final state2 = ref.watch(starIndexProvider2);
+    // int state = ref.watch(starIndexProvider)[0];
+    // int state2 = ref.watch(starIndexProvider)[1];
     final loginState = ref.watch(loginStateProvider);
+    final user = ref.watch(userDataProvider);
+    final analysisId = ref.watch(analysisNumProvider);
+    
     return DefaultLayout(
       func: () {
         Navigator.pop(context);
@@ -69,12 +77,10 @@ class EvaluationScreen extends ConsumerWidget {
                     5,
                     (index) => IconButton(
                       onPressed: () {
-                        ref
-                            .read(starIndexProvider2.notifier)
-                            .setIndex(index + 1);
+                        ref.read(starIndexProvider.notifier).setIndex(0, index + 1);
                       },
                       icon: Icon(
-                        index < state2
+                        index < state[0]
                             ? Icons.star
                             : Icons.star_border_outlined,
                         size: 40,
@@ -104,12 +110,12 @@ class EvaluationScreen extends ConsumerWidget {
                     5,
                     (index) => IconButton(
                       onPressed: () {
-                        ref
-                            .read(starIndexProvider.notifier)
-                            .setIndex(index + 1);
+                        ref.read(starIndexProvider.notifier).setIndex(1, index + 1);
                       },
                       icon: Icon(
-                        index < state ? Icons.star : Icons.star_border_outlined,
+                        index < state[1]
+                            ? Icons.star
+                            : Icons.star_border_outlined,
                         size: 40,
                         color: PColors.mainColor,
                       ),
@@ -124,19 +130,35 @@ class EvaluationScreen extends ConsumerWidget {
                 text: '다음에 하기',
                 func: () async {
                   if (loginState) {
-                    final result = ref
-                        .read(IngredientProvider.notifier)
-                        .getBookMarkData(ref.watch(previousDataProvider),
-                            ref.watch(userDataProvider)!.id!);
-                    if (result == false) {
-                      CustomDialog(
-                          context: context,
-                          title: '오류가 발생했습니다.',
-                          buttonText: '확인',
-                          buttonCount: 1,
-                          func: () {
-                            Navigator.pop(context);
-                          });
+                    if (isCompare) {
+                      final result = ref.read(IngredientProvider.notifier).getBookMarkData(ref.watch(previousDataProvider),ref.watch(userDataProvider)!.id!);
+                      final result2 = ref.read(compareIngredientProvider.notifier).getBookMarkData(ref.watch(compareIngredientProvider),ref.watch(userDataProvider)!.id!);
+                      if (result == false || result2 == false) {
+                        CustomDialog(
+                            context: context,
+                            title: '오류가 발생했습니다.',
+                            buttonText: '확인',
+                            buttonCount: 1,
+                            func: () {
+                              Navigator.pop(context);
+                            });
+                      }
+                    }
+                    if (!isCompare) {
+                      final result = ref
+                          .read(IngredientProvider.notifier)
+                          .getBookMarkData(ref.watch(previousDataProvider),
+                              ref.watch(userDataProvider)!.id!);
+                      if (result == false) {
+                        CustomDialog(
+                            context: context,
+                            title: '오류가 발생했습니다.',
+                            buttonText: '확인',
+                            buttonCount: 1,
+                            func: () {
+                              Navigator.pop(context);
+                            });
+                      }
                     }
                   }
                   Navigator.push(
@@ -155,30 +177,48 @@ class EvaluationScreen extends ConsumerWidget {
               CustomButton(
                 text: '결과 확인',
                 func: () async {
+                  print(loginState);
+                  print(isCompare);
                   if (loginState) {
-                    final result = ref
-                        .read(IngredientProvider.notifier)
-                        .getBookMarkData(ref.watch(previousDataProvider),
-                            ref.watch(userDataProvider)!.id!);
-                    if (result == false) {
-                      CustomDialog(
-                          context: context,
-                          title: '오류가 발생했습니다.',
-                          buttonText: '확인',
-                          buttonCount: 1,
-                          func: () {
-                            Navigator.pop(context);
-                          });
+                    if (isCompare) {
+                      print('결과확인');
+                      final result = ref.read(IngredientProvider.notifier).getBookMarkData(ref.watch(previousDataProvider),ref.watch(userDataProvider)!.id!);
+                      final result2 = ref.read(compareIngredientProvider.notifier).getBookMarkData(ref.watch(compareIngredientProvider),ref.watch(userDataProvider)!.id!);
+                      if (result == false || result2 == false) {
+                        CustomDialog(
+                            context: context,
+                            title: '오류가 발생했습니다.',
+                            buttonText: '확인',
+                            buttonCount: 1,
+                            func: () {
+                              Navigator.pop(context);
+                            });
+                      }
+                    }
+                    if (!isCompare) {
+                      final result = ref.read(IngredientProvider.notifier).getBookMarkData(ref.watch(previousDataProvider),ref.watch(userDataProvider)!.id!);
+                      await ref.read(starIndexProvider.notifier).analysisEvaluation(memberId: user!.id!, analysisId: analysisId, score1: state[0], score2: state[1]);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return RecommendScreen();
+                          },
+                        ),
+                      );
+                      if (result == false) {
+                        CustomDialog(
+                            context: context,
+                            title: '오류가 발생했습니다.',
+                            buttonText: '확인',
+                            buttonCount: 1,
+                            func: () {
+                              Navigator.pop(context);
+                            });
+                      }
                     }
                   }
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) {
-                        return RecommendScreen();
-                      },
-                    ),
-                  );
+                  
                 },
               ),
             ],

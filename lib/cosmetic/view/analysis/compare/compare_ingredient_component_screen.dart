@@ -16,7 +16,7 @@ class CompareIngredientComponentScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final data = ref.watch(compareAnalysisProvider);
-    final iData = ref.watch(compareIngredientProvider);
+    final iData2 = ref.watch(compareIngredientProvider);
     return Swiper(
               itemCount: 2,
               viewportFraction: 1,
@@ -33,7 +33,7 @@ class CompareIngredientComponentScreen extends ConsumerWidget {
               ),
               loop: false,
               itemBuilder: (context, index) {
-                return IngredientComponentScreen(compareData: data.analysisList[index], list: index == 0 ? null : iData,);
+                return IngredientComponentScreen(compareData: data.analysisList[index], list: index == 0 ? null : iData2, index: index,);
               },
             );
   }

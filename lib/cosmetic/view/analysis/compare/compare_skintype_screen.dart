@@ -4,17 +4,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gproject/common/variable/color.dart';
+import 'package:gproject/cosmetic/model/analysis/analysis_model.dart';
 import 'package:gproject/cosmetic/model/ingredient/ingredient_model.dart';
 import 'package:gproject/cosmetic/provider/anlysis/analysis_provider.dart';
 import 'package:gproject/cosmetic/view/analysis/skintype_screen.dart';
 import 'package:gproject/main.dart';
 
 class CompareSkinTypeScreen extends ConsumerWidget {
-  const CompareSkinTypeScreen({super.key});
+  final int index;
+  final AnalysisModel? aData;
+  const CompareSkinTypeScreen({
+    this.index = 0,
+    this.aData = null,
+    super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final data = ref.read(AnalysisProvider.notifier).skinEffectList(null, 0);
     return Swiper(
               itemCount: 2,
               scrollDirection: Axis.horizontal,
@@ -30,7 +35,7 @@ class CompareSkinTypeScreen extends ConsumerWidget {
               ),
               loop: false,
               itemBuilder: (context, index) {
-                return SkinTypeScreen();
+                return SkinTypeScreen(index: index, compareData: ref.watch(AnalysisProvider)[index],);
               },
             );
   }

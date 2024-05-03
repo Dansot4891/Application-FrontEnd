@@ -311,6 +311,9 @@ import 'package:image_picker/image_picker.dart';
 //   }
 // }
 
+final analysisNumProvider = StateProvider<int>((ref) => 0); // 초기값으로 0을 설정합니다.
+
+
 final AnalysisProvider = StateNotifierProvider<AnalysisNotifier, List<AnalysisModel>>(
     (ref) => AnalysisNotifier());
 
@@ -508,22 +511,20 @@ class AnalysisNotifier extends StateNotifier<List<AnalysisModel>> {
       dynamic sendData = image.path;
       var formData =
           FormData.fromMap({'file': await MultipartFile.fromFile(sendData)});
-          print(formData);
       final resp = await dio.post('${BASE_URL}/api/user/analysis/${memberId}',
           options: Options(
             headers: {
               "Content-Type": "multipart/form-data",
             },
           ),
-          data: {
-            'file' : formData,
-          }
+          data: formData
           );
-          print('요쳥함');
       if (resp.statusCode == 200) {
         final analysisId = resp.data;
+        ref.watch(analysisNumProvider.notifier).state = analysisId;
         CustomDialog(
           context: context,
+          barrierDismissible: true,
           title: '분석이 완료되었습니다!',
           buttonText: '확인',
           buttonCount: 1,
@@ -559,33 +560,38 @@ class AnalysisNotifier extends StateNotifier<List<AnalysisModel>> {
           },
         ),
       );
-      dynamic sendData1 = images[0]!.path;
-      var formData1 =FormData.fromMap({'file': await MultipartFile.fromFile(sendData1)});
-      dynamic sendData2 = images[1]!.path;
-      var formData2 =FormData.fromMap({'file': await MultipartFile.fromFile(sendData2)});
-      print(formData1);
-      print(formData2);
-      final resp = await dio.post('${BASE_URL}/api/user/analysis/${memberId}',
+      FormData formData = FormData();
+      for (int i = 0; i < images.length; i++) {
+        XFile? image = images[i];
+        if (image != null) {
+          formData.files.add(MapEntry(
+            'file${i+1}', // 각 파일 필드에 고유한 이름 할당
+            await MultipartFile.fromFile(image.path),
+          ));
+        }
+      }
+      final resp = await dio.post('${BASE_URL}/user2/api/comparison/analysis/${memberId}',
           options: Options(
             headers: {
-              "Content-Type": "multipart/form-data",
+              "content-type": "multipart/form-data",
             },
           ),
-          data: {
-            'file1' : formData1,
-            'file2' : formData2,
-          });
+          data: formData
+        );
       if (resp.statusCode == 200) {
         final analysisId = resp.data;
+        print(analysisId);
         CustomDialog(
+          barrierDismissible: false,
           context: context,
           title: '분석이 완료되었습니다!',
           buttonText: '확인',
           buttonCount: 1,
           func: () async {
-            await ref.read(AnalysisProvider.notifier).fetchData(memberId, analysisId);
+            await ref.read(compareAnalysisProvider.notifier).fetchData(memberId, analysisId);
+            ref.read(AnalysisProvider.notifier).setData(ref);
             ref.read(IngredientProvider.notifier).setData(ref.watch(compareAnalysisProvider).analysisList[0].ingredient);
-            ref.read(compareIngredientProvider.notifier).setData(ref.watch(compareAnalysisProvider).analysisList[0].ingredient);
+            ref.read(compareIngredientProvider.notifier).setData(ref.watch(compareAnalysisProvider).analysisList[1].ingredient);
             ref.read(previousDataProvider.notifier).setData(ref);
             ref.read(comparePreviousDataProvider.notifier).setData(ref);
             Navigator.push(
@@ -602,7 +608,34 @@ class AnalysisNotifier extends StateNotifier<List<AnalysisModel>> {
         print('실패');
       }
     } catch (e) {
-      print(e);
+      if (e is DioError) {
+        if (e.response != null) {
+          // 서버 응답이 있는 경우
+          print('Dio error response: ${e.response}');
+          print('Status: ${e.response?.statusCode}');
+          print('Data: ${e.response?.data}');
+          print('Headers: ${e.response?.headers}');
+          // 오류 메시지 출력
+          if (e.response?.statusCode == 400) {
+            // 400 오류가 발생한 경우
+            print('Bad request error: ${e.response?.data['error']}');
+            print('Detailed error message: ${e.response?.data['message']}');
+          } else if (e.response?.statusCode == 404) {
+            // 404 오류가 발생한 경우
+            print('Not found error: ${e.response?.data['error']}');
+            print('Detailed error message: ${e.response?.data['message']}');
+          } else {
+            // 기타 오류인 경우
+            print('Error message: ${e.response?.data['error']}');
+          }
+        } else {
+          // 서버 응답이 없는 경우 (네트워크 오류 등)
+          print('Dio error: $e');
+        }
+      } else {
+        // DioError가 아닌 다른 예외가 발생한 경우
+        print('Non-Dio error: $e');
+      }
     }
-  }
+   }
 }
