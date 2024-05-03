@@ -13,27 +13,66 @@ class TotalAIAnalysisScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final data = ref.watch(compareAnalysisProvider);
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 25),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          SizedBox(height: 40,),
-          Text('비교 분석 결과', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
-          AIAnalysis(comment: data.AI_total_description),
-          Spacer(),
-          Text('사용자 맞춤 점수', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
-          SizedBox(height: ratio.height * 20,),
-          Text('본 점수는 이미지들에 대한 사용자 데이터와 AI를 기반으로 측정된 점수입니다.',
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.w400),
-            textAlign: TextAlign.center,
-          ),
-          SizedBox(height: ratio.height * 20,),
-          StickGraph(percent: data.ratio[0].toDouble(), padding: 50, color1: PColors.safe, color2: PColors.halfDanger, appearNum: false,),
-          Text('${data.ratio[0]}  / ${data.ratio[1]}', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
-          Spacer()
-        ],
-      ),
-    );
+        padding: const EdgeInsets.symmetric(horizontal: 25),
+        child: CustomScrollView(
+          slivers: [
+            SliverToBoxAdapter(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    height: 40,
+                  ),
+                  Text(
+                    '비교 분석 결과',
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  ),
+                  AIAnalysis(comment: data.AI_total_description),
+                  SizedBox(
+                    height: ratio.height * 30,
+                  ),
+                ],
+              ),
+            ),
+            SliverFillRemaining(
+              hasScrollBody: false,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    '사용자 맞춤 점수',
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(
+                    height: ratio.height * 20,
+                  ),
+                  Text(
+                    '본 점수는 이미지들에 대한 사용자 데이터와 AI를 기반으로 측정된 점수입니다.',
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w400),
+                    textAlign: TextAlign.center,
+                  ),
+                  SizedBox(
+                    height: ratio.height * 20,
+                  ),
+                  StickGraph(
+                    percent: data.ratio[0].toDouble(),
+                    padding: 50,
+                    color1: PColors.safe,
+                    color2: PColors.halfDanger,
+                    appearNum: false,
+                  ),
+                  Text(
+                    '${data.ratio[0]}  / ${data.ratio[1]}',
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(
+                    height: ratio.height * 20,
+                  ),
+                ],
+              ),
+            )
+          ],
+        ));
   }
 
   Container AIAnalysis({required String comment}) {

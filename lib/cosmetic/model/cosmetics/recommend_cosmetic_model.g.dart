@@ -9,6 +9,7 @@ part of 'recommend_cosmetic_model.dart';
 _$RecommendCosmeticModelImpl _$$RecommendCosmeticModelImplFromJson(
         Map<String, dynamic> json) =>
     _$RecommendCosmeticModelImpl(
+      id: json['id'] as int,
       name: json['name'] as String,
       compatibilityScore: json['compatibilityScore'] as int,
       skintype: json['skintype'] as String,
@@ -24,6 +25,7 @@ _$RecommendCosmeticModelImpl _$$RecommendCosmeticModelImplFromJson(
 Map<String, dynamic> _$$RecommendCosmeticModelImplToJson(
         _$RecommendCosmeticModelImpl instance) =>
     <String, dynamic>{
+      'id': instance.id,
       'name': instance.name,
       'compatibilityScore': instance.compatibilityScore,
       'skintype': instance.skintype,

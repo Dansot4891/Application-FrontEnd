@@ -6,8 +6,11 @@ import 'package:gproject/common/component/stick_graph.dart';
 import 'package:gproject/common/dio/dio.dart';
 import 'package:gproject/common/variable/color.dart';
 import 'package:gproject/common/view/default_layout.dart';
+import 'package:gproject/common/view/home_screen.dart';
 import 'package:gproject/cosmetic/component/ingredient/ingredient_mini_bar.dart';
+import 'package:gproject/cosmetic/provider/cosmetics/cosmetics_provider.dart';
 import 'package:gproject/cosmetic/provider/cosmetics/recommend_cosmetic_provider.dart';
+import 'package:gproject/cosmetic/view/costetics/cosmetics_info_screen.dart';
 import 'package:gproject/main.dart';
 
 class RecommendScreen extends ConsumerWidget {
@@ -16,8 +19,22 @@ class RecommendScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final data = ref.watch(RecommendCosmeticProvider);
-    String skinType = data.skintype == 'DRY' ? '건성' : data.skintype == 'SENSITIVE' ? '민감성' : '지성';
+    String skinType = data.skintype == 'DRY'
+        ? '건성'
+        : data.skintype == 'SENSITIVE'
+            ? '민감성'
+            : '지성';
     return DefaultLayout(
+      func: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) {
+              return HomeScreen();
+            },
+          ),
+        );
+      },
       isBoard: true,
       child: SingleChildScrollView(
         child: Column(
@@ -33,9 +50,7 @@ class RecommendScreen extends ConsumerWidget {
                 ),
               ),
             ),
-            Image.network(
-              '${BASE_URL}/image/${data.image}'
-            ),
+            Image.network('${BASE_URL}/image/${data.image}'),
             Padding(
               padding: const EdgeInsets.symmetric(
                 vertical: 15,
@@ -54,12 +69,22 @@ class RecommendScreen extends ConsumerWidget {
                           data.name,
                           style: TextStyle(
                               fontSize: 20, fontWeight: FontWeight.w600),
-                            overflow: TextOverflow.clip,
+                          overflow: TextOverflow.clip,
                         ),
                       ),
                       SizedBox(),
                       ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () async {
+                          final cData = await ref.read(CosmeticProvider.notifier).getDetail(data.id);
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) {
+                                return CosmeticsInfoScreen(data: cData,);
+                              },
+                            ),
+                          );
+                        },
                         style: ElevatedButton.styleFrom(
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
@@ -84,7 +109,8 @@ class RecommendScreen extends ConsumerWidget {
                     "궁합력",
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
                   ),
-                  StickGraph(percent: data.compatibilityScore.toDouble(), padding: 50),
+                  StickGraph(
+                      percent: data.compatibilityScore.toDouble(), padding: 50),
                   RichText(
                     text: TextSpan(
                       text: '본 화장품은 ',
@@ -119,12 +145,11 @@ class RecommendScreen extends ConsumerWidget {
                       recommendContainer(
                           title: skinType,
                           context: context,
-                          list: data.skinTypeDescriptions
-                          ),
+                          list: data.skinTypeDescriptions),
                       recommendContainer(
-                          context: context,
-                          title: "주요 성분",
-                          list: data.keyIngredient,
+                        context: context,
+                        title: "주요 성분",
+                        list: data.keyIngredient,
                       )
                     ],
                   )
@@ -192,9 +217,7 @@ class RecommendScreen extends ConsumerWidget {
           ],
         ),
         GestureDetector(
-          onTap: (){
-            
-          },
+          onTap: () {},
           child: Stack(
             alignment: Alignment.center,
             children: [
@@ -233,32 +256,19 @@ class RecommendScreen extends ConsumerWidget {
               )),
       ),
       child: ListView.builder(
-        itemCount: list.length,
-        itemBuilder: (context, index){
-          return title == "주요 성분" ?
-          IngredientMiniBar(grade: 1, name: list[index], fontSize: 14, func: (){}, preference: false, isPreference: false,)
-          : effectText(effect: list[index]);
-        }
-      ),
+          itemCount: list.length,
+          itemBuilder: (context, index) {
+            return title == "주요 성분"
+                ? IngredientMiniBar(
+                    grade: 1,
+                    name: list[index],
+                    fontSize: 14,
+                    func: () {},
+                    preference: false,
+                    isPreference: false,
+                  )
+                : effectText(effect: list[index]);
+          }),
     );
   }
 }
-
-
-// SingleChildScrollView(
-//         child: Column(
-//           crossAxisAlignment: CrossAxisAlignment.start,
-//           mainAxisAlignment: MainAxisAlignment.start,
-//           children: [
-//             Text(
-//               title,
-//               style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
-//             ),
-//             SizedBox(
-//               height: ratio.height * 10,
-//             ),
-//             ...List.generate(list.length, (index) => list[index])
-//           ],
-//         ),
-//       ),
-//     );

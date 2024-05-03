@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gproject/common/component/button.dart';
@@ -20,14 +19,10 @@ class EvaluationScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // final state = ref.watch(starIndexProvider1);
-    // final state2 = ref.watch(starIndexProvider2);
     final state = ref.watch(starIndexProvider);
-    // int state = ref.watch(starIndexProvider)[0];
-    // int state2 = ref.watch(starIndexProvider)[1];
     final loginState = ref.watch(loginStateProvider);
     final user = ref.watch(userDataProvider);
-    final analysisId = ref.watch(analysisNumProvider)[0];
+    final analysisId = ref.watch(analysisNumProvider);
     return DefaultLayout(
       func: () {
         Navigator.pop(context);
@@ -75,7 +70,9 @@ class EvaluationScreen extends ConsumerWidget {
                     5,
                     (index) => IconButton(
                       onPressed: () {
-                        ref.read(starIndexProvider.notifier).setIndex(0, index + 1);
+                        ref
+                            .read(starIndexProvider.notifier)
+                            .setIndex(0, index + 1);
                       },
                       icon: Icon(
                         index < state[0]
@@ -101,7 +98,13 @@ class EvaluationScreen extends ConsumerWidget {
               SizedBox(
                 height: ratio.height * 30,
               ),
-              isCompare ? Text('1번 화장품', style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),) : SizedBox(),
+              isCompare
+                  ? Text(
+                      '1번 화장품',
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+                    )
+                  : SizedBox(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -109,7 +112,9 @@ class EvaluationScreen extends ConsumerWidget {
                     5,
                     (index) => IconButton(
                       onPressed: () {
-                        ref.read(starIndexProvider.notifier).setIndex(1, index + 1);
+                        ref
+                            .read(starIndexProvider.notifier)
+                            .setIndex(1, index + 1);
                       },
                       icon: Icon(
                         index < state[1]
@@ -122,28 +127,37 @@ class EvaluationScreen extends ConsumerWidget {
                   ),
                 ],
               ),
-              isCompare ? Text('2번 화장품', style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),) : SizedBox(),
-              isCompare ? 
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  ...List.generate(
-                    5,
-                    (index) => IconButton(
-                      onPressed: () {
-                        ref.read(starIndexProvider.notifier).setIndex(1, index + 1);
-                      },
-                      icon: Icon(
-                        index < state[1]
-                            ? Icons.star
-                            : Icons.star_border_outlined,
-                        size: 40,
-                        color: PColors.mainColor,
-                      ),
-                    ),
-                  ),
-                ],
-              ) : SizedBox(),
+              isCompare
+                  ? Text(
+                      '2번 화장품',
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+                    )
+                  : SizedBox(),
+              isCompare
+                  ? Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        ...List.generate(
+                          5,
+                          (index) => IconButton(
+                            onPressed: () {
+                              ref
+                                  .read(starIndexProvider.notifier)
+                                  .setIndex(2, index + 1);
+                            },
+                            icon: Icon(
+                              index < state[2]
+                                  ? Icons.star
+                                  : Icons.star_border_outlined,
+                              size: 40,
+                              color: PColors.mainColor,
+                            ),
+                          ),
+                        ),
+                      ],
+                    )
+                  : SizedBox(),
               Spacer(),
               CustomButton(
                 text: '다음에 하기',
@@ -180,6 +194,25 @@ class EvaluationScreen extends ConsumerWidget {
                       }
                     }
                   }
+                  if (!loginState) {
+                    CustomDialog(
+                      context: context,
+                      barrierDismissible: false,
+                      title: '회원만 이용할 수 있는 기능입니다.',
+                      buttonText: '확인',
+                      buttonCount: 1,
+                      func: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return HomeScreen();
+                            },
+                          ),
+                        );
+                      },
+                    );
+                  }
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -191,7 +224,7 @@ class EvaluationScreen extends ConsumerWidget {
                 },
               ),
               SizedBox(
-                height: ratio.height * 10,
+                height: ratio.height * 30,
               ),
               CustomButton(
                 text: '결과 확인',
@@ -200,6 +233,22 @@ class EvaluationScreen extends ConsumerWidget {
                     if (isCompare) {
                       final result = ref.read(IngredientProvider.notifier).getBookMarkData(ref.watch(previousDataProvider),ref.watch(userDataProvider)!.id!);
                       final result2 = ref.read(compareIngredientProvider.notifier).getBookMarkData(ref.watch(compareIngredientProvider),ref.watch(userDataProvider)!.id!);
+                      await ref.read(starIndexProvider.notifier).analysisEvaluation(
+                              memberId: user!.id!,
+                              analysisId: analysisId,
+                              score1: state[0],
+                              score2: state[1],
+                              ref: ref,
+                              score3: state[2],
+                            );
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return RecommendScreen();
+                          },
+                        ),
+                      );
                       if (result == false || result2 == false) {
                         CustomDialog(
                             context: context,
@@ -213,7 +262,12 @@ class EvaluationScreen extends ConsumerWidget {
                     }
                     if (!isCompare) {
                       final result = ref.read(IngredientProvider.notifier).getBookMarkData(ref.watch(previousDataProvider),ref.watch(userDataProvider)!.id!);
-                      await ref.read(starIndexProvider.notifier).analysisEvaluation(memberId: user!.id!, analysisId: analysisId, score1: state[0], score2: state[1], ref: ref);
+                      await ref.read(starIndexProvider.notifier).analysisEvaluation(
+                              memberId: user!.id!,
+                              analysisId: analysisId,
+                              score1: state[0],
+                              score2: state[1],
+                              ref: ref);
                       Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -234,10 +288,22 @@ class EvaluationScreen extends ConsumerWidget {
                       }
                     }
                   }
-                  
+                  if (!loginState) {
+                    CustomDialog(
+                      context: context,
+                      title: '회원만 이용할 수 있는 기능입니다.',
+                      buttonText: '확인',
+                      buttonCount: 1,
+                      func: () {
+                        Navigator.pop(context);
+                      },
+                    );
+                  }
                 },
               ),
-              SizedBox(height: 10,),
+              SizedBox(
+                height: 10,
+              ),
             ],
           ),
         ),

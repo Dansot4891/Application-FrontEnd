@@ -115,9 +115,9 @@ class IngredientEffectScreen extends ConsumerWidget {
                           fontSize: 16,
                           func: () {
                             if(list == null){
-                              ref.read(IngredientProvider.notifier).changeBookmark(ingreList[idx].name);  
+                              ref.read(IngredientProvider.notifier).changeBookmark(name : ingreList[idx].name, ref: ref);  
                             }else{
-                              ref.read(compareIngredientProvider.notifier).changeBookmark(ingreList[idx].name);
+                              ref.read(compareIngredientProvider.notifier).changeBookmark(name : ingreList[idx].name, ref: ref);
                             }
                           },
                           preference: ingreList[idx].preference,

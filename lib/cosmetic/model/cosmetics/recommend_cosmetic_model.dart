@@ -7,6 +7,7 @@ part 'recommend_cosmetic_model.g.dart';
 class RecommendCosmeticModel with _$RecommendCosmeticModel {
 
   factory RecommendCosmeticModel({
+    required int id,
     required String name,
     required int compatibilityScore,
     required String skintype,

@@ -50,6 +50,7 @@ class IngredientMiniBar extends ConsumerWidget {
             Text(
               name,
               style: TextStyle(fontSize: fontSize+2, fontWeight: FontWeight.bold),
+              overflow: TextOverflow.ellipsis,
             ),
           ],
         ),

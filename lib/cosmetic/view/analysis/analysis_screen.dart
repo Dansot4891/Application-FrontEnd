@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gproject/common/variable/color.dart';
 import 'package:gproject/common/view/default_layout.dart';
-import 'package:gproject/cosmetic/provider/ingredient/ingredient_provider.dart';
 import 'package:gproject/cosmetic/view/analysis/ai_analysis_screen.dart';
 import 'package:gproject/cosmetic/view/analysis/compare/compare_ai_analysis_screen.dart';
 import 'package:gproject/cosmetic/view/analysis/compare/compare_ingredient_component_screen.dart';

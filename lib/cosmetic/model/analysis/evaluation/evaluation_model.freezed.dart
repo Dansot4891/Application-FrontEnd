@@ -23,7 +23,6 @@ mixin _$EvaluationModel {
   int get analysis_id => throw _privateConstructorUsedError;
   int get analysis_score => throw _privateConstructorUsedError;
   int get cosmetic_score => throw _privateConstructorUsedError;
-  int? get analysis_id2 => throw _privateConstructorUsedError;
   int? get cosmetic_score2 => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -42,7 +41,6 @@ abstract class $EvaluationModelCopyWith<$Res> {
       {int analysis_id,
       int analysis_score,
       int cosmetic_score,
-      int? analysis_id2,
       int? cosmetic_score2});
 }
 
@@ -62,7 +60,6 @@ class _$EvaluationModelCopyWithImpl<$Res, $Val extends EvaluationModel>
     Object? analysis_id = null,
     Object? analysis_score = null,
     Object? cosmetic_score = null,
-    Object? analysis_id2 = freezed,
     Object? cosmetic_score2 = freezed,
   }) {
     return _then(_value.copyWith(
@@ -78,10 +75,6 @@ class _$EvaluationModelCopyWithImpl<$Res, $Val extends EvaluationModel>
           ? _value.cosmetic_score
           : cosmetic_score // ignore: cast_nullable_to_non_nullable
               as int,
-      analysis_id2: freezed == analysis_id2
-          ? _value.analysis_id2
-          : analysis_id2 // ignore: cast_nullable_to_non_nullable
-              as int?,
       cosmetic_score2: freezed == cosmetic_score2
           ? _value.cosmetic_score2
           : cosmetic_score2 // ignore: cast_nullable_to_non_nullable
@@ -102,7 +95,6 @@ abstract class _$$EvaluationModelImplCopyWith<$Res>
       {int analysis_id,
       int analysis_score,
       int cosmetic_score,
-      int? analysis_id2,
       int? cosmetic_score2});
 }
 
@@ -120,7 +112,6 @@ class __$$EvaluationModelImplCopyWithImpl<$Res>
     Object? analysis_id = null,
     Object? analysis_score = null,
     Object? cosmetic_score = null,
-    Object? analysis_id2 = freezed,
     Object? cosmetic_score2 = freezed,
   }) {
     return _then(_$EvaluationModelImpl(
@@ -136,10 +127,6 @@ class __$$EvaluationModelImplCopyWithImpl<$Res>
           ? _value.cosmetic_score
           : cosmetic_score // ignore: cast_nullable_to_non_nullable
               as int,
-      analysis_id2: freezed == analysis_id2
-          ? _value.analysis_id2
-          : analysis_id2 // ignore: cast_nullable_to_non_nullable
-              as int?,
       cosmetic_score2: freezed == cosmetic_score2
           ? _value.cosmetic_score2
           : cosmetic_score2 // ignore: cast_nullable_to_non_nullable
@@ -155,7 +142,6 @@ class _$EvaluationModelImpl implements _EvaluationModel {
       {required this.analysis_id,
       required this.analysis_score,
       required this.cosmetic_score,
-      this.analysis_id2,
       this.cosmetic_score2});
 
   factory _$EvaluationModelImpl.fromJson(Map<String, dynamic> json) =>
@@ -168,13 +154,11 @@ class _$EvaluationModelImpl implements _EvaluationModel {
   @override
   final int cosmetic_score;
   @override
-  final int? analysis_id2;
-  @override
   final int? cosmetic_score2;
 
   @override
   String toString() {
-    return 'EvaluationModel(analysis_id: $analysis_id, analysis_score: $analysis_score, cosmetic_score: $cosmetic_score, analysis_id2: $analysis_id2, cosmetic_score2: $cosmetic_score2)';
+    return 'EvaluationModel(analysis_id: $analysis_id, analysis_score: $analysis_score, cosmetic_score: $cosmetic_score, cosmetic_score2: $cosmetic_score2)';
   }
 
   @override
@@ -188,8 +172,6 @@ class _$EvaluationModelImpl implements _EvaluationModel {
                 other.analysis_score == analysis_score) &&
             (identical(other.cosmetic_score, cosmetic_score) ||
                 other.cosmetic_score == cosmetic_score) &&
-            (identical(other.analysis_id2, analysis_id2) ||
-                other.analysis_id2 == analysis_id2) &&
             (identical(other.cosmetic_score2, cosmetic_score2) ||
                 other.cosmetic_score2 == cosmetic_score2));
   }
@@ -197,7 +179,7 @@ class _$EvaluationModelImpl implements _EvaluationModel {
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, analysis_id, analysis_score,
-      cosmetic_score, analysis_id2, cosmetic_score2);
+      cosmetic_score, cosmetic_score2);
 
   @JsonKey(ignore: true)
   @override
@@ -219,7 +201,6 @@ abstract class _EvaluationModel implements EvaluationModel {
       {required final int analysis_id,
       required final int analysis_score,
       required final int cosmetic_score,
-      final int? analysis_id2,
       final int? cosmetic_score2}) = _$EvaluationModelImpl;
 
   factory _EvaluationModel.fromJson(Map<String, dynamic> json) =
@@ -231,8 +212,6 @@ abstract class _EvaluationModel implements EvaluationModel {
   int get analysis_score;
   @override
   int get cosmetic_score;
-  @override
-  int? get analysis_id2;
   @override
   int? get cosmetic_score2;
   @override

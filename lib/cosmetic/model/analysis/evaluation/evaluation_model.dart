@@ -9,7 +9,6 @@ class EvaluationModel with _$EvaluationModel {
     required int analysis_id,
     required int analysis_score,
     required int cosmetic_score,
-    int? analysis_id2,
     int? cosmetic_score2,
   }) = _EvaluationModel;
 

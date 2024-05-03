@@ -24,13 +24,27 @@ class StarIndexNotifier extends StateNotifier<List<int>> {
     int? score3,
     required WidgetRef ref,
   }) async {
-    EvaluationModel data = EvaluationModel(analysis_id: analysisId, analysis_score: score1, cosmetic_score: score2);
-    final resp = await dio.post('${BASE_URL}/api/user/analysis/evaluation/${memberId}',
-      data: data.toJson()
-    );
-    if(resp.statusCode == 200){
-      final newData = RecommendCosmeticModel.fromJson(resp.data);
-      ref.read(RecommendCosmeticProvider.notifier).setData(newData);
+    if(score3 == null){
+      EvaluationModel data = EvaluationModel(analysis_id: analysisId, analysis_score: score1, cosmetic_score: score2);
+      final eData = data.toJson();
+      eData.remove('cosmetic_score2');
+      final resp = await dio.post('${BASE_URL}/api/user/analysis/evaluation/${memberId}',
+        data: eData,
+      );
+      if(resp.statusCode == 200){
+        final newData = RecommendCosmeticModel.fromJson(resp.data);
+        ref.read(RecommendCosmeticProvider.notifier).setData(newData);
+      }
+    }
+    if(score3 != null){
+      EvaluationModel data = EvaluationModel(analysis_id: analysisId, analysis_score: score1, cosmetic_score: score2, cosmetic_score2: score3);
+      final resp = await dio.post('${BASE_URL}/api/user/conparison/evaluation/${memberId}',
+        data: data.toJson()
+      );
+      if(resp.statusCode == 200){
+        final newData = RecommendCosmeticModel.fromJson(resp.data);
+        ref.read(RecommendCosmeticProvider.notifier).setData(newData);
+      }
     }
   }
 }

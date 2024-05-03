@@ -9,6 +9,7 @@ import 'package:gproject/common/variable/color.dart';
 import 'package:gproject/common/variable/image_path.dart';
 import 'package:gproject/common/view/splash_screen.dart';
 import 'package:gproject/cosmetic/provider/cosmetics/cosmetics_provider.dart';
+import 'package:gproject/cosmetic/provider/cosmetics/recommend_cosmetic_provider.dart';
 import 'package:gproject/cosmetic/provider/ingredient/ingredient_provider.dart';
 import 'package:gproject/cosmetic/view/costetics/cosmetics_screen.dart';
 import 'package:gproject/cosmetic/view/ingredient/ingredient_screen.dart';
@@ -26,6 +27,7 @@ class HomeScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final loginState = ref.watch(loginStateProvider);
+    final userData = ref.watch(userDataProvider);
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white,
@@ -211,7 +213,8 @@ class HomeScreen extends ConsumerWidget {
                           title: 'AI 추천',
                           text: 'AI가 사용자의 취향을\n분석하여 맞춤형 추천을\n해드립니다.',
                           imgPath: ImgPath.ai_recommend,
-                          route: () {
+                          route: () async {
+                            await ref.read(RecommendCosmeticProvider.notifier).fetchData(userData!.id!);
                             Navigator.push(
                               context,
                               MaterialPageRoute(

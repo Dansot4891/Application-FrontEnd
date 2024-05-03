@@ -311,7 +311,7 @@ import 'package:image_picker/image_picker.dart';
 //   }
 // }
 
-final analysisNumProvider = StateProvider<List<int>>((ref) => [0, 0]); // 초기값으로 0을 설정합니다.
+final analysisNumProvider = StateProvider<int>((ref) => 0); // 초기값으로 0을 설정합니다.
 
 
 final AnalysisProvider = StateNotifierProvider<AnalysisNotifier, List<AnalysisModel>>(
@@ -521,10 +521,10 @@ class AnalysisNotifier extends StateNotifier<List<AnalysisModel>> {
           );
       if (resp.statusCode == 200) {
         final analysisId = resp.data;
-        ref.watch(analysisNumProvider.notifier).state[0] = analysisId;
+        ref.watch(analysisNumProvider.notifier).state = analysisId;
         CustomDialog(
           context: context,
-          barrierDismissible: true,
+          barrierDismissible: false,
           title: '분석이 완료되었습니다!',
           buttonText: '확인',
           buttonCount: 1,
@@ -542,6 +542,10 @@ class AnalysisNotifier extends StateNotifier<List<AnalysisModel>> {
             );
           },
         );
+      } else if(resp.statusCode == 204){
+        CustomDialog(context: context, title: '텍스트 인식이 불가능합니다.\n다른 이미지를 사용해주세요.', buttonText: '확인', buttonCount: 1, func: (){
+          Navigator.pop(context);
+        });
       } else {
         print('실패');
       }
@@ -570,7 +574,7 @@ class AnalysisNotifier extends StateNotifier<List<AnalysisModel>> {
           ));
         }
       }
-      final resp = await dio.post('${BASE_URL}/user2/api/comparison/analysis/${memberId}',
+      final resp = await dio.post('${BASE_URL}/api/user/comparison/analysis/${memberId}',
           options: Options(
             headers: {
               "content-type": "multipart/form-data",
@@ -580,7 +584,7 @@ class AnalysisNotifier extends StateNotifier<List<AnalysisModel>> {
         );
       if (resp.statusCode == 200) {
         final analysisId = resp.data;
-        print(analysisId);
+        ref.watch(analysisNumProvider.notifier).state = analysisId;
         CustomDialog(
           barrierDismissible: false,
           context: context,
@@ -608,34 +612,7 @@ class AnalysisNotifier extends StateNotifier<List<AnalysisModel>> {
         print('실패');
       }
     } catch (e) {
-      if (e is DioError) {
-        if (e.response != null) {
-          // 서버 응답이 있는 경우
-          print('Dio error response: ${e.response}');
-          print('Status: ${e.response?.statusCode}');
-          print('Data: ${e.response?.data}');
-          print('Headers: ${e.response?.headers}');
-          // 오류 메시지 출력
-          if (e.response?.statusCode == 400) {
-            // 400 오류가 발생한 경우
-            print('Bad request error: ${e.response?.data['error']}');
-            print('Detailed error message: ${e.response?.data['message']}');
-          } else if (e.response?.statusCode == 404) {
-            // 404 오류가 발생한 경우
-            print('Not found error: ${e.response?.data['error']}');
-            print('Detailed error message: ${e.response?.data['message']}');
-          } else {
-            // 기타 오류인 경우
-            print('Error message: ${e.response?.data['error']}');
-          }
-        } else {
-          // 서버 응답이 없는 경우 (네트워크 오류 등)
-          print('Dio error: $e');
-        }
-      } else {
-        // DioError가 아닌 다른 예외가 발생한 경우
-        print('Non-Dio error: $e');
-      }
+      print(e);
     }
    }
 }

@@ -72,11 +72,9 @@ class IngredientComponentScreen extends ConsumerWidget {
                 padding: const EdgeInsets.only(bottom: 20),
                 child: IngredientBar(level: lists[index].grade, ingredientName: lists[index].name, purpose: lists[index].purpose, features: lists[index].features, bookMark: lists[index].preference, func: (){
                   if(list == null){
-                    ref.read(IngredientProvider.notifier).changeBookmark(lists[index].name);
-                    print(lists[index].preference);
+                    ref.read(IngredientProvider.notifier).changeBookmark(name : lists[index].name, ref: ref);
                   }else{
-                    print(lists[index].preference);
-                    ref.read(compareIngredientProvider.notifier).changeBookmark(lists[index].name);
+                    ref.read(compareIngredientProvider.notifier).changeBookmark(name : lists[index].name, ref: ref);
                   }
                 }),
               ),

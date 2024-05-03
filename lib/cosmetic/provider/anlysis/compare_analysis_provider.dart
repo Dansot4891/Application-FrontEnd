@@ -56,7 +56,7 @@ class CompareAnalysisNotifier extends StateNotifier<CompareAnalysisModel> {
 
   Future fetchData(int memberId, int aid) async {
     try{
-      final resp = await dio.get('${BASE_URL}/api2/user/${memberId}/comparisonAnalysis/result/${aid}',);
+      final resp = await dio.get('${BASE_URL}/api/user/${memberId}/comparisonAnalysis/result/${aid}',);
       if(resp.statusCode == 200){
         state = CompareAnalysisModel.fromJson(resp.data);
       }

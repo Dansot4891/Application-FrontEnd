@@ -21,6 +21,7 @@ RecommendCosmeticModel _$RecommendCosmeticModelFromJson(
 
 /// @nodoc
 mixin _$RecommendCosmeticModel {
+  int get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   int get compatibilityScore => throw _privateConstructorUsedError;
   String get skintype => throw _privateConstructorUsedError;
@@ -41,7 +42,8 @@ abstract class $RecommendCosmeticModelCopyWith<$Res> {
       _$RecommendCosmeticModelCopyWithImpl<$Res, RecommendCosmeticModel>;
   @useResult
   $Res call(
-      {String name,
+      {int id,
+      String name,
       int compatibilityScore,
       String skintype,
       List<String> skinTypeDescriptions,
@@ -63,6 +65,7 @@ class _$RecommendCosmeticModelCopyWithImpl<$Res,
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = null,
     Object? name = null,
     Object? compatibilityScore = null,
     Object? skintype = null,
@@ -71,6 +74,10 @@ class _$RecommendCosmeticModelCopyWithImpl<$Res,
     Object? image = null,
   }) {
     return _then(_value.copyWith(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -109,7 +116,8 @@ abstract class _$$RecommendCosmeticModelImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String name,
+      {int id,
+      String name,
       int compatibilityScore,
       String skintype,
       List<String> skinTypeDescriptions,
@@ -130,6 +138,7 @@ class __$$RecommendCosmeticModelImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = null,
     Object? name = null,
     Object? compatibilityScore = null,
     Object? skintype = null,
@@ -138,6 +147,10 @@ class __$$RecommendCosmeticModelImplCopyWithImpl<$Res>
     Object? image = null,
   }) {
     return _then(_$RecommendCosmeticModelImpl(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -170,7 +183,8 @@ class __$$RecommendCosmeticModelImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$RecommendCosmeticModelImpl implements _RecommendCosmeticModel {
   _$RecommendCosmeticModelImpl(
-      {required this.name,
+      {required this.id,
+      required this.name,
       required this.compatibilityScore,
       required this.skintype,
       required final List<String> skinTypeDescriptions,
@@ -182,6 +196,8 @@ class _$RecommendCosmeticModelImpl implements _RecommendCosmeticModel {
   factory _$RecommendCosmeticModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$RecommendCosmeticModelImplFromJson(json);
 
+  @override
+  final int id;
   @override
   final String name;
   @override
@@ -210,7 +226,7 @@ class _$RecommendCosmeticModelImpl implements _RecommendCosmeticModel {
 
   @override
   String toString() {
-    return 'RecommendCosmeticModel(name: $name, compatibilityScore: $compatibilityScore, skintype: $skintype, skinTypeDescriptions: $skinTypeDescriptions, keyIngredient: $keyIngredient, image: $image)';
+    return 'RecommendCosmeticModel(id: $id, name: $name, compatibilityScore: $compatibilityScore, skintype: $skintype, skinTypeDescriptions: $skinTypeDescriptions, keyIngredient: $keyIngredient, image: $image)';
   }
 
   @override
@@ -218,6 +234,7 @@ class _$RecommendCosmeticModelImpl implements _RecommendCosmeticModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$RecommendCosmeticModelImpl &&
+            (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.compatibilityScore, compatibilityScore) ||
                 other.compatibilityScore == compatibilityScore) &&
@@ -234,6 +251,7 @@ class _$RecommendCosmeticModelImpl implements _RecommendCosmeticModel {
   @override
   int get hashCode => Object.hash(
       runtimeType,
+      id,
       name,
       compatibilityScore,
       skintype,
@@ -258,7 +276,8 @@ class _$RecommendCosmeticModelImpl implements _RecommendCosmeticModel {
 
 abstract class _RecommendCosmeticModel implements RecommendCosmeticModel {
   factory _RecommendCosmeticModel(
-      {required final String name,
+      {required final int id,
+      required final String name,
       required final int compatibilityScore,
       required final String skintype,
       required final List<String> skinTypeDescriptions,
@@ -268,6 +287,8 @@ abstract class _RecommendCosmeticModel implements RecommendCosmeticModel {
   factory _RecommendCosmeticModel.fromJson(Map<String, dynamic> json) =
       _$RecommendCosmeticModelImpl.fromJson;
 
+  @override
+  int get id;
   @override
   String get name;
   @override

@@ -87,7 +87,7 @@ class IngredientScreen extends ConsumerWidget {
               (context, index) => Padding(
                 padding: const EdgeInsets.only(bottom: 20),
                 child: IngredientBar(level: list[index].grade, ingredientName: list[index].name, purpose: list[index].purpose, features: list[index].features, bookMark: list[index].preference, func: (){
-                  ref.read(IngredientProvider.notifier).changeBookmark(list[index].name);
+                  ref.read(IngredientProvider.notifier).changeBookmark(name : list[index].name);
                 },),
               ),
               childCount: list.length,

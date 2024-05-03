@@ -68,7 +68,11 @@ class IngredientNotifier extends StateNotifier<List<IngredientModel>> {
     state = data;
   }
 
-  void changeBookmark(String name) {
+  void changeBookmark({required String name, WidgetRef? ref}) {
+    print('변경할 성분 이름 : ${name}');
+    if(ref != null){
+          ref.read(compareIngredientProvider.notifier).changeBookmark(name: name);
+    }
     state = state.map((ingredient) {
       if (ingredient.name == name) {
         return ingredient.copyWith(preference: !ingredient.preference);
@@ -88,6 +92,7 @@ class IngredientNotifier extends StateNotifier<List<IngredientModel>> {
       return true;
     }
     try{
+      print(data);
       final resp = await dio.put('${BASE_URL}/api/user/ingredient/preferenve/${memberId}',
         data: jsonEncode(data),
         
@@ -168,7 +173,10 @@ class CompareIngredientNotifier extends StateNotifier<List<IngredientModel>> {
     state = data;
   }
 
-  void changeBookmark(String name) {
+  void changeBookmark({required String name, WidgetRef? ref}) {
+    if(ref != null){
+      ref.read(IngredientProvider.notifier).changeBookmark(name: name);
+    }
     state = state.map((ingredient) {
       if (ingredient.name == name) {
         return ingredient.copyWith(preference: !ingredient.preference);
