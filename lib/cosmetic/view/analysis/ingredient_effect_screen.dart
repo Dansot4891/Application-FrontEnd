@@ -16,10 +16,12 @@ class IngredientEffectScreen extends ConsumerWidget {
   final AnalysisModel? compareData;
   final int index;
   final List<IngredientModel>? list;
+  final Text? text;
   const IngredientEffectScreen({
     this.list,
     this.compareData,
     this.index = 0,
+    this.text = null,
     super.key});
 
   @override
@@ -29,7 +31,7 @@ class IngredientEffectScreen extends ConsumerWidget {
     return CustomScrollView(
       slivers: [
         //맨위 상단 효과 텍스트
-        IngredientEffectText(data: effectList),
+        IngredientEffectText(data: effectList, text: text == null ? null : text),
         //그래프
         SliverToBoxAdapter(
           child: Container(
@@ -139,6 +141,7 @@ class IngredientEffectScreen extends ConsumerWidget {
 
   SliverToBoxAdapter IngredientEffectText({
     required List<EffectModel> data,
+    Text? text = null,
   }) {
     return SliverToBoxAdapter(
       child: Padding(
@@ -149,6 +152,13 @@ class IngredientEffectScreen extends ConsumerWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            text == null ? SizedBox() : SizedBox(height: 20,),
+            text == null ? SizedBox() : Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  text,
+                ],
+              ),
             Text(
               '효과별 성분',
               style: TextStyle(

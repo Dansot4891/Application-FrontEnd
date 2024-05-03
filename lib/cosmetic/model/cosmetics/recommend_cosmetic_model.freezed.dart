@@ -22,7 +22,7 @@ RecommendCosmeticModel _$RecommendCosmeticModelFromJson(
 /// @nodoc
 mixin _$RecommendCosmeticModel {
   String get name => throw _privateConstructorUsedError;
-  int get compatibilityScroe => throw _privateConstructorUsedError;
+  int get compatibilityScore => throw _privateConstructorUsedError;
   String get skintype => throw _privateConstructorUsedError;
   List<String> get skinTypeDescriptions => throw _privateConstructorUsedError;
   List<String> get keyIngredient => throw _privateConstructorUsedError;
@@ -42,7 +42,7 @@ abstract class $RecommendCosmeticModelCopyWith<$Res> {
   @useResult
   $Res call(
       {String name,
-      int compatibilityScroe,
+      int compatibilityScore,
       String skintype,
       List<String> skinTypeDescriptions,
       List<String> keyIngredient,
@@ -64,7 +64,7 @@ class _$RecommendCosmeticModelCopyWithImpl<$Res,
   @override
   $Res call({
     Object? name = null,
-    Object? compatibilityScroe = null,
+    Object? compatibilityScore = null,
     Object? skintype = null,
     Object? skinTypeDescriptions = null,
     Object? keyIngredient = null,
@@ -75,9 +75,9 @@ class _$RecommendCosmeticModelCopyWithImpl<$Res,
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      compatibilityScroe: null == compatibilityScroe
-          ? _value.compatibilityScroe
-          : compatibilityScroe // ignore: cast_nullable_to_non_nullable
+      compatibilityScore: null == compatibilityScore
+          ? _value.compatibilityScore
+          : compatibilityScore // ignore: cast_nullable_to_non_nullable
               as int,
       skintype: null == skintype
           ? _value.skintype
@@ -110,7 +110,7 @@ abstract class _$$RecommendCosmeticModelImplCopyWith<$Res>
   @useResult
   $Res call(
       {String name,
-      int compatibilityScroe,
+      int compatibilityScore,
       String skintype,
       List<String> skinTypeDescriptions,
       List<String> keyIngredient,
@@ -131,7 +131,7 @@ class __$$RecommendCosmeticModelImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? name = null,
-    Object? compatibilityScroe = null,
+    Object? compatibilityScore = null,
     Object? skintype = null,
     Object? skinTypeDescriptions = null,
     Object? keyIngredient = null,
@@ -142,9 +142,9 @@ class __$$RecommendCosmeticModelImplCopyWithImpl<$Res>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      compatibilityScroe: null == compatibilityScroe
-          ? _value.compatibilityScroe
-          : compatibilityScroe // ignore: cast_nullable_to_non_nullable
+      compatibilityScore: null == compatibilityScore
+          ? _value.compatibilityScore
+          : compatibilityScore // ignore: cast_nullable_to_non_nullable
               as int,
       skintype: null == skintype
           ? _value.skintype
@@ -171,7 +171,7 @@ class __$$RecommendCosmeticModelImplCopyWithImpl<$Res>
 class _$RecommendCosmeticModelImpl implements _RecommendCosmeticModel {
   _$RecommendCosmeticModelImpl(
       {required this.name,
-      required this.compatibilityScroe,
+      required this.compatibilityScore,
       required this.skintype,
       required final List<String> skinTypeDescriptions,
       required final List<String> keyIngredient,
@@ -185,7 +185,7 @@ class _$RecommendCosmeticModelImpl implements _RecommendCosmeticModel {
   @override
   final String name;
   @override
-  final int compatibilityScroe;
+  final int compatibilityScore;
   @override
   final String skintype;
   final List<String> _skinTypeDescriptions;
@@ -210,7 +210,7 @@ class _$RecommendCosmeticModelImpl implements _RecommendCosmeticModel {
 
   @override
   String toString() {
-    return 'RecommendCosmeticModel(name: $name, compatibilityScroe: $compatibilityScroe, skintype: $skintype, skinTypeDescriptions: $skinTypeDescriptions, keyIngredient: $keyIngredient, image: $image)';
+    return 'RecommendCosmeticModel(name: $name, compatibilityScore: $compatibilityScore, skintype: $skintype, skinTypeDescriptions: $skinTypeDescriptions, keyIngredient: $keyIngredient, image: $image)';
   }
 
   @override
@@ -219,8 +219,8 @@ class _$RecommendCosmeticModelImpl implements _RecommendCosmeticModel {
         (other.runtimeType == runtimeType &&
             other is _$RecommendCosmeticModelImpl &&
             (identical(other.name, name) || other.name == name) &&
-            (identical(other.compatibilityScroe, compatibilityScroe) ||
-                other.compatibilityScroe == compatibilityScroe) &&
+            (identical(other.compatibilityScore, compatibilityScore) ||
+                other.compatibilityScore == compatibilityScore) &&
             (identical(other.skintype, skintype) ||
                 other.skintype == skintype) &&
             const DeepCollectionEquality()
@@ -235,7 +235,7 @@ class _$RecommendCosmeticModelImpl implements _RecommendCosmeticModel {
   int get hashCode => Object.hash(
       runtimeType,
       name,
-      compatibilityScroe,
+      compatibilityScore,
       skintype,
       const DeepCollectionEquality().hash(_skinTypeDescriptions),
       const DeepCollectionEquality().hash(_keyIngredient),
@@ -259,7 +259,7 @@ class _$RecommendCosmeticModelImpl implements _RecommendCosmeticModel {
 abstract class _RecommendCosmeticModel implements RecommendCosmeticModel {
   factory _RecommendCosmeticModel(
       {required final String name,
-      required final int compatibilityScroe,
+      required final int compatibilityScore,
       required final String skintype,
       required final List<String> skinTypeDescriptions,
       required final List<String> keyIngredient,
@@ -271,7 +271,7 @@ abstract class _RecommendCosmeticModel implements RecommendCosmeticModel {
   @override
   String get name;
   @override
-  int get compatibilityScroe;
+  int get compatibilityScore;
   @override
   String get skintype;
   @override

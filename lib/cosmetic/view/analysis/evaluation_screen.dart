@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gproject/common/component/button.dart';
@@ -26,8 +27,7 @@ class EvaluationScreen extends ConsumerWidget {
     // int state2 = ref.watch(starIndexProvider)[1];
     final loginState = ref.watch(loginStateProvider);
     final user = ref.watch(userDataProvider);
-    final analysisId = ref.watch(analysisNumProvider);
-    
+    final analysisId = ref.watch(analysisNumProvider)[0];
     return DefaultLayout(
       func: () {
         Navigator.pop(context);
@@ -57,9 +57,7 @@ class EvaluationScreen extends ConsumerWidget {
                 ),
                 textAlign: TextAlign.center,
               ),
-              SizedBox(
-                height: ratio.height * 30,
-              ),
+              Spacer(),
               Text(
                 '분석 평가',
                 style: TextStyle(
@@ -101,8 +99,9 @@ class EvaluationScreen extends ConsumerWidget {
                 ),
               ),
               SizedBox(
-                height: ratio.height * 10,
+                height: ratio.height * 30,
               ),
+              isCompare ? Text('1번 화장품', style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),) : SizedBox(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -123,9 +122,29 @@ class EvaluationScreen extends ConsumerWidget {
                   ),
                 ],
               ),
-              SizedBox(
-                height: ratio.height * 50,
-              ),
+              isCompare ? Text('2번 화장품', style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),) : SizedBox(),
+              isCompare ? 
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ...List.generate(
+                    5,
+                    (index) => IconButton(
+                      onPressed: () {
+                        ref.read(starIndexProvider.notifier).setIndex(1, index + 1);
+                      },
+                      icon: Icon(
+                        index < state[1]
+                            ? Icons.star
+                            : Icons.star_border_outlined,
+                        size: 40,
+                        color: PColors.mainColor,
+                      ),
+                    ),
+                  ),
+                ],
+              ) : SizedBox(),
+              Spacer(),
               CustomButton(
                 text: '다음에 하기',
                 func: () async {
@@ -172,16 +191,13 @@ class EvaluationScreen extends ConsumerWidget {
                 },
               ),
               SizedBox(
-                height: ratio.height * 20,
+                height: ratio.height * 10,
               ),
               CustomButton(
                 text: '결과 확인',
                 func: () async {
-                  print(loginState);
-                  print(isCompare);
                   if (loginState) {
                     if (isCompare) {
-                      print('결과확인');
                       final result = ref.read(IngredientProvider.notifier).getBookMarkData(ref.watch(previousDataProvider),ref.watch(userDataProvider)!.id!);
                       final result2 = ref.read(compareIngredientProvider.notifier).getBookMarkData(ref.watch(compareIngredientProvider),ref.watch(userDataProvider)!.id!);
                       if (result == false || result2 == false) {
@@ -197,7 +213,7 @@ class EvaluationScreen extends ConsumerWidget {
                     }
                     if (!isCompare) {
                       final result = ref.read(IngredientProvider.notifier).getBookMarkData(ref.watch(previousDataProvider),ref.watch(userDataProvider)!.id!);
-                      await ref.read(starIndexProvider.notifier).analysisEvaluation(memberId: user!.id!, analysisId: analysisId, score1: state[0], score2: state[1]);
+                      await ref.read(starIndexProvider.notifier).analysisEvaluation(memberId: user!.id!, analysisId: analysisId, score1: state[0], score2: state[1], ref: ref);
                       Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -221,6 +237,7 @@ class EvaluationScreen extends ConsumerWidget {
                   
                 },
               ),
+              SizedBox(height: 10,),
             ],
           ),
         ),

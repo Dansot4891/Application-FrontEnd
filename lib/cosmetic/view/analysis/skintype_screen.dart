@@ -11,9 +11,11 @@ import 'package:gproject/main.dart';
 class SkinTypeScreen extends ConsumerWidget {
   final AnalysisModel? compareData;
   final int index;
+  final Widget? text;
   const SkinTypeScreen({
     this.index = 0,
     this.compareData,
+    this.text = null,
     super.key});
 
   @override
@@ -25,6 +27,13 @@ class SkinTypeScreen extends ConsumerWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              text == null ? SizedBox() : SizedBox(height: 40,),
+              text == null ? SizedBox() : Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  text!,
+                ],
+              ),
               SizedBox(
                 height: 30,
               ),

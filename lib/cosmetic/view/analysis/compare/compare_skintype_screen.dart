@@ -35,7 +35,7 @@ class CompareSkinTypeScreen extends ConsumerWidget {
               ),
               loop: false,
               itemBuilder: (context, index) {
-                return SkinTypeScreen(index: index, compareData: ref.watch(AnalysisProvider)[index],);
+                return SkinTypeScreen(index: index, compareData: ref.watch(AnalysisProvider)[index], text: Text('${index+1}번 이미지', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold,),),);
               },
             );
   }

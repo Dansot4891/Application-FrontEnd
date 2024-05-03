@@ -8,7 +8,7 @@ class RecommendCosmeticModel with _$RecommendCosmeticModel {
 
   factory RecommendCosmeticModel({
     required String name,
-    required int compatibilityScroe,
+    required int compatibilityScore,
     required String skintype,
     required List<String> skinTypeDescriptions,
     required List<String> keyIngredient,

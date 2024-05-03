@@ -10,7 +10,7 @@ _$RecommendCosmeticModelImpl _$$RecommendCosmeticModelImplFromJson(
         Map<String, dynamic> json) =>
     _$RecommendCosmeticModelImpl(
       name: json['name'] as String,
-      compatibilityScroe: json['compatibilityScroe'] as int,
+      compatibilityScore: json['compatibilityScore'] as int,
       skintype: json['skintype'] as String,
       skinTypeDescriptions: (json['skinTypeDescriptions'] as List<dynamic>)
           .map((e) => e as String)
@@ -25,7 +25,7 @@ Map<String, dynamic> _$$RecommendCosmeticModelImplToJson(
         _$RecommendCosmeticModelImpl instance) =>
     <String, dynamic>{
       'name': instance.name,
-      'compatibilityScroe': instance.compatibilityScroe,
+      'compatibilityScore': instance.compatibilityScore,
       'skintype': instance.skintype,
       'skinTypeDescriptions': instance.skinTypeDescriptions,
       'keyIngredient': instance.keyIngredient,

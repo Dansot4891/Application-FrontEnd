@@ -1,18 +1,22 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gproject/common/component/stick_graph.dart';
+import 'package:gproject/common/dio/dio.dart';
 import 'package:gproject/common/variable/color.dart';
-import 'package:gproject/common/variable/image_path.dart';
 import 'package:gproject/common/view/default_layout.dart';
 import 'package:gproject/cosmetic/component/ingredient/ingredient_mini_bar.dart';
+import 'package:gproject/cosmetic/provider/cosmetics/recommend_cosmetic_provider.dart';
 import 'package:gproject/main.dart';
 
-class RecommendScreen extends StatelessWidget {
+class RecommendScreen extends ConsumerWidget {
   const RecommendScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final data = ref.watch(RecommendCosmeticProvider);
+    String skinType = data.skintype == 'DRY' ? '건성' : data.skintype == 'SENSITIVE' ? '민감성' : '지성';
     return DefaultLayout(
       isBoard: true,
       child: SingleChildScrollView(
@@ -24,14 +28,13 @@ class RecommendScreen extends StatelessWidget {
               child: Text(
                 "AI 사용자 맞춤 추천",
                 style: TextStyle(
-                  fontFamily: 'Pretendard',
                   fontSize: 28,
                   fontWeight: FontWeight.bold,
                 ),
               ),
             ),
-            Image.asset(
-              ImgPath.sample,
+            Image.network(
+              '${BASE_URL}/image/${data.image}'
             ),
             Padding(
               padding: const EdgeInsets.symmetric(
@@ -45,10 +48,14 @@ class RecommendScreen extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        '레이어 물톡스 엠프',
-                        style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.w600),
+                      Container(
+                        width: MediaQuery.of(context).size.width / 5 * 3,
+                        child: Text(
+                          data.name,
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.w600),
+                            overflow: TextOverflow.clip,
+                        ),
                       ),
                       SizedBox(),
                       ElevatedButton(
@@ -77,7 +84,7 @@ class RecommendScreen extends StatelessWidget {
                     "궁합력",
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
                   ),
-                  StickGraph(percent: 82, padding: 50),
+                  StickGraph(percent: data.compatibilityScore.toDouble(), padding: 50),
                   RichText(
                     text: TextSpan(
                       text: '본 화장품은 ',
@@ -85,9 +92,9 @@ class RecommendScreen extends StatelessWidget {
                         fontSize: 14,
                         color: Colors.black,
                       ),
-                      children: const <TextSpan>[
+                      children: <TextSpan>[
                         TextSpan(
-                          text: '민감성 피부',
+                          text: skinType,
                           style: TextStyle(
                             fontSize: 14,
                             color: PColors.safe,
@@ -110,33 +117,15 @@ class RecommendScreen extends StatelessWidget {
                   Row(
                     children: [
                       recommendContainer(
-                          title: "민감성 피부",
+                          title: skinType,
                           context: context,
-                          list: [
-                            effectText(effect: '수분 보충'),
-                            effectText(effect: '예민현상 차단'),
-                            effectText(effect: '습윤'),
-                            effectText(effect: '윤기 효과'),
-                            effectText(effect: '수분 보충'),
-                            effectText(effect: '예민현상 차단'),
-                            effectText(effect: '습윤'),
-                            effectText(effect: '윤기 효과'),
-                          ]),
+                          list: data.skinTypeDescriptions
+                          ),
                       recommendContainer(
                           context: context,
                           title: "주요 성분",
-                          list: [
-                            IngredientMiniBar(grade: 1, name: '글리세린', fontSize: 14, func: (){}, preference: false,),
-                            IngredientMiniBar(grade: 1, name: '글리세린', fontSize: 14, func: (){}, preference: false,),
-                            IngredientMiniBar(grade: 1, name: '글리세린', fontSize: 14, func: (){}, preference: false,),
-                            IngredientMiniBar(grade: 1, name: '글리세린', fontSize: 14, func: (){}, preference: false,),
-                            IngredientMiniBar(grade: 1, name: '글리세린', fontSize: 14, func: (){}, preference: false,),
-                            IngredientMiniBar(grade: 1, name: '글리세린', fontSize: 14, func: (){}, preference: false,),
-                            IngredientMiniBar(grade: 1, name: '글리세린', fontSize: 14, func: (){}, preference: false,),
-                            IngredientMiniBar(grade: 1, name: '글리세린', fontSize: 14, func: (){}, preference: false,),
-                            IngredientMiniBar(grade: 1, name: '글리세린', fontSize: 14, func: (){}, preference: false,),
-                            IngredientMiniBar(grade: 1, name: '글리세린', fontSize: 14, func: (){}, preference: false,),
-                          ])
+                          list: data.keyIngredient,
+                      )
                     ],
                   )
                 ],
@@ -226,7 +215,7 @@ class RecommendScreen extends StatelessWidget {
   Container recommendContainer({
     required BuildContext context,
     required String title,
-    required List<Widget> list,
+    required List<String> list,
   }) {
     return Container(
       padding: title == "주요 성분" ? const EdgeInsets.only(left: 15) : null,
@@ -243,22 +232,33 @@ class RecommendScreen extends StatelessWidget {
                 color: PColors.grey2,
               )),
       ),
-      child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Text(
-              title,
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
-            ),
-            SizedBox(
-              height: ratio.height * 10,
-            ),
-            ...List.generate(list.length, (index) => list[index])
-          ],
-        ),
+      child: ListView.builder(
+        itemCount: list.length,
+        itemBuilder: (context, index){
+          return title == "주요 성분" ?
+          IngredientMiniBar(grade: 1, name: list[index], fontSize: 14, func: (){}, preference: false, isPreference: false,)
+          : effectText(effect: list[index]);
+        }
       ),
     );
   }
 }
+
+
+// SingleChildScrollView(
+//         child: Column(
+//           crossAxisAlignment: CrossAxisAlignment.start,
+//           mainAxisAlignment: MainAxisAlignment.start,
+//           children: [
+//             Text(
+//               title,
+//               style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+//             ),
+//             SizedBox(
+//               height: ratio.height * 10,
+//             ),
+//             ...List.generate(list.length, (index) => list[index])
+//           ],
+//         ),
+//       ),
+//     );

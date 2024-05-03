@@ -9,12 +9,14 @@ class IngredientMiniBar extends ConsumerWidget {
   final double fontSize;
   final bool preference;
   final VoidCallback func;
-  const IngredientMiniBar({
+  bool isPreference;
+  IngredientMiniBar({
     required this.grade,
     required this.name,
     required this.fontSize,
     required this.preference,
     required this.func,
+    this.isPreference = true,
     super.key,});
 
   @override
@@ -51,7 +53,7 @@ class IngredientMiniBar extends ConsumerWidget {
             ),
           ],
         ),
-        loginState ? GestureDetector(
+        (loginState && isPreference) ? GestureDetector(
           onTap: func,
           child: preference ? Stack(
             alignment: Alignment.center,

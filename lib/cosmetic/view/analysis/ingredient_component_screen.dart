@@ -15,10 +15,12 @@ class IngredientComponentScreen extends ConsumerWidget {
   final AnalysisModel? compareData;
   final List<IngredientModel>? list;
   final int index;
+  final Widget? text;
   const IngredientComponentScreen({
     this.compareData,
     this.list,
     this.index = 0,
+    this.text = null,
     super.key});
 
   @override
@@ -35,6 +37,8 @@ class IngredientComponentScreen extends ConsumerWidget {
           sliver: SliverToBoxAdapter(
             child: Column(
               children: [
+                text == null ? SizedBox() : SizedBox(height: 40,),
+                text == null ? SizedBox() : text!,
                 IngredientBox(context: context, aDanger: data.allArg_danger, mDanger: data.danger, safeRating: (percentList[0].toDouble()/lists!.length.toDouble() * 100).toInt(), halfSafeRating: (percentList[1].toDouble()/lists.length.toDouble() * 100).toInt(), dangerRating: (percentList[2].toDouble()/lists.length.toDouble() * 100).toInt()),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 20),

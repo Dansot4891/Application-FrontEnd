@@ -311,7 +311,7 @@ import 'package:image_picker/image_picker.dart';
 //   }
 // }
 
-final analysisNumProvider = StateProvider<int>((ref) => 0); // 초기값으로 0을 설정합니다.
+final analysisNumProvider = StateProvider<List<int>>((ref) => [0, 0]); // 초기값으로 0을 설정합니다.
 
 
 final AnalysisProvider = StateNotifierProvider<AnalysisNotifier, List<AnalysisModel>>(
@@ -521,7 +521,7 @@ class AnalysisNotifier extends StateNotifier<List<AnalysisModel>> {
           );
       if (resp.statusCode == 200) {
         final analysisId = resp.data;
-        ref.watch(analysisNumProvider.notifier).state = analysisId;
+        ref.watch(analysisNumProvider.notifier).state[0] = analysisId;
         CustomDialog(
           context: context,
           barrierDismissible: true,

@@ -33,7 +33,7 @@ class CompareIngredientComponentScreen extends ConsumerWidget {
               ),
               loop: false,
               itemBuilder: (context, index) {
-                return IngredientComponentScreen(compareData: data.analysisList[index], list: index == 0 ? null : iData2, index: index,);
+                return IngredientComponentScreen(compareData: data.analysisList[index], list: index == 0 ? null : iData2, index: index, text: Text('${index+1}번 이미지', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold,),),);
               },
             );
   }

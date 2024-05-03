@@ -12,6 +12,8 @@ _$EvaluationModelImpl _$$EvaluationModelImplFromJson(
       analysis_id: json['analysis_id'] as int,
       analysis_score: json['analysis_score'] as int,
       cosmetic_score: json['cosmetic_score'] as int,
+      analysis_id2: json['analysis_id2'] as int?,
+      cosmetic_score2: json['cosmetic_score2'] as int?,
     );
 
 Map<String, dynamic> _$$EvaluationModelImplToJson(
@@ -20,4 +22,6 @@ Map<String, dynamic> _$$EvaluationModelImplToJson(
       'analysis_id': instance.analysis_id,
       'analysis_score': instance.analysis_score,
       'cosmetic_score': instance.cosmetic_score,
+      'analysis_id2': instance.analysis_id2,
+      'cosmetic_score2': instance.cosmetic_score2,
     };

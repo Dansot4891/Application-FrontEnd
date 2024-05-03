@@ -37,7 +37,7 @@ class CompareIngredientEffectScreen extends ConsumerWidget {
       loop: false,
       itemBuilder: (context, index) {
         print(ref.watch(AnalysisProvider)[index]);
-        return IngredientEffectScreen(index: index, compareData: ref.watch(AnalysisProvider)[index], list: index == 0 ? null : iData2,);
+        return IngredientEffectScreen(index: index, compareData: ref.watch(AnalysisProvider)[index], list: index == 0 ? null : iData2, text: Text('${index+1}번 이미지', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold,),),);
       },
     );
   }
