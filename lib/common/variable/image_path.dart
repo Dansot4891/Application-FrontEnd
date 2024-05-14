@@ -13,4 +13,8 @@ class ImgPath{
   static const String image = 'assets/icon/image.png';
   static const String ai_chatbox_tail = 'assets/img/ai_chatbox_tail.png';
   static const String user_chatbox_tail = 'assets/img/user_chatbox_tail.png';
+  static const String loading = 'assets/img/loading.gif';
+  static const String sample2 = 'assets/img/sample2.jpg';
+  static const String sample3 = 'assets/img/sample3.jpg';
+  static const String sample4 = 'assets/img/sample4.jpg';
 }

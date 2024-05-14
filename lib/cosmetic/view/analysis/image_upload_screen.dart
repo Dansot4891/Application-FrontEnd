@@ -42,7 +42,7 @@ class _ImageUpLoadScreenState extends ConsumerState<ImageUpLoadScreen> {
   @override
   Widget build(BuildContext context) {
     final userData = ref.watch(userDataProvider);
-    int memberId = userData == null ? 0 : ref.watch(userDataProvider)!.id!;
+    int memberId = userData == null ? 999 : ref.watch(userDataProvider)!.id!;
     List<Widget> areas = [
       PhotoArea(img: images.length > 0 ? images[0] : null),
       PhotoArea(img: images.length > 1 ? images[1] : null),

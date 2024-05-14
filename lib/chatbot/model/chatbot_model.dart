@@ -10,7 +10,3 @@ class ChatBotModel with _$ChatBotModel {
 
   factory ChatBotModel.fromJson(Map<String, dynamic> json) => _$ChatBotModelFromJson(json);
 }
-
-// id
-// question
-// answer

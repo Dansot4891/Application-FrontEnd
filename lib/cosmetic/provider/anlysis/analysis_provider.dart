@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gproject/common/component/dialog.dart';
 import 'package:gproject/common/dio/dio.dart';
+import 'package:gproject/common/view/home_screen.dart';
 import 'package:gproject/common/view/loading_screen.dart';
 import 'package:gproject/cosmetic/model/analysis/analysis_model.dart';
 import 'package:gproject/cosmetic/model/analysis/effect_model.dart';
@@ -542,15 +543,19 @@ class AnalysisNotifier extends StateNotifier<List<AnalysisModel>> {
             );
           },
         );
-      } else if(resp.statusCode == 204){
-        CustomDialog(context: context, title: '텍스트 인식이 불가능합니다.\n다른 이미지를 사용해주세요.', buttonText: '확인', buttonCount: 1, func: (){
-          Navigator.pop(context);
-        });
       } else {
-        print('실패');
+        CustomDialog(context: context, title: '텍스트 인식이 불가능합니다.\n다른 이미지를 사용해주세요.', buttonText: '확인', buttonCount: 1, func: (){
+          Navigator.push(context, MaterialPageRoute(builder: (_){
+            return HomeScreen();
+          }));
+        });
       }
     } catch (e) {
-      print(e);
+      CustomDialog(context: context, title: '텍스트 인식이 불가능합니다.\n다른 이미지를 사용해주세요.', buttonText: '확인', buttonCount: 1, func: (){
+          Navigator.push(context, MaterialPageRoute(builder: (_){
+            return HomeScreen();
+          }));
+        });
     }
   }
 
