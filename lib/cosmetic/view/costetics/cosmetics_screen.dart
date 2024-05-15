@@ -21,7 +21,7 @@ class CosmeticsScreen extends ConsumerWidget {
         itemCount: state.length,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
-          childAspectRatio: 7/9,
+          childAspectRatio: 1/3,
         ),
         itemBuilder: (BuildContext context, index) {
           return gridViewBox(
@@ -54,7 +54,7 @@ class CosmeticsScreen extends ConsumerWidget {
     return GestureDetector(
       onTap: func,
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 25,),
+        padding: const EdgeInsets.symmetric(horizontal: 15,),
         margin: const EdgeInsets.only(top: 50),
         child: Column(
           children: [
@@ -76,7 +76,8 @@ class CosmeticsScreen extends ConsumerWidget {
                 fontSize: 16,
                 fontWeight: FontWeight.w400,
               ),
-              overflow: TextOverflow.ellipsis,
+              overflow: TextOverflow.clip,
+              textAlign: TextAlign.center,
             ),
             Text(
               '최저가 ${price}원',
