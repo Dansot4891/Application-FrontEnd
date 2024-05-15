@@ -7,6 +7,8 @@ import 'package:gproject/common/variable/color.dart';
 import 'package:gproject/common/view/default_layout.dart';
 import 'package:gproject/common/view/home_screen.dart';
 import 'package:gproject/cosmetic/component/ingredient/ingredient_mini_bar.dart';
+import 'package:gproject/cosmetic/model/cosmetics/cosmetic_model.dart';
+import 'package:gproject/cosmetic/provider/cosmetics/cosmetic_info_provider.dart';
 import 'package:gproject/cosmetic/provider/cosmetics/cosmetics_provider.dart';
 import 'package:gproject/cosmetic/provider/cosmetics/recommend_cosmetic_provider.dart';
 import 'package:gproject/cosmetic/view/costetics/cosmetics_info_screen.dart';
@@ -62,45 +64,44 @@ class RecommendScreen extends ConsumerWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   //상단 화장품 이름과 구매처 버튼
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(
-                        width: MediaQuery.of(context).size.width / 5 * 3,
-                        child: Text(
+                  Text(
                           data.name,
                           style: TextStyle(
                               fontSize: 20, fontWeight: FontWeight.w600),
                           overflow: TextOverflow.clip,
-                        ),
                       ),
-                      SizedBox(),
+                       SizedBox(
+                    height: ratio.height * 30,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
                       ElevatedButton(
-                        onPressed: () async {
-                          final cData = await ref.read(CosmeticProvider.notifier).getDetail(data.id);
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) {
-                                return CosmeticsInfoScreen(data: cData,);
-                              },
+                            onPressed: () async {
+                              await ref.read(CosmeticInfoProvider.notifier).getDetail(data.id);
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) {
+                                    return CosmeticsInfoScreen();
+                                  },
+                                ),
+                              );
+                            },
+                            style: ElevatedButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              backgroundColor: PColors.mainColor,
                             ),
-                          );
-                        },
-                        style: ElevatedButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
+                            child: Text(
+                              '구매처 확인',
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: Colors.white,
+                              ),
+                            ),
                           ),
-                          backgroundColor: PColors.mainColor,
-                        ),
-                        child: Text(
-                          '구매처 확인',
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
                     ],
                   ),
                   SizedBox(
@@ -261,14 +262,16 @@ class RecommendScreen extends ConsumerWidget {
           itemCount: list.length,
           itemBuilder: (context, index) {
             return title == "주요 성분"
-                ? IngredientMiniBar(
+                ? SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: IngredientMiniBar(
                     grade: 1,
                     name: list[index],
                     fontSize: 14,
                     func: () {},
                     preference: false,
                     isPreference: false,
-                  )
+                  ),)
                 : effectText(effect: list[index]);
           }),
     );

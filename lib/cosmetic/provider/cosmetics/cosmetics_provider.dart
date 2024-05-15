@@ -26,16 +26,16 @@ class CosmeticNotifier extends StateNotifier<List<CosmeticModel>> {
     }
   }
 
-  Future<CosmeticModel> getDetail(int id) async {
-    CosmeticModel? data;
+  Future getDetail(int id) async {
+    List<CosmeticModel> data = [];
     try{
       final resp = await dio.get('${BASE_URL}/api/user/cosmetic_detail/${id}');
       if(resp.statusCode == 200){
-        data = CosmeticModel.fromJson(resp.data);
+        data = [CosmeticModel.fromJson(resp.data)];
       }
     }catch(e){
       
     }
-    return data!;
+    state = data;
   }
 }

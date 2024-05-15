@@ -6,7 +6,7 @@ part 'cosmetic_purchase.g.dart';
 @freezed
 class CosmeticPurchaseModel with _$CosmeticPurchaseModel {
 
-  factory CosmeticPurchaseModel(int id, String purchaseSite, int price, String url) = _CosmeticPurchaseModel;
+  factory CosmeticPurchaseModel(int id, String purchaseSite, String price, String url) = _CosmeticPurchaseModel;
 
   factory CosmeticPurchaseModel.fromJson(Map<String, dynamic> json) => _$CosmeticPurchaseModelFromJson(json);
 }

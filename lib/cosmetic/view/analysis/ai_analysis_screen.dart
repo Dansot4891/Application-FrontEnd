@@ -13,10 +13,7 @@ import 'package:gproject/user/view/login/signup_screen1.dart';
 class AIAnalysisScreen extends ConsumerWidget {
   final AnalysisModel? compareData;
   final Widget? text;
-  AIAnalysisScreen({
-    this.compareData,
-    this.text = null,
-    super.key});
+  AIAnalysisScreen({this.compareData, this.text = null, super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -34,9 +31,9 @@ class AIAnalysisScreen extends ConsumerWidget {
       '보통',
       '충분',
     ];
-    AnalysisModel data = compareData == null ? ref.watch(AnalysisProvider)[0] : compareData!;
+    AnalysisModel data =
+        compareData == null ? ref.watch(AnalysisProvider)[0] : compareData!;
     final loginState = ref.watch(loginStateProvider);
-    print(data);
     return loginState
         ? Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
@@ -55,7 +52,7 @@ class AIAnalysisScreen extends ConsumerWidget {
                     ),
                     itemCount: scoreList.length,
                     itemBuilder: (BuildContext context, index) {
-                      return index == (data.score-1)
+                      return index == (data.score - 1)
                           ? GridViewBox(title: scoreList[index], selected: true)
                           : GridViewBox(title: scoreList[index]);
                     },
@@ -87,81 +84,9 @@ class AIAnalysisScreen extends ConsumerWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Column(
-                        children: [
-                          Text(
-                            '긍정 성분 수',
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                          Text(
-                            typeList[data.type_posit],
-                            style: TextStyle(
-                              color: data.type_posit == 3
-                                  ? PColors.subColor3
-                                  : data.type_posit == 2
-                                  ? PColors.mainColor
-                                  : data.type_posit == 1
-                                  ? PColors.grey3
-                                  : PColors.grey2,
-                              fontSize: 18,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ],
-                      ),
-                      Column(
-                        children: [
-                          Text(
-                            '부정 성분 수',
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                          Text(
-                            typeList[data.type_nega],
-                            style: TextStyle(
-                            color: data.type_nega == 3
-                                  ? PColors.subColor3
-                                  : data.type_nega == 2
-                                  ? PColors.mainColor
-                                  : data.type_nega == 1
-                                  ? PColors.grey3
-                                  : PColors.grey2,
-                              fontSize: 18,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ],
-                      ),
-                      Column(
-                        children: [
-                          Text(
-                            '주의 성분 수',
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                          Text(
-                            typeList[data.type_danger],
-                            style: TextStyle(
-                            color: data.type_danger == 3
-                                  ? PColors.subColor3
-                                  : data.type_danger == 2
-                                  ? PColors.mainColor
-                                  : data.type_danger == 1
-                                  ? PColors.grey3
-                                  : PColors.grey2,
-                              fontSize: 18,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ],
-                      ),
+                      TypeIngredientNum(typeNum: typeList[data.type_posit], text: '긍정 성분 수'),
+                      TypeIngredientNum(typeNum: typeList[data.type_nega], text: '부정 성분 수'),
+                      TypeIngredientNum(typeNum: typeList[data.type_danger], text: '주의 성분 수'),
                     ],
                   ),
                 ),
@@ -210,6 +135,37 @@ class AIAnalysisScreen extends ConsumerWidget {
               ),
             ),
           );
+  }
+
+  Column TypeIngredientNum({
+    required String typeNum,
+    required String text,
+  }) {
+    return Column(
+      children: [
+        Text(
+          text,
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+        Text(
+          typeNum,
+          style: TextStyle(
+            color: typeNum == '충분'
+                ? PColors.subColor3
+                : typeNum == '보통'
+                    ? PColors.mainColor
+                    : typeNum == '부족'
+                        ? PColors.grey3
+                        : PColors.grey2,
+            fontSize: 18,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+      ],
+    );
   }
 
   Container AIAnalysis({required String comment}) {

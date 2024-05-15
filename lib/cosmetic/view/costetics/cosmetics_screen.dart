@@ -2,9 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:gproject/common/dio/dio.dart';
 import 'package:gproject/common/variable/color.dart';
 import 'package:gproject/common/view/default_layout.dart';
+import 'package:gproject/cosmetic/provider/cosmetics/cosmetic_info_provider.dart';
 import 'package:gproject/cosmetic/provider/cosmetics/cosmetics_provider.dart';
 import 'package:gproject/cosmetic/view/costetics/cosmetics_info_screen.dart';
 import 'package:gproject/main.dart';
@@ -29,12 +29,12 @@ class CosmeticsScreen extends ConsumerWidget {
             imgPath: state[index].imagePath,
             price: state[index].lowestPrice,
             func: () async {
-              final data = await ref.read(CosmeticProvider.notifier).getDetail(state[index].id);
+              await ref.read(CosmeticInfoProvider.notifier).getDetail(state[index].id);
               Navigator.push(
                 context,
                 MaterialPageRoute(
                   builder: (context) {
-                    return CosmeticsInfoScreen(data: data,);
+                    return CosmeticsInfoScreen();
                   },
                 ),
               );

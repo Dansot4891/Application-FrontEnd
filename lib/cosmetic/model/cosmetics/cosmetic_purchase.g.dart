@@ -11,7 +11,7 @@ _$CosmeticPurchaseModelImpl _$$CosmeticPurchaseModelImplFromJson(
     _$CosmeticPurchaseModelImpl(
       json['id'] as int,
       json['purchaseSite'] as String,
-      json['price'] as int,
+      json['price'] as String,
       json['url'] as String,
     );
 

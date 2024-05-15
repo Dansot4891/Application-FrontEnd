@@ -23,7 +23,7 @@ CosmeticPurchaseModel _$CosmeticPurchaseModelFromJson(
 mixin _$CosmeticPurchaseModel {
   int get id => throw _privateConstructorUsedError;
   String get purchaseSite => throw _privateConstructorUsedError;
-  int get price => throw _privateConstructorUsedError;
+  String get price => throw _privateConstructorUsedError;
   String get url => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -38,7 +38,7 @@ abstract class $CosmeticPurchaseModelCopyWith<$Res> {
           $Res Function(CosmeticPurchaseModel) then) =
       _$CosmeticPurchaseModelCopyWithImpl<$Res, CosmeticPurchaseModel>;
   @useResult
-  $Res call({int id, String purchaseSite, int price, String url});
+  $Res call({int id, String purchaseSite, String price, String url});
 }
 
 /// @nodoc
@@ -72,7 +72,7 @@ class _$CosmeticPurchaseModelCopyWithImpl<$Res,
       price: null == price
           ? _value.price
           : price // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       url: null == url
           ? _value.url
           : url // ignore: cast_nullable_to_non_nullable
@@ -90,7 +90,7 @@ abstract class _$$CosmeticPurchaseModelImplCopyWith<$Res>
       __$$CosmeticPurchaseModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int id, String purchaseSite, int price, String url});
+  $Res call({int id, String purchaseSite, String price, String url});
 }
 
 /// @nodoc
@@ -122,7 +122,7 @@ class __$$CosmeticPurchaseModelImplCopyWithImpl<$Res>
       null == price
           ? _value.price
           : price // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       null == url
           ? _value.url
           : url // ignore: cast_nullable_to_non_nullable
@@ -144,7 +144,7 @@ class _$CosmeticPurchaseModelImpl implements _CosmeticPurchaseModel {
   @override
   final String purchaseSite;
   @override
-  final int price;
+  final String price;
   @override
   final String url;
 
@@ -186,7 +186,7 @@ class _$CosmeticPurchaseModelImpl implements _CosmeticPurchaseModel {
 
 abstract class _CosmeticPurchaseModel implements CosmeticPurchaseModel {
   factory _CosmeticPurchaseModel(final int id, final String purchaseSite,
-      final int price, final String url) = _$CosmeticPurchaseModelImpl;
+      final String price, final String url) = _$CosmeticPurchaseModelImpl;
 
   factory _CosmeticPurchaseModel.fromJson(Map<String, dynamic> json) =
       _$CosmeticPurchaseModelImpl.fromJson;
@@ -196,7 +196,7 @@ abstract class _CosmeticPurchaseModel implements CosmeticPurchaseModel {
   @override
   String get purchaseSite;
   @override
-  int get price;
+  String get price;
   @override
   String get url;
   @override
