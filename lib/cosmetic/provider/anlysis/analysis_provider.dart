@@ -408,6 +408,7 @@ class AnalysisNotifier extends StateNotifier<List<AnalysisModel>> {
         }
       }
     }
+    effectList.sort((a, b) => b.num.compareTo(a.num));
     return effectList;
   }
 
@@ -456,7 +457,31 @@ class AnalysisNotifier extends StateNotifier<List<AnalysisModel>> {
     for (var data in state[index].ingredient) {
       if (data.skin_type != null) {
         for (int i = 0; i < data.skin_type!.length; i++) {
-          if (data.skin_type![i].positivity_status &&
+          if (
+              data.skin_type![i].skin_type == type) {
+            List<SkinTypeModel> subdata2 = [];
+            subdata2.add(data.skin_type![i]);
+            final subdata = data.copyWith(
+                name: data.name,
+                grade: data.grade,
+                purpose: data.purpose,
+                preference: data.preference,
+                features: data.features,
+                skin_type: subdata2);
+            list.add(subdata);
+          }
+        }
+      }
+    }
+    return list;
+  }
+
+  List<IngredientModel> skinTypeBadData(String type, int index) {
+    List<IngredientModel> list = [];
+    for (var data in state[index].ingredient) {
+      if (data.skin_type != null) {
+        for (int i = 0; i < data.skin_type!.length; i++) {
+          if (!data.skin_type![i].positivity_status &&
               data.skin_type![i].skin_type == type) {
             List<SkinTypeModel> subdata2 = [];
             subdata2.add(data.skin_type![i]);

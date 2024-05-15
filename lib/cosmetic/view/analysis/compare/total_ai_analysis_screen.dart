@@ -54,16 +54,29 @@ class TotalAIAnalysisScreen extends ConsumerWidget {
                   SizedBox(
                     height: ratio.height * 20,
                   ),
+                  Text(
+                    '1번 이미지',
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w400),
+                  ),
                   StickGraph(
                     percent: data.ratio[0].toDouble(),
                     padding: 50,
                     color1: PColors.safe,
-                    color2: PColors.halfDanger,
-                    appearNum: false,
+                    color2: Colors.white,
+                    isBorder: true,
+                    appearNum: true,
                   ),
                   Text(
-                    '${data.ratio[0]}  / ${data.ratio[1]}',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    '2번 이미지',
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w400),
+                  ),
+                  StickGraph(
+                    percent: data.ratio[1].toDouble(),
+                    padding: 50,
+                    color1: PColors.halfDanger,
+                    color2: Colors.white,
+                    isBorder: true,
+                    appearNum: true,
                   ),
                   SizedBox(
                     height: ratio.height * 20,

@@ -35,7 +35,7 @@ class SkinTypeScreen extends ConsumerWidget {
                 ],
               ),
               SizedBox(
-                height: 30,
+                height: ratio.height * 50,
               ),
               SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
@@ -56,7 +56,7 @@ class SkinTypeScreen extends ConsumerWidget {
                 ),
               ),
               SizedBox(
-                height: 20,
+                height:  ratio.height * 40,
               ),
               Padding(
                 padding: const EdgeInsets.only(
@@ -88,9 +88,9 @@ class SkinTypeScreen extends ConsumerWidget {
             ],
           ),
         ),
-        SliverBox(skinType: '건성 피부', ingredient: ref.read(AnalysisProvider.notifier).skinTypeData('DRY', index)),
-        SliverBox(skinType: '지성 피부', ingredient: ref.read(AnalysisProvider.notifier).skinTypeData('OILY', index)),
-        SliverBox(skinType: '민감성 피부', ingredient: ref.read(AnalysisProvider.notifier).skinTypeData('SENSITIVE', index)),
+        SliverBox(skinType: '건성 피부', ingredient: ref.read(AnalysisProvider.notifier).skinTypeData('DRY', index), badIngredient: ref.read(AnalysisProvider.notifier).skinTypeBadData('DRY', index)),
+        SliverBox(skinType: '지성 피부', ingredient: ref.read(AnalysisProvider.notifier).skinTypeData('OILY', index), badIngredient: ref.read(AnalysisProvider.notifier).skinTypeBadData('OILY', index)),
+        SliverBox(skinType: '민감성 피부', ingredient: ref.read(AnalysisProvider.notifier).skinTypeData('SENSITIVE', index), badIngredient: ref.read(AnalysisProvider.notifier).skinTypeBadData('SENSITIVE', index)),
       ],
     );
   }
@@ -227,6 +227,7 @@ class SkinTypeScreen extends ConsumerWidget {
   SliverPadding SliverBox({
     required String skinType,
     required List<IngredientModel> ingredient,
+    required List<IngredientModel> badIngredient,
   }) {
     return SliverPadding(
       padding: const EdgeInsets.only(left: 30, top: 30),
@@ -258,8 +259,8 @@ class SkinTypeScreen extends ConsumerWidget {
                       itemBuilder: (context, idx) {
                         return SingleChildScrollView(
                           scrollDirection: Axis.horizontal,
-                          child: ingredient[index].skin_type![idx].positivity_status ?
-                          SkinTypeRow(ingredient[index].name,'${ingredient[index].skin_type![idx].skinDescription}',ingredient[index].skin_type![idx].positivity_status) : null
+                          child: 
+                          SkinTypeRow(ingredient[index].name,'${ingredient[index].skin_type![idx].skinDescription}',ingredient[index].skin_type![idx].positivity_status)
                         );
                       },
                     ) : SizedBox(height: 50,),

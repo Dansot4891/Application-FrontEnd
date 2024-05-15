@@ -36,6 +36,7 @@ class AIAnalysisScreen extends ConsumerWidget {
     ];
     AnalysisModel data = compareData == null ? ref.watch(AnalysisProvider)[0] : compareData!;
     final loginState = ref.watch(loginStateProvider);
+    print(data);
     return loginState
         ? Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
@@ -43,9 +44,9 @@ class AIAnalysisScreen extends ConsumerWidget {
               children: [
                 text == null ? SizedBox() : text!,
                 AIAnalysis(comment: data.ai_description),
-                // SizedBox(
-                //   height: ratio.height * 20,
-                // ),
+                SizedBox(
+                  height: ratio.height * 35,
+                ),
                 Expanded(
                   child: GridView.builder(
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(

@@ -61,7 +61,7 @@ class CosmeticsScreen extends ConsumerWidget {
             ClipRRect(
               borderRadius: BorderRadius.circular(12),
               child: Image.network(
-                imgPath == '-' ? "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4aNIlrin0wKvaB1KEly8LMJ3Pj5QlcEraE4YwAutekA&s" : '${BASE_URL}/image/${imgPath}',
+                imgPath == '-' ? "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4aNIlrin0wKvaB1KEly8LMJ3Pj5QlcEraE4YwAutekA&s" : 'https:${imgPath}',
                 width: ratio.width * 130,
                 height: ratio.height * 170,
                 fit: BoxFit.cover,

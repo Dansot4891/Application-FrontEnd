@@ -9,6 +9,7 @@ class StickGraph extends StatelessWidget {
   final Color color1;
   final Color color2;
   final double padding;
+  final bool isBorder;
   bool appearNum;
   StickGraph({
     this.height = 35,
@@ -17,6 +18,7 @@ class StickGraph extends StatelessWidget {
     required this.percent,
     required this.padding,
     this.appearNum = true,
+    this.isBorder = false,
     super.key});
 
   @override
@@ -30,6 +32,7 @@ class StickGraph extends StatelessWidget {
           decoration: BoxDecoration(
             color: color2,
             borderRadius: BorderRadius.circular(24),
+            border: isBorder ? Border.all(color: Colors.grey, width: 1) : null,
           ),
         ),
         Container(
@@ -38,7 +41,7 @@ class StickGraph extends StatelessWidget {
           height: ratio.height * height,
           decoration: BoxDecoration(
             color: color1,
-            borderRadius: BorderRadius.circular(24),
+            borderRadius: BorderRadius.circular(24)
           ),
           child: appearNum ? Center(
             child: Text(

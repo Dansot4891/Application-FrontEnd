@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gproject/common/component/stick_graph.dart';
-import 'package:gproject/common/dio/dio.dart';
 import 'package:gproject/common/variable/color.dart';
 import 'package:gproject/common/view/default_layout.dart';
 import 'package:gproject/common/view/home_screen.dart';
@@ -50,7 +49,10 @@ class RecommendScreen extends ConsumerWidget {
                 ),
               ),
             ),
-            Image.network('${BASE_URL}/image/${data.image}'),
+            Container(
+              width: double.infinity,
+              child: Image.network('https:${data.image}', fit: BoxFit.cover,),
+            ),
             Padding(
               padding: const EdgeInsets.symmetric(
                 vertical: 15,

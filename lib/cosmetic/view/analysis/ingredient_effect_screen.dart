@@ -176,7 +176,7 @@ class IngredientEffectScreen extends ConsumerWidget {
                   fontSize: 16,
                 ),
                 children: [
-                  ...List.generate(data.length, (index) {
+                  ...List.generate(data.length > 3 ? 3 : data.length, (index) {
                     if (index == 0)
                       return TextSpan(
                         text: data[index].text,
@@ -221,7 +221,7 @@ class IngredientEffectScreen extends ConsumerWidget {
           ),
           Container(
             margin: const EdgeInsets.symmetric(vertical: 10),
-            height: ratio.height * 20 * num,
+            height: ratio.height * 10 * num ,
             width: 30,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(6),
