@@ -49,12 +49,16 @@ class RecommendScreen extends ConsumerWidget {
                   fontSize: 28,
                   fontWeight: FontWeight.bold,
                 ),
+                
               ),
             ),
             Container(
-              width: double.infinity,
-              child: Image.network('https:${data.image}', fit: BoxFit.cover,),
-            ),
+                width: double.infinity,
+                child: Image.network(
+                  data.image.startsWith('/') ? 'http:${data.image}' : data.image, 
+                  fit: BoxFit.cover
+                )
+              ),
             Padding(
               padding: const EdgeInsets.symmetric(
                 vertical: 15,

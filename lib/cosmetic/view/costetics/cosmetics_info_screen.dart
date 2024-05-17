@@ -20,61 +20,65 @@ class CosmeticsInfoScreen extends ConsumerWidget {
     print('--------------------------------------------------------------------------');
     print(data);
     return DefaultLayout(
+      child: SingleChildScrollView(
         child: Column(
-      children: [
-        Image.network(
-                data.imagePath == '-' ? "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4aNIlrin0wKvaB1KEly8LMJ3Pj5QlcEraE4YwAutekA&s" : 'http:${data.imagePath}',
-                width: double.infinity,
-                fit: BoxFit.cover,
+          children: [
+            Image.network(
+              // data.imagePath == '-' ? "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4aNIlrin0wKvaB1KEly8LMJ3Pj5QlcEraE4YwAutekA&s" : 'http:${data.imagePath}',
+              data.imagePath.startsWith('/') ? 'http:${data.imagePath}' : data.imagePath,
+              width: double.infinity,
+              fit: BoxFit.cover,
+            ),
+            Container(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 30,
               ),
-        Container(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 30,
-          ),
-          width: double.infinity,
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                height: ratio.height * 20,
+              width: double.infinity,
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    height: ratio.height * 20,
+                  ),
+                  Text(
+                    data.name,
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                  SizedBox(
+                    height: ratio.height * 10,
+                  ),
+                  Text(
+                    '최저가 ${data.lowestPrice}원',
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: PColors.price,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  SizedBox(
+                    height: ratio.height * 20,
+                  ),
+                  ListView.builder(
+                    itemCount: data.cosmeticPurchaseLinks!.length,
+                    shrinkWrap: true,
+                    itemBuilder: ((context, index) {
+                      return purchasingOffice(
+                        context,
+                        data.cosmeticPurchaseLinks![index],
+                      );
+                    }),
+                  ),
+                ],
               ),
-              Text(
-                data.name,
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.w400,
-                ),
-              ),
-              SizedBox(
-                height: ratio.height * 10,
-              ),
-              Text(
-                '최저가 ${data.lowestPrice}원',
-                style: TextStyle(
-                  fontSize: 18,
-                  color: PColors.price,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              SizedBox(
-                height: ratio.height * 20,
-              ),
-              ListView.builder(
-                itemCount: data.cosmeticPurchaseLinks!.length,
-                shrinkWrap: true,
-                itemBuilder: ((context, index) {
-                  return purchasingOffice(
-                    context,
-                    data.cosmeticPurchaseLinks![index],
-                  );
-                }),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
-      ],
-    ));
+      ),
+    );
   }
 
   Padding purchasingOffice(
@@ -104,31 +108,33 @@ class CosmeticsInfoScreen extends ConsumerWidget {
             ),
           ),
           GestureDetector(
-              onTap: () async {
-                final url = Uri.parse(
-                  '${price.url}',
+            onTap: () async {
+              final url = Uri.parse(
+                '${price.url}',
+              );
+              if (await canLaunchUrl(url)) {
+                launchUrl(url);
+              } else {
+                CustomDialog(
+                  context: context,
+                  title: '에러입니다. 다시 시도해 주세요.',
+                  buttonText: '확인',
+                  buttonCount: 1,
+                  func: () {
+                    Navigator.pop(context);
+                  },
                 );
-                if (await canLaunchUrl(url)) {
-                  launchUrl(url);
-                } else {
-                  CustomDialog(
-                      context: context,
-                      title: '에러입니다. 다시 시도해 주세요.',
-                      buttonText: '확인',
-                      buttonCount: 1,
-                      func: () {
-                        Navigator.pop(context);
-                      });
-                }
-              },
-              child: Padding(
-                padding: const EdgeInsets.only(left: 40),
-                child: Icon(
-                  Icons.chevron_right,
-                  size: 35,
-                  color: PColors.mainColor,
-                ),
-              ))
+              }
+            },
+            child: Padding(
+              padding: const EdgeInsets.only(left: 40),
+              child: Icon(
+                Icons.chevron_right,
+                size: 35,
+                color: PColors.mainColor,
+              ),
+            ),
+          ),
         ],
       ),
     );

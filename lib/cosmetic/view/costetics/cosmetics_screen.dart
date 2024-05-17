@@ -21,7 +21,7 @@ class CosmeticsScreen extends ConsumerWidget {
         itemCount: state.length,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
-          childAspectRatio: 1/3,
+          childAspectRatio: 4/6,
         ),
         itemBuilder: (BuildContext context, index) {
           return gridViewBox(
@@ -61,7 +61,8 @@ class CosmeticsScreen extends ConsumerWidget {
             ClipRRect(
               borderRadius: BorderRadius.circular(12),
               child: Image.network(
-                imgPath == '-' ? "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4aNIlrin0wKvaB1KEly8LMJ3Pj5QlcEraE4YwAutekA&s" : 'https:${imgPath}',
+                // imgPath == '-' ? "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4aNIlrin0wKvaB1KEly8LMJ3Pj5QlcEraE4YwAutekA&s" : 'https:${imgPath}',
+                imgPath.startsWith('/') ? 'http:${imgPath}' : imgPath,
                 width: ratio.width * 130,
                 height: ratio.height * 170,
                 fit: BoxFit.cover,
