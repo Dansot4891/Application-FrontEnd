@@ -2,6 +2,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gproject/common/dio/dio.dart';
 import 'package:gproject/cosmetic/model/cosmetics/cosmetic_model.dart';
 
+final CosmeticPaginationDataProvider = Provider.family<List<CosmeticModel>, int>((ref, num) {
+  final cosmeticData = ref.watch(CosmeticProvider);
+  List<CosmeticModel> subData = cosmeticData.sublist((num-1) * 6, num * 6 >= cosmeticData.length ? cosmeticData.length : num * 6);
+  return subData;
+});
+
 final CosmeticProvider = StateNotifierProvider<CosmeticNotifier, List<CosmeticModel>>((ref) => CosmeticNotifier());
 
 class CosmeticNotifier extends StateNotifier<List<CosmeticModel>> {
@@ -37,5 +43,32 @@ class CosmeticNotifier extends StateNotifier<List<CosmeticModel>> {
       
     }
     state = data;
+  }
+}
+
+final cosmeticPaginationProvider = StateNotifierProvider<CosmeticPaginationNotifier, int>((ref) => CosmeticPaginationNotifier());
+
+class CosmeticPaginationNotifier extends StateNotifier<int>{
+  CosmeticPaginationNotifier():super(1);
+
+  void setPaging(int num){
+    state = num;
+  }
+}
+
+final cosmeticPaginationNumProvider = StateNotifierProvider<CosmeticPaginationNumNotifier, int>((ref) => CosmeticPaginationNumNotifier());
+
+class CosmeticPaginationNumNotifier extends StateNotifier<int>{
+  CosmeticPaginationNumNotifier():super(0);
+
+  void setPlusNum(){
+    state = state + 1;
+  }
+
+  void setMinusNum(){
+    if(state == 0){
+      return;
+    }
+    state = state - 1;
   }
 }

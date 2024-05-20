@@ -24,7 +24,6 @@ class CosmeticsInfoScreen extends ConsumerWidget {
         child: Column(
           children: [
             Image.network(
-              // data.imagePath == '-' ? "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4aNIlrin0wKvaB1KEly8LMJ3Pj5QlcEraE4YwAutekA&s" : 'http:${data.imagePath}',
               data.imagePath.startsWith('/') ? 'http:${data.imagePath}' : data.imagePath,
               width: double.infinity,
               fit: BoxFit.cover,

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gproject/common/variable/color.dart';
@@ -14,34 +15,79 @@ class CosmeticsScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(CosmeticProvider);
+    final pagination = ref.watch(cosmeticPaginationProvider);
+    final state = ref.watch(CosmeticPaginationDataProvider(pagination));
+    final pagingNum = ref.watch(cosmeticPaginationNumProvider);
     return DefaultLayout(
       isBoard: true,
-      child: GridView.builder(
-        itemCount: state.length,
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          childAspectRatio: 4/6,
-        ),
-        itemBuilder: (BuildContext context, index) {
-          return gridViewBox(
-            name: state[index].name,
-            imgPath: state[index].imagePath,
-            price: state[index].lowestPrice,
-            func: () async {
-              await ref.read(CosmeticInfoProvider.notifier).getDetail(state[index].id);
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) {
-                    return CosmeticsInfoScreen();
-                  },
-                ),
+      child: CustomScrollView(
+        slivers: [
+          SliverGrid(
+            delegate: SliverChildBuilderDelegate((context, index){
+              return gridViewBox(
+                name: state[index].name,
+                imgPath: state[index].imagePath,
+                price: state[index].lowestPrice,
+                func: () async {
+                  await ref.read(CosmeticInfoProvider.notifier).getDetail(state[index].id);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return CosmeticsInfoScreen();
+                      },
+                    ),
+                  );
+                },
               );
             },
-          );
-        },
-      ),
+            childCount: state.length,
+            ),
+             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              childAspectRatio: 4 / 6,
+            ),
+          ),
+          SliverFillRemaining(
+            hasScrollBody: false,
+            child: 
+            Column(
+              children: [
+                Spacer(),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    IconButton(onPressed: (){
+                      ref.read(cosmeticPaginationNumProvider.notifier).setMinusNum();
+                    }, icon: Icon(Icons.chevron_left)),
+                    ...List.generate(
+                      2,
+                      (index) {
+                        if(2* pagingNum + index+1 > (ref.watch(CosmeticProvider).length / 6).ceil()){
+                          return SizedBox();
+                        }
+                        return Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: TextButton(onPressed: (){
+                          ref.read(cosmeticPaginationProvider.notifier).setPaging(2* pagingNum + index+1);
+                        },
+                        child: Text((2* pagingNum + index+1).toString()),),
+                      );
+                      },
+                    ),
+                    IconButton(onPressed: (){
+                      if(2* (pagingNum+1) > (ref.watch(CosmeticProvider).length / 6).ceil()){
+                          return;
+                      }
+                      ref.read(cosmeticPaginationNumProvider.notifier).setPlusNum();
+                    }, icon: Icon(Icons.chevron_right)),
+                  ],
+                ),
+              ],
+            ),
+          )
+        ],
+      )
     );
   }
 
@@ -61,7 +107,6 @@ class CosmeticsScreen extends ConsumerWidget {
             ClipRRect(
               borderRadius: BorderRadius.circular(12),
               child: Image.network(
-                // imgPath == '-' ? "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4aNIlrin0wKvaB1KEly8LMJ3Pj5QlcEraE4YwAutekA&s" : 'https:${imgPath}',
                 imgPath.startsWith('/') ? 'http:${imgPath}' : imgPath,
                 width: ratio.width * 130,
                 height: ratio.height * 170,
