@@ -9,10 +9,12 @@ class CustomTextFormField extends StatelessWidget {
   bool obsecure;
   bool enabled;
   final String? initialValue;
+  final void Function(String)? onChanged;
   final String? Function(String?)? validator;
   CustomTextFormField({
     required this.controller,
     required this.hintText,
+    this.onChanged,
     this.expand = false,
     this.obsecure = false,
     this.enabled = true,
@@ -34,6 +36,7 @@ class CustomTextFormField extends StatelessWidget {
         fontSize: 16,
         color: Colors.black,
       ),
+      onChanged: onChanged,
       minLines: !expand ? 1 : null,
       maxLines: !expand ? 1 : null,
       controller: initialValue == null ? controller : null,

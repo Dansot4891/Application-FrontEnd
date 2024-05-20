@@ -77,7 +77,8 @@ class CosmeticsScreen extends ConsumerWidget {
                 fontSize: 16,
                 fontWeight: FontWeight.w400,
               ),
-              overflow: TextOverflow.clip,
+              overflow: TextOverflow.ellipsis,
+              maxLines: 2,
               textAlign: TextAlign.center,
             ),
             Text(

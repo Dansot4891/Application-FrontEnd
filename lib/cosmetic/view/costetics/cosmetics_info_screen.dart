@@ -75,6 +75,7 @@ class CosmeticsInfoScreen extends ConsumerWidget {
                 ],
               ),
             ),
+            SizedBox(height : ratio.height * 30),
           ],
         ),
       ),

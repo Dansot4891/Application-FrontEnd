@@ -12,13 +12,19 @@ import 'package:gproject/cosmetic/provider/ingredient/ingredient_button_provider
 import 'package:gproject/cosmetic/provider/ingredient/ingredient_provider.dart';
 import 'package:gproject/user/provider/login_provider.dart';
 
+final searchQueryProvider = StateProvider<String>((ref) => '');
+
 class IngredientScreen extends ConsumerWidget {
   IngredientScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final List<bool> state = ref.watch(buttonIndexProvider);
+    final String searchQuery = ref.watch(searchQueryProvider);
     List<IngredientModel> list = ref.watch(IngredientFilterProvider);
+    List<IngredientModel> filteredList = list.where((ingredient) {
+      return ingredient.name.contains(searchQuery);
+    }).toList();
     List<Widget> levelButton = [
       IngredientButton(
         title: '전체',
@@ -65,16 +71,41 @@ class IngredientScreen extends ConsumerWidget {
             child: Column(
               children: [
                 SizedBox(
-                  height: 25,
+                  height: 15,
                 ),
                 IngredientInfo(),
                 SizedBox(
-                  height: 20,
+                  height: 10,
                 ),
                 Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: levelButton),
-                    SizedBox(
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 30),
+                  child: TextField(
+                    onChanged: (value) {
+                      ref.read(searchQueryProvider.notifier).state = value;
+                    },
+                    decoration: InputDecoration(
+                      hintText: '성분을 입력해주세요.',
+                      contentPadding: const EdgeInsets.all(0),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: BorderSide(color: PColors.mainColor, width: 1)
+                      ),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: BorderSide(color: PColors.mainColor, width: 1)
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: BorderSide(color: PColors.mainColor, width: 1)
+                      ),
+                      prefixIcon: Icon(Icons.search, color: PColors.mainColor),
+                    ),
+                  ),
+                ),
+                SizedBox(
                   height: 20,
                 ),
               ],
@@ -86,12 +117,19 @@ class IngredientScreen extends ConsumerWidget {
                 delegate: SliverChildBuilderDelegate(
               (context, index) => Padding(
                 padding: const EdgeInsets.only(bottom: 20),
-                child: IngredientBar(level: list[index].grade, ingredientName: list[index].name, purpose: list[index].purpose, features: list[index].features, bookMark: list[index].preference, func: (){
-                  ref.read(IngredientProvider.notifier).changeBookmark(name : list[index].name);
-                },),
+                child: IngredientBar(
+                  level: filteredList[index].grade,
+                  ingredientName: filteredList[index].name,
+                  purpose: filteredList[index].purpose,
+                  features: filteredList[index].features,
+                  bookMark: filteredList[index].preference,
+                  func: () {
+                    ref.read(IngredientProvider.notifier).changeBookmark(name: filteredList[index].name);
+                  },
+                ),
               ),
-              childCount: list.length,
-            ),),
+              childCount: filteredList.length,
+            )),
           ),
         ],
       ),
