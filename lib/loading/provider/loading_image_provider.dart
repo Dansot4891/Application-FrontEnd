@@ -9,6 +9,7 @@ class LoadingImgNotifier extends StateNotifier<List<LoadingImgModel>>{
 
   Future<void> fetchData() async {
     try{
+      state = [];
       final resp = await dio.get('${BASE_URL}/api/admin/promotion/List');
       if(resp.statusCode == 200){
         for(var data in resp.data){
