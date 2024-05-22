@@ -5,7 +5,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gproject/common/component/dialog.dart';
 import 'package:gproject/common/dio/dio.dart';
 import 'package:gproject/common/view/home_screen.dart';
-import 'package:gproject/common/view/loading_screen.dart';
+import 'package:gproject/loading/provider/loading_image_provider.dart';
+import 'package:gproject/loading/view/loading_screen.dart';
 import 'package:gproject/cosmetic/model/analysis/analysis_model.dart';
 import 'package:gproject/cosmetic/model/analysis/effect_model.dart';
 import 'package:gproject/cosmetic/model/analysis/skin_type_model.dart';
@@ -525,6 +526,7 @@ class AnalysisNotifier extends StateNotifier<List<AnalysisModel>> {
   }
 
   Future requestAnalysisList(BuildContext context, WidgetRef ref, XFile image, int memberId) async {
+    await ref.read(loadingImgProvider.notifier).fetchData();
     try {
       Navigator.push(
         context,
@@ -585,6 +587,8 @@ class AnalysisNotifier extends StateNotifier<List<AnalysisModel>> {
   }
 
   Future requestCompareAnalysisList(BuildContext context, WidgetRef ref, List<XFile?> images, int memberId) async {
+    print('요청 들어감');
+    await ref.read(loadingImgProvider.notifier).fetchData();
     try {
       Navigator.push(
         context,

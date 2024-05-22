@@ -2,16 +2,19 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gproject/common/variable/color.dart';
 import 'package:gproject/common/variable/image_path.dart';
+import 'package:gproject/loading/provider/loading_image_provider.dart';
 import 'package:gproject/main.dart';
 
-class LoadingScreen extends StatelessWidget {
+class LoadingScreen extends ConsumerWidget {
   const LoadingScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    List<String> imgData = [ImgPath.sample4, ImgPath.sample2, ImgPath.sample3];
+  Widget build(BuildContext context, WidgetRef ref) {
+    final imgData = ref.watch(loadingImgProvider);
+    print(imgData);
     return Scaffold(
       backgroundColor: Colors.white,
       body: Center(
@@ -23,7 +26,7 @@ class LoadingScreen extends StatelessWidget {
               width: ratio.width * 350,
               height: ratio.height * 450,
               child: Swiper(
-                itemCount: 3,
+                itemCount: imgData.length,
                 scale: 0,
                 loop : true,
                 autoplay: true,
@@ -40,7 +43,7 @@ class LoadingScreen extends StatelessWidget {
                   ),
                 ),
                 itemBuilder: (context, index) {
-                  return Image.asset(imgData[index], fit: BoxFit.cover,);
+                  return Image.network(imgData[index].image, fit: BoxFit.cover,);
                 },
               ),
             ),
