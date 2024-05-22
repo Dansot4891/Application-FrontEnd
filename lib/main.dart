@@ -15,16 +15,16 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
 
   @override
-  void initState() async {
+  void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    getUserNum(1);
+    sendUserStatus(1);
   }
 
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
-    getUserNum(0);
+    sendUserStatus(0);
     super.dispose();
   }
 
@@ -32,11 +32,16 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) {
       // 앱이 포그라운드로 돌아올 때
-      getUserNum(1);
+      sendUserStatus(1);
     } else if (state == AppLifecycleState.paused) {
       // 앱이 백그라운드로 전환될 때
-      getUserNum(0);
+      sendUserStatus(0);
     }
+  }
+
+  void sendUserStatus(int status) {
+    // 비동기 작업은 별도 메서드로 수행
+    getUserNum(status);
   }
 
   Future<void> getUserNum(int num) async {
