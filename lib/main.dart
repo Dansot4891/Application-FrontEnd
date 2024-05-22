@@ -2,65 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gproject/common/dio/dio.dart';
 import 'package:gproject/common/view/splash_screen.dart';
+import 'package:web_socket_channel/io.dart';
+import 'package:web_socket_channel/web_socket_channel.dart';
 
 late Size ratio;
 
 class MyApp extends StatefulWidget {
-  const MyApp({super.key});
+  MyApp({super.key});
 
   @override
   State<MyApp> createState() => _MyAppState();
 }
 
-class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
-
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addObserver(this);
-    sendUserStatus(1);
-  }
-
-  @override
-  void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
-    sendUserStatus(0);
-    super.dispose();
-  }
-
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.resumed) {
-      // 앱이 포그라운드로 돌아올 때
-      sendUserStatus(1);
-    } else if (state == AppLifecycleState.paused) {
-      // 앱이 백그라운드로 전환될 때
-      sendUserStatus(0);
-    }
-  }
-
-  void sendUserStatus(int status) {
-    // 비동기 작업은 별도 메서드로 수행
-    getUserNum(status);
-  }
-
-  Future<void> getUserNum(int num) async {
-    // 1이 들어오는거
-    // 0 이 나가는거
-    try{
-      final resp = await dio.post('${BASE_URL}/api/admin/userCount/${num}');
-      if(resp.statusCode == 200){
-        if(num == 1){
-          print('유저 한명 추가!');
-        }
-        if(num == 0){
-          print('유저 한명 삭제!');
-        }
-      }
-    }catch(e){
-      print(e);
-    }
-  }
+class _MyAppState extends State<MyApp> {
+  final channel = IOWebSocketChannel.connect('ws://http://ceprj.gachon.ac.kr:60006/ws');
 
   @override
   Widget build(BuildContext context) {
@@ -68,15 +23,26 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(fontFamily: "Pretendard"),
-      home: SplashScreen(),
+      home: StreamBuilder(
+        stream: channel.stream,
+        builder: (context, snapshot){
+          return SplashScreen();
+        },
+      ),
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    channel.sink.close();
   }
 }
 
 void main() {
   runApp(
     ProviderScope(
-      child: const MyApp(),
+      child: MyApp(),
     ),
   );
 }

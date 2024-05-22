@@ -15,13 +15,18 @@ class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(onPressed: (){
+          SystemNavigator.pop();
+        }, icon: Icon(Icons.abc)),
+      ),
       backgroundColor: Colors.white,
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 50),
         child: Column(
           children: [
             SizedBox(
-              height: MediaQuery.of(context).size.height / 6 * 1,
+              height: MediaQuery.of(context).size.height / 8 * 1,
             ),
             MainText(
               size: 45,
