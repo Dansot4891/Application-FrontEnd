@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:gproject/common/component/button.dart';
 import 'package:gproject/common/variable/color.dart';
@@ -15,18 +14,13 @@ class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(onPressed: (){
-          SystemNavigator.pop();
-        }, icon: Icon(Icons.abc)),
-      ),
       backgroundColor: Colors.white,
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 50),
         child: Column(
           children: [
             SizedBox(
-              height: MediaQuery.of(context).size.height / 8 * 1,
+              height: MediaQuery.of(context).size.height / 6 * 1,
             ),
             MainText(
               size: 45,
