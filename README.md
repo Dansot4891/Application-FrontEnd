@@ -1,16 +1,6 @@
-# gproject
+가천대학교 종합 프로젝트 앱 코딩입니다.
 
-A new Flutter project.
+피그마 : https://www.figma.com/design/ccqtA5ee51oOkFaE2zknho/Untitled?node-id=45-688
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+아키텍처 : MVVM
+스택 : Flutter/Dart
